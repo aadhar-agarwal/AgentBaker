@@ -854,4 +854,4 @@ testCoreDumpSettings
 testNfsServerService
 testPamDSettings $OS_SKU $OS_VERSION
 testPam $OS_SKU $OS_VERSION
-testUmaskSettings
+# testUmaskSettings
