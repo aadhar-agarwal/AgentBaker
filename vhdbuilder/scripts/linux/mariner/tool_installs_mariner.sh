@@ -179,3 +179,13 @@ installFIPS() {
     fi
     
 }
+
+enableExtraLogging() {
+
+    echo "Enabling extra kernel logging..."
+
+    # Install necessary rpm pacakages
+    dnf_install 120 5 25 grubby || exit $ERR_APT_INSTALL_TIMEOUT
+
+    grubby --update-kernel=ALL --args="loglevel=7"
+}
