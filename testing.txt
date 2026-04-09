@@ -1,0 +1,182 @@
+Flatcar aks image - ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/flatcargen2/versions/1.1775030968.20723
+
+az aks create \
+   --resource-group aadagarwal \
+   --name fc-aks \
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2s_v3 \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=flatcargen2,\
+OSImageVersion=1.1775030968.20723,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImage\
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None --node-count 1
+
+
+ACL aks image with no first boot - ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775030698.3815
+
+
+az aks create \
+   --resource-group aadagarwal \
+   --name acl-aks-current \
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2s_v3 \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=aclgen2TL,\
+OSImageVersion=1.1775030698.3815,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImageLinuxGuard\
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None  --node-count 1
+
+
+ACL aks image w/ /etc/machine-id removed - ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1774999179.7014
+
+
+
+az aks create \
+   --resource-group aadagarwal \
+   --name acl-aks-mid \
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2s_v3 \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=aclgen2TL,\
+OSImageVersion=1.1774999179.7014,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImageLinuxGuard\
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None --node-count 1
+
+
+current aks azl3 image - ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/AzureLinuxV3gen2/versions/1.1775030906.26935
+
+
+az aks create \
+   --resource-group aadagarwal \
+   --name azl-aks \
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2s_v3 \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=AzureLinuxV3gen2,\
+OSImageVersion=1.1775030906.26935,\
+OSSKU=AzureLinux\
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None --node-count 1
+
+
+
+ACL base vm:
+
+az vm create --resource-group aadagarwal --name acl-base-vm --image /subscriptions/035db282-f1c8-4ce7-b78f-2a7265d5398c/resourceGroups/acl/providers/Microsoft.Compute/galleries/acldevel/images/acldevel/versions/0.20260330.1082615 --generate-ssh-keys --size Standard_D2ds_v5 --location westus3    --security-type TrustedLaunch --enable-vtpm true --public-ip-sku Standard
+
+
+# Systemd First-Boot Preset Bug on ACL (Azure Container Linux)
+
+## Summary
+On ACL VMs, any systemd service with an [Install] WantedBy= section gets
+auto-enabled on first boot, even if preset rules say "disable *".
+
+## Environment
+- OS: ACL 3.0.20260330 (Microsoft Azure Container Linux)
+- systemd: 255-26.azl3
+- VM image used for repro:
+  /subscriptions/035db282-f1c8-4ce7-b78f-2a7265d5398c/resourceGroups/acl/providers/Microsoft.Compute/galleries/acldevel/images/acldevel/versions/0.20260330.1082615
+
+## How to create a test VM
+az vm create \
+  --resource-group <RG> \
+  --name acl-preset-test \
+  --image <ACL image ID above> \
+  --generate-ssh-keys \
+  --size Standard_D2ds_v5 \
+  --location westus3 \
+  --security-type TrustedLaunch \
+  --enable-vtpm true \
+  --public-ip-sku Standard
+
+## Repro steps (on any ACL VM)
+
+# 1. Create a dummy service with [Install] WantedBy=
+sudo bash -c 'cat > /etc/systemd/system/test-preset.service <<EOF
+[Unit]
+Description=Test preset behavior
+
+[Service]
+ExecStart=/bin/true
+
+[Install]
+WantedBy=multi-user.target
+EOF'
+
+# 2. Verify it's disabled
+systemctl is-enabled test-preset.service   # disabled
+
+# 3. Remove machine-id to trigger first-boot detection on next boot
+sudo rm -f /etc/machine-id
+
+# 4. Reboot
+sudo reboot
+
+# 5. After reboot — service is enabled despite "disable *" preset
+systemctl is-enabled test-preset.service   # enabled (BUG)
+
+# 6. Confirm it's the ENABLE_ONLY vs FULL mode difference:
+#    preset-all with --preset-mode=full forces systemd to process ALL
+#    rules including "disable *". The service becomes disabled, proving
+#    the rule exists and works — systemd just ignores it at boot because
+#    it defaults to ENABLE_ONLY mode (compile flag missing).
+sudo systemctl preset-all --preset-mode=full --no-reload
+systemctl is-enabled test-preset.service   # disabled (CORRECT)
+
+## Suspected root cause (needs confirmation)
+systemd 255 has a compile-time meson option -Dfirst-boot-full-preset.
+When true, first-boot preset uses FULL mode (processes enable AND disable).
+When false (the default in ALL versions including v258), it uses ENABLE_ONLY
+mode which should only enable services matched by explicit enable rules.
+
+On ACL (systemd 255), ENABLE_ONLY mode incorrectly enables services with
+[Install] WantedBy= even though "disable *" should prevent it.
+
+What we verified:
+  - The ACL build config (acl-scripts/.../coreos/config/env/sys-apps/systemd)
+    does NOT include -Dfirst-boot-full-preset in its meson args
+  - The Azure Linux RPM spec DOES set -Dfirst-boot-full-preset=true
+  - ACL does not build from the RPM — systemd is baked into the read-only
+    btrfs root image via Flatcar's portage build system
+
+What is STILL UNCLEAR:
+  - Flatcar (systemd 258) also does NOT set -Dfirst-boot-full-preset=true
+    in its ebuild, yet it handles "disable *" correctly. This means the
+    compile flag alone may not explain the difference.
+  - The behavioral fix may be a bug fix in systemd between v255 and v258
+    rather than a compile flag issue. This needs investigation.
+  - Setting -Dfirst-boot-full-preset=true in the ACL build would likely fix
+    the issue, but it may not be the only or correct fix.
+
+## Impact on AKS
+In production VHDs, these services get auto-enabled when they shouldn't:
+  - kms.service         (legacy KMS — no CSE handler to disable)
+  - mig-partition.service (GPU MIG — should only enable when MIG_NODE=true)
+  - localdns.service    (should only enable when local DNS configured)
+

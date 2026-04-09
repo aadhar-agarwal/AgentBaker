@@ -1,0 +1,98 @@
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/flatcargen2/versions/1.1774464383.26372
+
+
+az aks create \
+  --resource-group aadagarwal \
+  --name "fc-cluster" \
+  --location "westus3" \
+  --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=flatcargen2,\
+OSImageVersion=1.1774464383.26372,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImage \
+  --nodepool-tags AzSecPackAutoConfigReady=true \
+  --node-os-upgrade-channel None \
+  --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1774464330.14061
+
+
+az aks create \
+   --resource-group aadagarwal \
+   --name acl-cluster-mid \
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2s_v3 \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=aclgen2TL,\
+OSImageVersion=1.1774999179.7014,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImageLinuxGuard \
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None
+
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1774999179.7014
+
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775636019.29804
+
+
+az aks create \
+   --resource-group aadagarwal \
+   --name acl-byoi-48-2\
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2ads_v5 \
+   --enable-secure-boot \
+   --enable-vtpm \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=aclgen2TL,\
+OSImageVersion=1.1775636019.29804,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImageLinuxGuard \
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None --node-count 1
+
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775603314.16815
+
+
+az vm create --resource-group aadagarwal --name test-acl-vm-48-2 --image "/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775603314.16815" --location westus3 --size Standard_D2_v5 --generate-ssh-keys --security-type TrustedLaunch --enable-vtpm true --public-ip-sku Standard
+
+
+az aks create \
+   --resource-group aadagarwal \
+   --name acl-byoi-fboot\
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2ads_v5 \
+   --enable-secure-boot \
+   --enable-vtpm \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=aclgen2TL,\
+OSImageVersion=1.1775603314.16815,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImageLinuxGuard \
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None --node-count 1

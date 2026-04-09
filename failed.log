@@ -1,0 +1,1390 @@
+2026-04-09T04:15:49.4837801Z ##[section]Starting: Run AgentBaker E2E
+2026-04-09T04:15:49.4848009Z ==============================================================================
+2026-04-09T04:15:49.4848359Z Task         : Azure CLI
+2026-04-09T04:15:49.4848546Z Description  : Run Azure CLI commands against an Azure subscription in a PowerShell Core/Shell script when running on Linux agent or PowerShell/PowerShell Core/Batch script when running on Windows agent.
+2026-04-09T04:15:49.4848840Z Version      : 2.270.3
+2026-04-09T04:15:49.4848990Z Author       : Microsoft Corporation
+2026-04-09T04:15:49.4849152Z Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/deploy/azure-cli
+2026-04-09T04:15:49.4849345Z ==============================================================================
+2026-04-09T04:15:49.7363464Z [command]/usr/bin/az version
+2026-04-09T04:16:15.0090717Z {
+2026-04-09T04:16:15.0091563Z   "azure-cli": "2.82.0",
+2026-04-09T04:16:15.0092137Z   "azure-cli-core": "2.82.0",
+2026-04-09T04:16:15.0092638Z   "azure-cli-telemetry": "1.1.0",
+2026-04-09T04:16:15.0093362Z   "extensions": {
+2026-04-09T04:16:15.0093849Z     "azure-devops": "1.0.2"
+2026-04-09T04:16:15.0094293Z   }
+2026-04-09T04:16:15.0094714Z }
+2026-04-09T04:16:15.0113410Z Setting AZURE_CONFIG_DIR env variable to: /mnt/vss/_work/_temp/.azclitask
+2026-04-09T04:16:15.0120518Z Setting active cloud to: AzureCloud
+2026-04-09T04:16:15.0125786Z [command]/usr/bin/az cloud set -n AzureCloud
+2026-04-09T04:16:18.5096750Z [command]/usr/bin/az login --service-principal -u *** --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47 --allow-no-subscriptions --federated-token ***
+2026-04-09T04:16:19.6898134Z [
+2026-04-09T04:16:19.6899090Z   {
+2026-04-09T04:16:19.6899528Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6899982Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6900459Z     "id": "4be8920b-2978-43d7-ab14-04d8549c1d05",
+2026-04-09T04:16:19.6900966Z     "isDefault": true,
+2026-04-09T04:16:19.6901949Z     "managedByTenants": [],
+2026-04-09T04:16:19.6902487Z     "name": "AKS Dev Infra",
+2026-04-09T04:16:19.6903115Z     "state": "Enabled",
+2026-04-09T04:16:19.6903644Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6904109Z     "user": {
+2026-04-09T04:16:19.6904722Z       "name": "***",
+2026-04-09T04:16:19.6905150Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6905602Z     }
+2026-04-09T04:16:19.6906014Z   },
+2026-04-09T04:16:19.6906396Z   {
+2026-04-09T04:16:19.6906847Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6907365Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6907979Z     "id": "8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8",
+2026-04-09T04:16:19.6908537Z     "isDefault": false,
+2026-04-09T04:16:19.6909056Z     "managedByTenants": [
+2026-04-09T04:16:19.6909521Z       {
+2026-04-09T04:16:19.6910003Z         "tenantId": "1380f944-a410-47c1-b4ff-2ed76692603e"
+2026-04-09T04:16:19.6910476Z       },
+2026-04-09T04:16:19.6910910Z       {
+2026-04-09T04:16:19.6911398Z         "tenantId": "b5ce0030-ec42-4a62-bc94-3025993e790c"
+2026-04-09T04:16:19.6911898Z       }
+2026-04-09T04:16:19.6912310Z     ],
+2026-04-09T04:16:19.6912810Z     "name": "Azure Container Service - Test (AKS Standalone)",
+2026-04-09T04:16:19.6913570Z     "state": "Enabled",
+2026-04-09T04:16:19.6914107Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6914613Z     "user": {
+2026-04-09T04:16:19.6915143Z       "name": "***",
+2026-04-09T04:16:19.6915646Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6916104Z     }
+2026-04-09T04:16:19.6916541Z   },
+2026-04-09T04:16:19.6916988Z   {
+2026-04-09T04:16:19.6917473Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6918047Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6918649Z     "id": "c4c3550e-a965-4993-a50c-628fd38cd3e1",
+2026-04-09T04:16:19.6919179Z     "isDefault": false,
+2026-04-09T04:16:19.6919677Z     "managedByTenants": [],
+2026-04-09T04:16:19.6920178Z     "name": "AKS Node SIG",
+2026-04-09T04:16:19.6920960Z     "state": "Enabled",
+2026-04-09T04:16:19.6921899Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6922399Z     "user": {
+2026-04-09T04:16:19.6922864Z       "name": "***",
+2026-04-09T04:16:19.6923450Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6923870Z     }
+2026-04-09T04:16:19.6924267Z   },
+2026-04-09T04:16:19.6924653Z   {
+2026-04-09T04:16:19.6925075Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6925606Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6926056Z     "id": "1c8c4edc-b188-4199-9580-3173033d75f7",
+2026-04-09T04:16:19.6926530Z     "isDefault": false,
+2026-04-09T04:16:19.6926942Z     "managedByTenants": [],
+2026-04-09T04:16:19.6927359Z     "name": "CoreOS_DPLAT_WCCT_Demo",
+2026-04-09T04:16:19.6927819Z     "state": "Enabled",
+2026-04-09T04:16:19.6928266Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6928761Z     "user": {
+2026-04-09T04:16:19.6929285Z       "name": "***",
+2026-04-09T04:16:19.6929714Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6930158Z     }
+2026-04-09T04:16:19.6930609Z   },
+2026-04-09T04:16:19.6931002Z   {
+2026-04-09T04:16:19.6931434Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6931903Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6932471Z     "id": "3be1ff13-7eef-458c-b1ef-97a01af1b2f4",
+2026-04-09T04:16:19.6933066Z     "isDefault": false,
+2026-04-09T04:16:19.6933536Z     "managedByTenants": [],
+2026-04-09T04:16:19.6934022Z     "name": "AzCoreLinux Flatcar community & CI",
+2026-04-09T04:16:19.6934448Z     "state": "Enabled",
+2026-04-09T04:16:19.6934884Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6935309Z     "user": {
+2026-04-09T04:16:19.6935807Z       "name": "***",
+2026-04-09T04:16:19.6936238Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6936613Z     }
+2026-04-09T04:16:19.6936967Z   },
+2026-04-09T04:16:19.6937582Z   {
+2026-04-09T04:16:19.6937956Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6938448Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6938938Z     "id": "a15c116e-99e3-4c59-aebc-8f864929b4a0",
+2026-04-09T04:16:19.6939327Z     "isDefault": false,
+2026-04-09T04:16:19.6939691Z     "managedByTenants": [],
+2026-04-09T04:16:19.6940054Z     "name": "AKS VHD Image Release",
+2026-04-09T04:16:19.6940436Z     "state": "Enabled",
+2026-04-09T04:16:19.6941098Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6941898Z     "user": {
+2026-04-09T04:16:19.6942432Z       "name": "***",
+2026-04-09T04:16:19.6942888Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6943469Z     }
+2026-04-09T04:16:19.6943816Z   },
+2026-04-09T04:16:19.6944148Z   {
+2026-04-09T04:16:19.6944489Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6944879Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6945292Z     "id": "035db282-f1c8-4ce7-b78f-2a7265d5398c",
+2026-04-09T04:16:19.6945692Z     "isDefault": false,
+2026-04-09T04:16:19.6946078Z     "managedByTenants": [],
+2026-04-09T04:16:19.6946507Z     "name": "EdgeOS_Mariner_Platform_AKS_test",
+2026-04-09T04:16:19.6946999Z     "state": "Enabled",
+2026-04-09T04:16:19.6947508Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6947979Z     "user": {
+2026-04-09T04:16:19.6948479Z       "name": "***",
+2026-04-09T04:16:19.6948907Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6949397Z     }
+2026-04-09T04:16:19.6949841Z   },
+2026-04-09T04:16:19.6950280Z   {
+2026-04-09T04:16:19.6950754Z     "cloudName": "AzureCloud",
+2026-04-09T04:16:19.6951279Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6951815Z     "id": "b8f169b2-5b23-444a-ae4b-19a31b5e3652",
+2026-04-09T04:16:19.6952352Z     "isDefault": false,
+2026-04-09T04:16:19.6952851Z     "managedByTenants": [],
+2026-04-09T04:16:19.6953558Z     "name": "EdgeOS_Mariner_Platform_dev",
+2026-04-09T04:16:19.6954084Z     "state": "Enabled",
+2026-04-09T04:16:19.6954577Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-04-09T04:16:19.6955342Z     "user": {
+2026-04-09T04:16:19.6955823Z       "name": "***",
+2026-04-09T04:16:19.6956264Z       "type": "servicePrincipal"
+2026-04-09T04:16:19.6956707Z     }
+2026-04-09T04:16:19.6957123Z   }
+2026-04-09T04:16:19.6957566Z ]
+2026-04-09T04:16:19.6958180Z [command]/usr/bin/az account set --subscription c4c3550e-a965-4993-a50c-628fd38cd3e1
+2026-04-09T04:16:20.2569093Z [command]/usr/bin/bash /mnt/vss/_work/_temp/azureclitaskscript1775708149732.sh
+2026-04-09T04:16:20.8169578Z Using subscription 8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8 for e2e tests
+2026-04-09T04:16:21.8413402Z go: downloading go1.24.12 (linux/amd64)
+2026-04-09T04:16:27.8494928Z go version go1.24.12 linux/amd64
+2026-04-09T04:16:27.8520630Z setting logging dir to scenario-logs-1775708187
+2026-04-09T04:16:27.8541507Z VHD_BUILD_ID: 159811463
+2026-04-09T04:16:27.8542272Z IGNORE_SCENARIOS_WITH_MISSING_VHD: True
+2026-04-09T04:16:27.8542821Z LOGGING_DIR: scenario-logs-1775708187
+2026-04-09T04:16:27.8544216Z E2E_SUBSCRIPTION_ID: 8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8
+2026-04-09T04:16:27.8544821Z ENABLE_SECURE_TLS_BOOTSTRAPPING: true
+2026-04-09T04:16:27.8545367Z TAGS_TO_SKIP: os=windows
+2026-04-09T04:16:27.8545864Z TAGS_TO_RUN:
+2026-04-09T04:16:27.8546328Z GALLERY_NAME:
+2026-04-09T04:16:27.8546735Z SIG_GALLERY_NAME: PackerSigGalleryEastUS
+2026-04-09T04:16:27.8547050Z E2E_GO_TEST_TIMEOUT: 90m
+2026-04-09T04:16:27.8547388Z VHD_BUILD_ID is specified (159811463). Running tests using VHDs from that build
+2026-04-09T04:16:27.8547779Z SIG_GALLERY_NAME is specified (PackerSigGalleryEastUS). Updating GALLERY_NAME to PackerSigGalleryEastUS
+2026-04-09T04:16:32.8658338Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/azcore v1.20.0
+2026-04-09T04:16:32.9439919Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.1
+2026-04-09T04:16:32.9442431Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/compute/armcompute/v7 v7.2.0
+2026-04-09T04:16:32.9443725Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/authorization/armauthorization/v3 v3.0.0-beta.2
+2026-04-09T04:16:32.9444426Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/containerregistry/armcontainerregistry/v2 v2.0.0
+2026-04-09T04:16:32.9879239Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/containerservice/armcontainerservice/v8 v8.2.0
+2026-04-09T04:16:33.0290637Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/network/armnetwork/v7 v7.2.0
+2026-04-09T04:16:33.0528937Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/privatedns/armprivatedns v1.3.0
+2026-04-09T04:16:33.0530472Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources/v3 v3.0.1
+2026-04-09T04:16:33.0869104Z go: downloading github.com/Masterminds/semver v1.5.0
+2026-04-09T04:16:33.0876697Z go: downloading github.com/blang/semver v3.5.1+incompatible
+2026-04-09T04:16:33.1010045Z go: downloading github.com/bramvdbogaerde/go-scp v1.6.0
+2026-04-09T04:16:33.1044763Z go: downloading github.com/coder/websocket v1.8.14
+2026-04-09T04:16:33.1285462Z go: downloading github.com/google/uuid v1.6.0
+2026-04-09T04:16:33.1301329Z go: downloading github.com/samber/lo v1.52.0
+2026-04-09T04:16:33.1421513Z go: downloading github.com/stretchr/testify v1.11.1
+2026-04-09T04:16:33.1674290Z go: downloading github.com/tidwall/gjson v1.18.0
+2026-04-09T04:16:33.1675533Z go: downloading golang.org/x/crypto v0.47.0
+2026-04-09T04:16:33.1799474Z go: downloading k8s.io/api v0.34.2
+2026-04-09T04:16:33.4042398Z go: downloading k8s.io/apimachinery v0.34.2
+2026-04-09T04:16:33.5818529Z go: downloading k8s.io/client-go v0.34.2
+2026-04-09T04:16:34.1989356Z go: downloading sigs.k8s.io/controller-runtime v0.20.4
+2026-04-09T04:16:34.3530734Z go: downloading google.golang.org/protobuf v1.36.6
+2026-04-09T04:16:34.4020281Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/msi/armmsi v1.2.0
+2026-04-09T04:16:34.4140126Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/storage/armstorage/v3 v3.0.0
+2026-04-09T04:16:34.4591251Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/storage/azblob v1.6.2
+2026-04-09T04:16:34.5198606Z go: downloading github.com/caarlos0/env/v11 v11.3.1
+2026-04-09T04:16:34.5325243Z go: downloading github.com/joho/godotenv v1.5.1
+2026-04-09T04:16:34.6245693Z go: downloading github.com/Azure/go-autorest/autorest/to v0.4.1
+2026-04-09T04:16:34.6246382Z go: downloading github.com/coreos/butane v0.25.1
+2026-04-09T04:16:34.7130064Z go: downloading gopkg.in/yaml.v3 v3.0.1
+2026-04-09T04:16:34.7138935Z go: downloading github.com/Masterminds/semver/v3 v3.4.0
+2026-04-09T04:16:34.7142064Z go: downloading github.com/pkg/errors v0.9.1
+2026-04-09T04:16:34.7282789Z go: downloading github.com/Azure/azure-sdk-for-go/sdk/internal v1.11.2
+2026-04-09T04:16:34.7380315Z go: downloading github.com/AzureAD/microsoft-authentication-library-for-go v1.6.0
+2026-04-09T04:16:34.7833626Z go: downloading golang.org/x/text v0.33.0
+2026-04-09T04:16:34.7834782Z go: downloading github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
+2026-04-09T04:16:34.7976706Z go: downloading github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2
+2026-04-09T04:16:34.9176153Z go: downloading github.com/Azure/go-autorest v14.2.0+incompatible
+2026-04-09T04:16:34.9309617Z go: downloading github.com/tidwall/match v1.1.1
+2026-04-09T04:16:34.9367389Z go: downloading github.com/tidwall/pretty v1.2.1
+2026-04-09T04:16:34.9488597Z go: downloading github.com/gogo/protobuf v1.3.2
+2026-04-09T04:16:35.0985630Z go: downloading gopkg.in/inf.v0 v0.9.1
+2026-04-09T04:16:35.3064287Z go: downloading sigs.k8s.io/randfill v1.0.0
+2026-04-09T04:16:35.3065206Z go: downloading k8s.io/utils v0.0.0-20250604170112-4c0f3b243397
+2026-04-09T04:16:35.3563832Z go: downloading k8s.io/klog/v2 v2.130.1
+2026-04-09T04:16:35.3577544Z go: downloading github.com/gorilla/websocket v1.5.4-0.20250319132907-e064f32e3674
+2026-04-09T04:16:35.3855896Z go: downloading github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822
+2026-04-09T04:16:35.3983306Z go: downloading golang.org/x/net v0.49.0
+2026-04-09T04:16:35.4000280Z go: downloading github.com/spf13/pflag v1.0.9
+2026-04-09T04:16:35.4281940Z go: downloading golang.org/x/term v0.39.0
+2026-04-09T04:16:35.4602664Z go: downloading github.com/evanphx/json-patch/v5 v5.9.11
+2026-04-09T04:16:35.4813312Z go: downloading github.com/go-logr/logr v1.4.3
+2026-04-09T04:16:35.5058309Z go: downloading github.com/go-logr/zapr v1.3.0
+2026-04-09T04:16:35.5188223Z go: downloading go.uber.org/zap v1.27.0
+2026-04-09T04:16:35.6068636Z go: downloading github.com/coreos/go-systemd/v22 v22.5.0
+2026-04-09T04:16:35.6069798Z go: downloading github.com/flatcar/ignition/v2 v2.0.0-20250903113522-05b8a773288c
+2026-04-09T04:16:35.7841531Z go: downloading github.com/coreos/vcontext v0.0.0-20230201181013-d72178a18687
+2026-04-09T04:16:35.7842279Z go: downloading github.com/coreos/go-semver v0.3.1
+2026-04-09T04:16:35.7913326Z go: downloading github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
+2026-04-09T04:16:35.7939417Z go: downloading github.com/kylelemons/godebug v1.1.0
+2026-04-09T04:16:35.7967211Z go: downloading sigs.k8s.io/structured-merge-diff/v6 v6.3.0
+2026-04-09T04:16:35.7968175Z go: downloading sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8
+2026-04-09T04:16:35.8030917Z go: downloading github.com/google/gnostic-models v0.7.0
+2026-04-09T04:16:35.8052353Z go: downloading golang.org/x/time v0.12.0
+2026-04-09T04:16:35.8181581Z go: downloading github.com/fxamacker/cbor/v2 v2.9.0
+2026-04-09T04:16:35.8249334Z go: downloading golang.org/x/oauth2 v0.30.0
+2026-04-09T04:16:35.8822014Z go: downloading golang.org/x/sys v0.40.0
+2026-04-09T04:16:35.8834652Z go: downloading k8s.io/kube-openapi v0.0.0-20250710124328-f3f2b991d03b
+2026-04-09T04:16:35.8857416Z go: downloading go.uber.org/multierr v1.11.0
+2026-04-09T04:16:35.9090068Z go: downloading github.com/vincent-petithory/dataurl v1.0.0
+2026-04-09T04:16:35.9254269Z go: downloading github.com/aws/aws-sdk-go-v2 v1.38.2
+2026-04-09T04:16:36.0172018Z go: downloading github.com/clarketm/json v1.17.1
+2026-04-09T04:16:36.0611430Z go: downloading github.com/golang-jwt/jwt/v5 v5.3.0
+2026-04-09T04:16:36.1585949Z go: downloading sigs.k8s.io/yaml v1.6.0
+2026-04-09T04:16:36.1587248Z go: downloading github.com/moby/spdystream v0.5.0
+2026-04-09T04:16:36.1587832Z go: downloading go.yaml.in/yaml/v3 v3.0.4
+2026-04-09T04:16:36.1600685Z go: downloading github.com/x448/float16 v0.8.4
+2026-04-09T04:16:36.1728972Z go: downloading github.com/json-iterator/go v1.1.12
+2026-04-09T04:16:36.1775175Z go: downloading go.yaml.in/yaml/v2 v2.4.2
+2026-04-09T04:16:36.1777497Z go: downloading github.com/coreos/go-json v0.0.0-20230131223807-18775e0fb4fb
+2026-04-09T04:16:36.1868863Z go: downloading gopkg.in/evanphx/json-patch.v4 v4.12.0
+2026-04-09T04:16:36.2007622Z go: downloading github.com/go-openapi/jsonreference v0.21.0
+2026-04-09T04:16:36.2030759Z go: downloading github.com/go-openapi/swag v0.23.1
+2026-04-09T04:16:36.2053500Z go: downloading github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f
+2026-04-09T04:16:36.2126808Z go: downloading github.com/emicklei/go-restful/v3 v3.12.2
+2026-04-09T04:16:36.2134698Z go: downloading github.com/go-openapi/jsonpointer v0.21.1
+2026-04-09T04:16:36.2231726Z go: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+2026-04-09T04:16:36.2260518Z go: downloading github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee
+2026-04-09T04:16:36.2293148Z go: downloading github.com/mailru/easyjson v0.9.0
+2026-04-09T04:16:36.2701071Z go: downloading github.com/josharian/intern v1.0.0
+2026-04-09T04:27:36.5195498Z github.com/Azure/agentbaker/e2e:
+2026-04-09T04:27:36.6020596Z  ✖ ACL (473.87s)
+2026-04-09T04:27:36.6022389Z  ∅ ACL ARM64 (21.81s)
+2026-04-09T04:27:36.6023220Z  ✖ ACL GPUA10 scriptless (473.87s)
+2026-04-09T04:27:36.6023880Z  ✖ ACL GPUA100 scriptless (473.87s)
+2026-04-09T04:27:36.6024496Z  ✖ ACL GPUNC scriptless (473.87s)
+2026-04-09T04:27:36.6026939Z  ✖ ACL azure CNI (290.76s)
+2026-04-09T04:27:36.6027670Z  ✖ ACL azure CNI chrony restarts (290.00s)
+2026-04-09T04:27:36.6028334Z  ✖ ACL azure CNI chrony restarts scriptless (270.04s)
+2026-04-09T04:27:36.6028961Z  ✖ ACL custom CA trust (473.87s)
+2026-04-09T04:27:36.6029558Z  ✖ ACL disable SSH (473.87s)
+2026-04-09T04:27:36.6030188Z  ✖ ACL network isolated cluster non anonymous ACR (491.87s)
+2026-04-09T04:27:36.6030805Z  ✖ ACL scriptless (473.87s)
+2026-04-09T04:27:36.6031459Z  ✖ ACL secure TLS bootstrapping bootstrap token fallback (473.87s)
+2026-04-09T04:27:36.6032086Z  ∅ Azure linux 3OS guard (13.64s)
+2026-04-09T04:27:36.6032704Z  ∅ AzureLinux skip binary cleanup (0.00s)
+2026-04-09T04:27:36.6033448Z  ∅ AzureLinux3 PMC install (0.00s)
+2026-04-09T04:27:36.6034103Z  ∅ AzureLinux3 nvidia device plugin running (0.00s)
+2026-04-09T04:27:36.6034744Z  ∅ AzureLinux3OSGuard PMC install (13.65s)
+2026-04-09T04:27:36.6035403Z  ∅ AzureLinuxV3 ARM64 (20.11s)
+2026-04-09T04:27:36.6035996Z  ∅ AzureLinuxV3 GPU (0.00s)
+2026-04-09T04:27:36.6036623Z  ∅ AzureLinuxV3 GPU azure CNI (0.00s)
+2026-04-09T04:27:36.6038440Z  ∅ AzureLinuxV3 GPU azure CNI scriptless (0.00s)
+2026-04-09T04:27:36.6039360Z  ∅ AzureLinuxV3 GPUA10 (0.00s)
+2026-04-09T04:27:36.6040011Z  ∅ AzureLinuxV3 MA35D (17.14s)
+2026-04-09T04:27:36.6040650Z  ∅ AzureLinuxV3 MA35D scriptless (17.14s)
+2026-04-09T04:27:36.6041269Z  ∅ AzureLinuxV3 app armor (0.00s)
+2026-04-09T04:27:36.6041873Z  ∅ AzureLinuxV3 azure CNI (0.00s)
+2026-04-09T04:27:36.6042488Z  ∅ AzureLinuxV3 chrony restarts (0.00s)
+2026-04-09T04:27:36.6043231Z  ∅ AzureLinuxV3 custom CA trust (0.00s)
+2026-04-09T04:27:36.6043894Z  ∅ AzureLinuxV3 custom sysctls (0.00s)
+2026-04-09T04:27:36.6044520Z  ∅ AzureLinuxV3 disable SSH (0.00s)
+2026-04-09T04:27:36.6045144Z  ∅ AzureLinuxV3 kubelet custom config (0.00s)
+2026-04-09T04:27:36.6045796Z  ∅ AzureLinuxV3 kubelet custom config scriptless (0.00s)
+2026-04-09T04:27:36.6046410Z  ∅ AzureLinuxV3 message of the day (0.00s)
+2026-04-09T04:27:36.6047063Z  ∅ AzureLinuxV3 message of the day scriptless (0.00s)
+2026-04-09T04:27:36.6047742Z  ∅ AzureLinuxV3 network isolated cluster non anonymous ACR (0.00s)
+2026-04-09T04:27:36.6048708Z  ∅ AzureLinuxV3 network isolated package install (0.00s)
+2026-04-09T04:27:36.6049394Z  ∅ AzureLinuxV3 secure TLS bootstrapping bootstrap token fallback (0.00s)
+2026-04-09T04:27:36.6050063Z  ∅ AzureLinuxV3LocalDns disabled scriptless (0.00s)
+2026-04-09T04:27:36.6050691Z  ✓ DCGM exporter compatibility (0.00s)
+2026-04-09T04:27:36.6051333Z  ∅ DCGM exporter compatibility azure linux 3 (7.13s)
+2026-04-09T04:27:36.6051981Z  ∅ DCGM exporter compatibility ubuntu 2404 (27.59s)
+2026-04-09T04:27:36.6052570Z  ∅ Flatcar (21.14s)
+2026-04-09T04:27:36.6053269Z  ∅ Flatcar ARM64 (23.97s)
+2026-04-09T04:27:36.6053899Z  ∅ Flatcar azure CNI (21.15s)
+2026-04-09T04:27:36.6054871Z  ∅ Flatcar azure CNI chrony restarts (21.15s)
+2026-04-09T04:27:36.6055561Z  ∅ Flatcar azure CNI chrony restarts scriptless (21.15s)
+2026-04-09T04:27:36.6056189Z  ∅ Flatcar custom CA trust (21.14s)
+2026-04-09T04:27:36.6056807Z  ∅ Flatcar disable SSH (21.15s)
+2026-04-09T04:27:36.6057517Z  ∅ Flatcar network isolated cluster non anonymous ACR (21.15s)
+2026-04-09T04:27:36.6058144Z  ∅ Flatcar scriptless (21.15s)
+2026-04-09T04:27:36.6058792Z  ∅ Flatcar secure TLS bootstrapping bootstrap token fallback (21.15s)
+2026-04-09T04:27:36.6059470Z  ∅ NetworkIsolatedCluster windows oras kubelet download (0.00s)
+2026-04-09T04:27:36.6060130Z  ∅ NetworkIsolatedCluster windows with egress (0.00s)
+2026-04-09T04:27:36.6061376Z  ∅ Random VHD with latest kubernetes version (0.00s)
+2026-04-09T04:27:36.6062086Z  ∅ Ubuntu 2204 (13.50s)
+2026-04-09T04:27:36.6062708Z  ∅ Ubuntu 2204 gen 2FIPS (18.29s)
+2026-04-09T04:27:36.6063440Z  ∅ Ubuntu 2204 gen 2FIPSTL (17.69s)
+2026-04-09T04:27:36.6064038Z  ∅ Ubuntu 2204ARM64 (17.00s)
+2026-04-09T04:27:36.6064664Z  ∅ Ubuntu 2204FIPS (19.71s)
+2026-04-09T04:27:36.6065253Z  ∅ Ubuntu 2404 gen 1 (13.82s)
+2026-04-09T04:27:36.6065835Z  ∅ Ubuntu 2404 gen 2 (0.00s)
+2026-04-09T04:27:36.6066420Z  ∅ Ubuntu 2404ARM (12.17s)
+2026-04-09T04:27:36.6067256Z  ∅ Ubuntu2204 GPU grid driver (13.51s)
+2026-04-09T04:27:36.6067882Z  ∅ Ubuntu2204 GPU no driver (13.51s)
+2026-04-09T04:27:36.6068511Z  ∅ Ubuntu2204 GPU no driver scriptless (13.50s)
+2026-04-09T04:27:36.6069130Z  ∅ Ubuntu2204 GPUA10 (13.51s)
+2026-04-09T04:27:36.6069747Z  ∅ Ubuntu2204 GPUA10 scriptless (13.51s)
+2026-04-09T04:27:36.6070355Z  ∅ Ubuntu2204 GPUA100 (13.51s)
+2026-04-09T04:27:36.6070934Z  ∅ Ubuntu2204 GPUNC (13.51s)
+2026-04-09T04:27:36.6071537Z  ∅ Ubuntu2204 PMC install (13.51s)
+2026-04-09T04:27:36.6072148Z  ∅ Ubuntu2204 artifact streaming (13.51s)
+2026-04-09T04:27:36.6072786Z  ∅ Ubuntu2204 artifact streaming scriptless (13.51s)
+2026-04-09T04:27:36.6073587Z  ∅ Ubuntu2204 chrony restarts taints and tolerations (13.51s)
+2026-04-09T04:27:36.6074302Z  ∅ Ubuntu2204 chrony restarts taints and tolerations scriptless (13.50s)
+2026-04-09T04:27:36.6075011Z  ∅ Ubuntu2204 containerd URL IMDS restriction filter table (13.51s)
+2026-04-09T04:27:36.6075720Z  ∅ Ubuntu2204 containerd URL IMDS restriction filter table scriptless (13.51s)
+2026-04-09T04:27:36.6076411Z  ∅ Ubuntu2204 containerd has current version (13.51s)
+2026-04-09T04:27:36.6077011Z  ∅ Ubuntu2204 custom CA trust (13.51s)
+2026-04-09T04:27:36.6077791Z  ∅ Ubuntu2204 custom CA trust scriptless (13.51s)
+2026-04-09T04:27:36.6078418Z  ∅ Ubuntu2204 custom sysctls (13.51s)
+2026-04-09T04:27:36.6079066Z  ∅ Ubuntu2204 custom sysctls scriptless (13.51s)
+2026-04-09T04:27:36.6079743Z  ∅ Ubuntu2204 disable SSH (13.50s)
+2026-04-09T04:27:36.6080400Z  ∅ Ubuntu2204 disable kubelet serving certificate rotation with tags (13.51s)
+2026-04-09T04:27:36.6081135Z  ∅ Ubuntu2204 disable kubelet serving certificate rotation with tags already disabled (13.51s)
+2026-04-09T04:27:36.6081973Z  ∅ Ubuntu2204 disable kubelet serving certificate rotation with tags already disabled custom kubelet config (13.51s)
+2026-04-09T04:27:36.6082748Z  ∅ Ubuntu2204 disable kubelet serving certificate rotation with tags custom kubelet config (13.51s)
+2026-04-09T04:27:36.6083691Z  ∅ Ubuntu2204 disable kubelet serving certificate rotation with tags custom kubelet config scriptless (13.51s)
+2026-04-09T04:27:36.6084594Z  ∅ Ubuntu2204 early failure scriptless (13.50s)
+2026-04-09T04:27:36.6085800Z  ∅ Ubuntu2204 entra IDSSH (13.50s)
+2026-04-09T04:27:36.6086681Z  ∅ Ubuntu2204 entra IDSSH scriptless (13.50s)
+2026-04-09T04:27:36.6087432Z  ∅ Ubuntu2204 failure scriptless (13.50s)
+2026-04-09T04:27:36.6088132Z  ∅ Ubuntu2204 kubelet custom config (13.51s)
+2026-04-09T04:27:36.6088789Z  ∅ Ubuntu2204 message of the day (13.51s)
+2026-04-09T04:27:36.6090919Z  ∅ Ubuntu2204 network isolated cluster non anonymous ACR (13.50s)
+2026-04-09T04:27:36.6091811Z  ∅ Ubuntu2204 nvidia device plugin daemonset (13.51s)
+2026-04-09T04:27:36.6092576Z  ∅ Ubuntu2204 nvidia device plugin running (13.50s)
+2026-04-09T04:27:36.6093420Z  ∅ Ubuntu2204 nvidia device plugin running without VMSS tag (13.50s)
+2026-04-09T04:27:36.6094102Z  ✖ Ubuntu2204 private kube pkg (473.87s)
+2026-04-09T04:27:36.6094724Z  ∅ Ubuntu2204 scriptless (13.50s)
+2026-04-09T04:27:36.6095364Z  ∅ Ubuntu2204 scriptless CSE cmd hotfix (13.50s)
+2026-04-09T04:27:36.6096052Z  ∅ Ubuntu2204 secure TLS bootstrapping bootstrap token fallback (13.51s)
+2026-04-09T04:27:36.6096721Z  ∅ Ubuntu2204ARM64 kubelet custom config (17.00s)
+2026-04-09T04:27:36.6098624Z  ✓ Ubuntu2204Gen2 containerd network isolated cluster non anonymous none cached (512.62s)
+2026-04-09T04:27:36.6099625Z  ✓ Ubuntu2204Gen2 containerd network isolated cluster non anonymous none cached install package (516.28s)
+2026-04-09T04:27:36.6100387Z  ✓ Ubuntu2204Gen2 containerd network isolated cluster none cached (519.67s)
+2026-04-09T04:27:36.6101094Z  ∅ Ubuntu2204Gen2 image pull identity binding disabled (13.51s)
+2026-04-09T04:27:36.6101809Z  ∅ Ubuntu2204Gen2 image pull identity binding disabled scriptless (13.51s)
+2026-04-09T04:27:36.6102513Z  ∅ Ubuntu2204Gen2 image pull identity binding enabled (13.51s)
+2026-04-09T04:27:36.6104320Z  ∅ Ubuntu2204Gen2 image pull identity binding enabled scriptless (13.51s)
+2026-04-09T04:27:36.6105550Z  ∅ Ubuntu2204Gen2 image pull identity binding enabled without default IDs (13.51s)
+2026-04-09T04:27:36.6106308Z  ∅ Ubuntu2204Gen2 image pull identity binding network isolated (13.51s)
+2026-04-09T04:27:36.6106970Z  ∅ Ubuntu2404 GPU A100 (35.98s)
+2026-04-09T04:27:36.6107602Z  ∅ Ubuntu2404 GPU H100 (31.40s)
+2026-04-09T04:27:36.6108927Z  ∅ Ubuntu2404 GPUA10 (0.00s)
+2026-04-09T04:27:36.6110093Z  ∅ Ubuntu2404 NPD basic (0.00s)
+2026-04-09T04:27:36.6110844Z  ✓ Ubuntu2404 VHD caching (0.00s)
+2026-04-09T04:27:36.6111509Z  ∅ Ubuntu2404 VHD caching VHD creation (13.51s)
+2026-04-09T04:27:36.6112174Z  ∅ Ubuntu2404 nvidia device plugin running (0.00s)
+2026-04-09T04:27:36.6112845Z  ∅ Ubuntu2404 nvidia device plugin running MIG (0.00s)
+2026-04-09T04:27:36.6113692Z  ∅ Ubuntu2404 scriptless (0.00s)
+2026-04-09T04:27:36.6114383Z  ∅ Ubuntu2404 secure TLS bootstrapping bootstrap token fallback (0.00s)
+2026-04-09T04:27:36.6115049Z  ∅ Ubuntu2404Gen2 GPU no driver (0.00s)
+2026-04-09T04:27:36.6115707Z  ∅ Ubuntu2404Gen2 mcr china cloud (0.00s)
+2026-04-09T04:27:36.6116375Z  ∅ Ubuntu2404Gen2 mcr china cloud scriptless (0.00s)
+2026-04-09T04:27:36.6117056Z  ✓ Version consistency GPU managed components (0.00s)
+2026-04-09T04:27:36.6117725Z  ∅ Windows 2022 azure overlay network dual stack (0.00s)
+2026-04-09T04:27:36.6118373Z  ∅ Windows 2022 caching regression (0.00s)
+2026-04-09T04:27:36.6119016Z  ∅ Windows 2022 gen 2 azure network (0.00s)
+2026-04-09T04:27:36.6119672Z  ∅ Windows 2022 gen 2 azure overlay network dual stack (0.00s)
+2026-04-09T04:27:36.6121166Z  ∅ Windows 2025 (0.00s)
+2026-04-09T04:27:36.6121946Z  ∅ Windows 2025 gen 2 (0.00s)
+2026-04-09T04:27:36.6122582Z  ∅ Windows 23H2 azure network (0.00s)
+2026-04-09T04:27:36.6123418Z  ∅ Windows 23H2 azure overlay network dual stack (0.00s)
+2026-04-09T04:27:36.6124154Z  ∅ Windows 23H2 gen 2 azure network (0.00s)
+2026-04-09T04:27:36.6124817Z  ∅ Windows 23H2 gen 2 azure overlay dual stack (0.00s)
+2026-04-09T04:27:36.6125483Z  ∅ Windows 23H2 gen 2 caching regression (0.00s)
+2026-04-09T04:27:36.6126143Z  ✓ Windows2022 VHD caching (0.00s)
+2026-04-09T04:27:36.6127034Z  ∅ Windows2022 VHD caching VHD creation (0.00s)
+2026-04-09T04:27:36.6127733Z  ∅ Windows2022 azure network (0.00s)
+2026-04-09T04:27:36.6128426Z  ∅ Windows2022 disable kubelet serving certificate rotation with tags (0.00s)
+2026-04-09T04:27:36.6129100Z  ∅ Windows2022 mcr china cloud windows (0.00s)
+2026-04-09T04:27:36.6129768Z  ∅ Windows2022 secure TLS bootstrapping bootstrap token fallback (0.00s)
+2026-04-09T04:27:36.6130420Z  ∅ Windows2022Gen2 k 8s 133 (0.00s)
+2026-04-09T04:27:36.6131076Z  ∅ Windows2025Gen2 mcr china cloud windows (0.00s)
+2026-04-09T04:27:36.6131724Z  ∅ Windows23H2 cilium 2 (0.00s)
+2026-04-09T04:27:36.6132374Z  ∅ Windows23H2Gen2 windows cilium networking (0.00s)
+2026-04-09T04:27:36.6132642Z
+2026-04-09T04:27:36.7353845Z
+2026-04-09T04:27:36.7356148Z === Skipped
+2026-04-09T04:27:36.7356703Z === SKIP: . Test_DCGM_Exporter_Compatibility/AzureLinux3 (7.13s)
+2026-04-09T04:27:36.7357696Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-gen2/overview
+2026-04-09T04:27:36.7358999Z     azure.go:536: [7.134s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-gen2/overview
+2026-04-09T04:27:36.7360231Z     test_helpers.go:355: skipping scenario "Test_DCGM_Exporter_Compatibility/AzureLinux3": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7360725Z
+2026-04-09T04:27:36.7361245Z === SKIP: . Test_DCGM_Exporter_Compatibility/Ubuntu2404 (27.59s)
+2026-04-09T04:27:36.7362591Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7364141Z     azure.go:536: [27.592s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7365301Z     test_helpers.go:355: skipping scenario "Test_DCGM_Exporter_Compatibility/Ubuntu2404": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7365794Z
+2026-04-09T04:27:36.7366326Z === SKIP: . Test_Windows2022AzureOverlayNetworkDualStack (0.00s)
+2026-04-09T04:27:36.7366970Z     scenario_win_test.go:77: Dual stack tests are not working yet
+2026-04-09T04:27:36.7367258Z
+2026-04-09T04:27:36.7367785Z === SKIP: . Test_Windows2022Gen2AzureOverlayNetworkDualStack (0.00s)
+2026-04-09T04:27:36.7368453Z     scenario_win_test.go:122: Dual stack tests are not working yet
+2026-04-09T04:27:36.7368714Z
+2026-04-09T04:27:36.7369228Z === SKIP: . Test_Windows23H2AzureOverlayNetworkDualStack (0.00s)
+2026-04-09T04:27:36.7369877Z     scenario_win_test.go:166: Dual stack tests are not working yet
+2026-04-09T04:27:36.7370164Z
+2026-04-09T04:27:36.7370688Z === SKIP: . Test_Windows23H2Gen2AzureOverlayDualStack (0.00s)
+2026-04-09T04:27:36.7371323Z     scenario_win_test.go:210: Dual stack tests are not working yet
+2026-04-09T04:27:36.7371606Z
+2026-04-09T04:27:36.7372113Z === SKIP: . Test_Windows23H2_Cilium2 (0.00s)
+2026-04-09T04:27:36.7372795Z     scenario_win_test.go:427: skipping test for Cilium on Windows 23H2, as it is not supported in production AKS yet
+2026-04-09T04:27:36.7373293Z
+2026-04-09T04:27:36.7373798Z === SKIP: . Test_Windows2022_AzureNetwork (0.00s)
+2026-04-09T04:27:36.7375269Z     test_helpers.go:345: skipping scenario "Test_Windows2022_AzureNetwork": scenario tags {Name:Test_Windows2022_AzureNetwork ImageName:windows-2022-containerd OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7376208Z
+2026-04-09T04:27:36.7376781Z === SKIP: . Test_AzureLinuxV3_AppArmor (0.00s)
+2026-04-09T04:27:36.7377637Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_AppArmor": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7378173Z
+2026-04-09T04:27:36.7378729Z === SKIP: . Test_NetworkIsolatedCluster_Windows_OrasKubeletDownload (0.00s)
+2026-04-09T04:27:36.7380119Z     test_helpers.go:345: skipping scenario "Test_NetworkIsolatedCluster_Windows_OrasKubeletDownload": scenario tags {Name:Test_NetworkIsolatedCluster_Windows_OrasKubeletDownload ImageName:windows-2025-gen2 OS:windows Arch:amd64 NetworkIsolated:true NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7381061Z
+2026-04-09T04:27:36.7381553Z === SKIP: . Test_AzureLinux3_PMC_Install (0.00s)
+2026-04-09T04:27:36.7382280Z     test_helpers.go:355: skipping scenario "Test_AzureLinux3_PMC_Install": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7382763Z
+2026-04-09T04:27:36.7383370Z === SKIP: . Test_Ubuntu2404_Scriptless (0.00s)
+2026-04-09T04:27:36.7384119Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_Scriptless": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7384905Z
+2026-04-09T04:27:36.7385390Z === SKIP: . Test_Ubuntu2404_NPD_Basic (0.00s)
+2026-04-09T04:27:36.7386129Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_NPD_Basic": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7386581Z
+2026-04-09T04:27:36.7386979Z === SKIP: . Test_Windows2022_McrChinaCloud_Windows (0.00s)
+2026-04-09T04:27:36.7388172Z     test_helpers.go:345: skipping scenario "Test_Windows2022_McrChinaCloud_Windows": scenario tags {Name:Test_Windows2022_McrChinaCloud_Windows ImageName:windows-2022-containerd OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:true VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7389317Z
+2026-04-09T04:27:36.7389824Z === SKIP: . Test_AzureLinuxV3_CustomCATrust (0.00s)
+2026-04-09T04:27:36.7390470Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_CustomCATrust": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7390914Z
+2026-04-09T04:27:36.7391365Z === SKIP: . Test_Ubuntu2404_GPUA10 (0.00s)
+2026-04-09T04:27:36.7392119Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_GPUA10": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7392573Z
+2026-04-09T04:27:36.7393725Z === SKIP: . Test_Windows2025Gen2_McrChinaCloud_Windows (0.00s)
+2026-04-09T04:27:36.7394951Z     test_helpers.go:345: skipping scenario "Test_Windows2025Gen2_McrChinaCloud_Windows": scenario tags {Name:Test_Windows2025Gen2_McrChinaCloud_Windows ImageName:windows-2025-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:true VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7396082Z
+2026-04-09T04:27:36.7396723Z === SKIP: . Test_Random_VHD_With_Latest_Kubernetes_Version (0.00s)
+2026-04-09T04:27:36.7397550Z     test_helpers.go:355: skipping scenario "Test_Random_VHD_With_Latest_Kubernetes_Version": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7398099Z
+2026-04-09T04:27:36.7398702Z === SKIP: . Test_Windows23H2Gen2_WindowsCiliumNetworking (0.00s)
+2026-04-09T04:27:36.7399726Z     test_helpers.go:345: skipping scenario "Test_Windows23H2Gen2_WindowsCiliumNetworking": scenario tags {Name:Test_Windows23H2Gen2_WindowsCiliumNetworking ImageName:windows-23H2-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7400570Z
+2026-04-09T04:27:36.7401094Z === SKIP: . Test_Ubuntu2404Gen2_GPUNoDriver (0.00s)
+2026-04-09T04:27:36.7401811Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404Gen2_GPUNoDriver": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7402257Z
+2026-04-09T04:27:36.7402724Z === SKIP: . Test_Windows2025Gen2 (0.00s)
+2026-04-09T04:27:36.7404148Z     test_helpers.go:345: skipping scenario "Test_Windows2025Gen2": scenario tags {Name:Test_Windows2025Gen2 ImageName:windows-2025-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7405037Z
+2026-04-09T04:27:36.7405508Z === SKIP: . Test_Ubuntu2404_SecureTLSBootstrapping_BootstrapToken_Fallback (0.00s)
+2026-04-09T04:27:36.7406285Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_SecureTLSBootstrapping_BootstrapToken_Fallback": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7406884Z
+2026-04-09T04:27:36.7407522Z === SKIP: . Test_Ubuntu2404Gen2_McrChinaCloud (0.00s)
+2026-04-09T04:27:36.7408226Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404Gen2_McrChinaCloud": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7408723Z
+2026-04-09T04:27:36.7409212Z === SKIP: . Test_Ubuntu2404Gen2_McrChinaCloud_Scriptless (0.00s)
+2026-04-09T04:27:36.7409897Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404Gen2_McrChinaCloud_Scriptless": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7410399Z
+2026-04-09T04:27:36.7410859Z === SKIP: . Test_Ubuntu2404Gen2 (0.00s)
+2026-04-09T04:27:36.7411575Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404Gen2": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7412024Z
+2026-04-09T04:27:36.7412455Z === SKIP: . Test_AzureLinuxV3_GPUAzureCNI_Scriptless (0.00s)
+2026-04-09T04:27:36.7413456Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_GPUAzureCNI_Scriptless": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7413952Z
+2026-04-09T04:27:36.7414392Z === SKIP: . Test_AzureLinuxV3_GPUAzureCNI (0.00s)
+2026-04-09T04:27:36.7415181Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_GPUAzureCNI": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7415793Z
+2026-04-09T04:27:36.7416279Z === SKIP: . Test_AzureLinuxV3_GPUA10 (0.00s)
+2026-04-09T04:27:36.7416972Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_GPUA10": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7417434Z
+2026-04-09T04:27:36.7417942Z === SKIP: . Test_AzureLinuxV3_GPU (0.00s)
+2026-04-09T04:27:36.7418672Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_GPU": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7419110Z
+2026-04-09T04:27:36.7419619Z === SKIP: . Test_AzureLinuxV3_KubeletCustomConfig_Scriptless (0.00s)
+2026-04-09T04:27:36.7420392Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_KubeletCustomConfig_Scriptless": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7420895Z
+2026-04-09T04:27:36.7421358Z === SKIP: . Test_AzureLinuxV3_KubeletCustomConfig (0.00s)
+2026-04-09T04:27:36.7422119Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_KubeletCustomConfig": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7422633Z
+2026-04-09T04:27:36.7423361Z === SKIP: . Test_AzureLinuxV3LocalDns_Disabled_Scriptless (0.00s)
+2026-04-09T04:27:36.7424184Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3LocalDns_Disabled_Scriptless": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7424668Z
+2026-04-09T04:27:36.7425168Z === SKIP: . Test_AzureLinuxV3_MessageOfTheDay_Scriptless (0.00s)
+2026-04-09T04:27:36.7426110Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_MessageOfTheDay_Scriptless": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7426570Z
+2026-04-09T04:27:36.7427112Z === SKIP: . Test_AzureLinuxV3_MessageOfTheDay (0.00s)
+2026-04-09T04:27:36.7427827Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_MessageOfTheDay": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7428333Z
+2026-04-09T04:27:36.7428925Z === SKIP: . Test_AzureLinux_Skip_Binary_Cleanup (0.00s)
+2026-04-09T04:27:36.7429724Z     test_helpers.go:355: skipping scenario "Test_AzureLinux_Skip_Binary_Cleanup": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7430187Z
+2026-04-09T04:27:36.7430671Z === SKIP: . Test_Windows2025 (0.00s)
+2026-04-09T04:27:36.7431758Z     test_helpers.go:345: skipping scenario "Test_Windows2025": scenario tags {Name:Test_Windows2025 ImageName:windows-2025 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7432596Z
+2026-04-09T04:27:36.7433262Z === SKIP: . Test_Windows2022CachingRegression (0.00s)
+2026-04-09T04:27:36.7434560Z     test_helpers.go:345: skipping scenario "Test_Windows2022CachingRegression": scenario tags {Name:Test_Windows2022CachingRegression ImageName:windows-2022-containerd-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7435532Z
+2026-04-09T04:27:36.7436055Z === SKIP: . Test_Windows23H2Gen2CachingRegression (0.00s)
+2026-04-09T04:27:36.7437460Z     test_helpers.go:345: skipping scenario "Test_Windows23H2Gen2CachingRegression": scenario tags {Name:Test_Windows23H2Gen2CachingRegression ImageName:windows-23H2-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7438479Z
+2026-04-09T04:27:36.7438936Z === SKIP: . Test_Windows23H2Gen2AzureNetwork (0.00s)
+2026-04-09T04:27:36.7440120Z     test_helpers.go:345: skipping scenario "Test_Windows23H2Gen2AzureNetwork": scenario tags {Name:Test_Windows23H2Gen2AzureNetwork ImageName:windows-23H2-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7440944Z
+2026-04-09T04:27:36.7441267Z === SKIP: . Test_Windows23H2AzureNetwork (0.00s)
+2026-04-09T04:27:36.7441968Z     test_helpers.go:345: skipping scenario "Test_Windows23H2AzureNetwork": scenario tags {Name:Test_Windows23H2AzureNetwork ImageName:windows-23H2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7442456Z
+2026-04-09T04:27:36.7442740Z === SKIP: . Test_Windows2022Gen2AzureNetwork (0.00s)
+2026-04-09T04:27:36.7443656Z     test_helpers.go:345: skipping scenario "Test_Windows2022Gen2AzureNetwork": scenario tags {Name:Test_Windows2022Gen2AzureNetwork ImageName:windows-2022-containerd-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7444348Z
+2026-04-09T04:27:36.7444656Z === SKIP: . Test_Windows2022_VHDCaching/VHDCreation (0.00s)
+2026-04-09T04:27:36.7445340Z     test_helpers.go:345: skipping scenario "Test_Windows2022_VHDCaching/VHDCreation": scenario tags {Name:Test_Windows2022_VHDCaching/VHDCreation ImageName:windows-2022-containerd OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:true MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7445865Z
+2026-04-09T04:27:36.7446286Z === SKIP: . Test_AzureLinuxV3_CustomSysctls (0.00s)
+2026-04-09T04:27:36.7446812Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_CustomSysctls": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7447099Z
+2026-04-09T04:27:36.7447569Z === SKIP: . Test_AzureLinuxV3_NetworkIsolated_Package_Install (0.00s)
+2026-04-09T04:27:36.7448123Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_NetworkIsolated_Package_Install": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7448425Z
+2026-04-09T04:27:36.7448846Z === SKIP: . Test_AzureLinuxV3_NetworkIsolatedCluster_NonAnonymousACR (0.00s)
+2026-04-09T04:27:36.7449387Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_NetworkIsolatedCluster_NonAnonymousACR": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7449685Z
+2026-04-09T04:27:36.7450097Z === SKIP: . Test_AzureLinuxV3_DisableSSH (0.00s)
+2026-04-09T04:27:36.7450607Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_DisableSSH": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7450997Z
+2026-04-09T04:27:36.7451443Z === SKIP: . Test_Windows2022Gen2_k8s_133 (0.00s)
+2026-04-09T04:27:36.7452226Z     test_helpers.go:345: skipping scenario "Test_Windows2022Gen2_k8s_133": scenario tags {Name:Test_Windows2022Gen2_k8s_133 ImageName:windows-2022-containerd-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7452752Z
+2026-04-09T04:27:36.7453312Z === SKIP: . Test_Windows2022_SecureTLSBootstrapping_BootstrapToken_Fallback (0.00s)
+2026-04-09T04:27:36.7454152Z     test_helpers.go:345: skipping scenario "Test_Windows2022_SecureTLSBootstrapping_BootstrapToken_Fallback": scenario tags {Name:Test_Windows2022_SecureTLSBootstrapping_BootstrapToken_Fallback ImageName:windows-2022-containerd-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:true KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7454743Z
+2026-04-09T04:27:36.7455170Z === SKIP: . Test_Windows2022_DisableKubeletServingCertificateRotationWithTags (0.00s)
+2026-04-09T04:27:36.7456243Z     test_helpers.go:345: skipping scenario "Test_Windows2022_DisableKubeletServingCertificateRotationWithTags": scenario tags {Name:Test_Windows2022_DisableKubeletServingCertificateRotationWithTags ImageName:windows-2022-containerd-gen2 OS:windows Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7457595Z
+2026-04-09T04:27:36.7458138Z === SKIP: . Test_AzureLinuxV3_ChronyRestarts (0.00s)
+2026-04-09T04:27:36.7458947Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_ChronyRestarts": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7459452Z
+2026-04-09T04:27:36.7459978Z === SKIP: . Test_AzureLinuxV3_AzureCNI (0.00s)
+2026-04-09T04:27:36.7460716Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_AzureCNI": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7461132Z
+2026-04-09T04:27:36.7461631Z === SKIP: . Test_AzureLinuxV3_SecureTLSBootstrapping_BootstrapToken_Fallback (0.00s)
+2026-04-09T04:27:36.7462545Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_SecureTLSBootstrapping_BootstrapToken_Fallback": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7463202Z
+2026-04-09T04:27:36.7463739Z === SKIP: . Test_AzureLinux3_NvidiaDevicePluginRunning (0.00s)
+2026-04-09T04:27:36.7464508Z     test_helpers.go:355: skipping scenario "Test_AzureLinux3_NvidiaDevicePluginRunning": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7464969Z
+2026-04-09T04:27:36.7465451Z === SKIP: . Test_Ubuntu2404_NvidiaDevicePluginRunning_MIG (0.00s)
+2026-04-09T04:27:36.7466191Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_NvidiaDevicePluginRunning_MIG": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7466651Z
+2026-04-09T04:27:36.7467147Z === SKIP: . Test_NetworkIsolatedCluster_Windows_WithEgress (0.00s)
+2026-04-09T04:27:36.7468358Z     test_helpers.go:345: skipping scenario "Test_NetworkIsolatedCluster_Windows_WithEgress": scenario tags {Name:Test_NetworkIsolatedCluster_Windows_WithEgress ImageName:windows-2025-gen2 OS:windows Arch:amd64 NetworkIsolated:true NonAnonymousACR:true GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false} matches filter "os=windows"
+2026-04-09T04:27:36.7469458Z
+2026-04-09T04:27:36.7469957Z === SKIP: . Test_Ubuntu2404_NvidiaDevicePluginRunning (0.00s)
+2026-04-09T04:27:36.7470702Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_NvidiaDevicePluginRunning": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7471244Z
+2026-04-09T04:27:36.7471694Z === SKIP: . Test_Ubuntu2404ARM (12.17s)
+2026-04-09T04:27:36.7472564Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-arm64-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7474050Z     azure.go:536: [12.169s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-arm64-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7475254Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404ARM": could not find image for VHD aks-ubuntu-arm64-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7475734Z
+2026-04-09T04:27:36.7476285Z === SKIP: . Test_Ubuntu2204_NvidiaDevicePlugin_Daemonset (13.51s)
+2026-04-09T04:27:36.7477106Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-22.04-gen2/overview
+2026-04-09T04:27:36.7478366Z     azure.go:536: [13.512s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-22.04-gen2/overview
+2026-04-09T04:27:36.7479340Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_NvidiaDevicePlugin_Daemonset": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7479769Z
+2026-04-09T04:27:36.7480197Z === SKIP: . Test_Ubuntu2204_GPUNoDriver (13.51s)
+2026-04-09T04:27:36.7480939Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_GPUNoDriver": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7481392Z
+2026-04-09T04:27:36.7481870Z === SKIP: . Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Disabled_Scriptless (13.51s)
+2026-04-09T04:27:36.7482707Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Disabled_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7483369Z
+2026-04-09T04:27:36.7484179Z === SKIP: . Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Enabled_Scriptless (13.51s)
+2026-04-09T04:27:36.7485313Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Enabled_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7485860Z
+2026-04-09T04:27:36.7486414Z === SKIP: . Test_Ubuntu2204Gen2_ImagePullIdentityBinding_NetworkIsolated (13.51s)
+2026-04-09T04:27:36.7487381Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2_ImagePullIdentityBinding_NetworkIsolated": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7487883Z
+2026-04-09T04:27:36.7488438Z === SKIP: . Test_Ubuntu2204Gen2_ImagePullIdentityBinding_EnabledWithoutDefaultIDs (13.51s)
+2026-04-09T04:27:36.7489275Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2_ImagePullIdentityBinding_EnabledWithoutDefaultIDs": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7489770Z
+2026-04-09T04:27:36.7490298Z === SKIP: . Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Disabled (13.51s)
+2026-04-09T04:27:36.7491083Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Disabled": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7491634Z
+2026-04-09T04:27:36.7492152Z === SKIP: . Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Enabled (13.51s)
+2026-04-09T04:27:36.7493070Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2_ImagePullIdentityBinding_Enabled": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7493614Z
+2026-04-09T04:27:36.7494157Z === SKIP: . Test_Ubuntu2404_VHDCaching/VHDCreation (13.51s)
+2026-04-09T04:27:36.7494920Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_VHDCaching/VHDCreation": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7495377Z
+2026-04-09T04:27:36.7495859Z === SKIP: . Test_Ubuntu2204_GPUGridDriver (13.51s)
+2026-04-09T04:27:36.7496794Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_GPUGridDriver": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7497269Z
+2026-04-09T04:27:36.7497762Z === SKIP: . Test_Ubuntu2204_GPUA10_Scriptless (13.51s)
+2026-04-09T04:27:36.7498546Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_GPUA10_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7499054Z
+2026-04-09T04:27:36.7499564Z === SKIP: . Test_Ubuntu2204_GPUA10 (13.51s)
+2026-04-09T04:27:36.7500333Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_GPUA10": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7500808Z
+2026-04-09T04:27:36.7501286Z === SKIP: . Test_Ubuntu2204_GPUNC (13.51s)
+2026-04-09T04:27:36.7501984Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_GPUNC": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7502444Z
+2026-04-09T04:27:36.7503127Z === SKIP: . Test_Ubuntu2204_ChronyRestarts_Taints_And_Tolerations (13.51s)
+2026-04-09T04:27:36.7504005Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ChronyRestarts_Taints_And_Tolerations": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7504558Z
+2026-04-09T04:27:36.7505104Z === SKIP: . Test_Ubuntu2204_ArtifactStreaming_Scriptless (13.51s)
+2026-04-09T04:27:36.7505933Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ArtifactStreaming_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7506428Z
+2026-04-09T04:27:36.7506948Z === SKIP: . Test_Ubuntu2204_ArtifactStreaming (13.51s)
+2026-04-09T04:27:36.7507901Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ArtifactStreaming": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7508349Z
+2026-04-09T04:27:36.7508869Z === SKIP: . Test_Ubuntu2204_SecureTLSBootstrapping_BootstrapToken_Fallback (13.51s)
+2026-04-09T04:27:36.7509706Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_SecureTLSBootstrapping_BootstrapToken_Fallback": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7510182Z
+2026-04-09T04:27:36.7510642Z === SKIP: . Test_Ubuntu2204_KubeletCustomConfig (13.51s)
+2026-04-09T04:27:36.7511445Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_KubeletCustomConfig": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7511937Z
+2026-04-09T04:27:36.7512417Z === SKIP: . Test_Ubuntu2204_MessageOfTheDay (13.51s)
+2026-04-09T04:27:36.7513240Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_MessageOfTheDay": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7513684Z
+2026-04-09T04:27:36.7514207Z === SKIP: . Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_AlreadyDisabled_CustomKubeletConfig (13.51s)
+2026-04-09T04:27:36.7515065Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_AlreadyDisabled_CustomKubeletConfig": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7515597Z
+2026-04-09T04:27:36.7516085Z === SKIP: . Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_AlreadyDisabled (13.51s)
+2026-04-09T04:27:36.7517094Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_AlreadyDisabled": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7517611Z
+2026-04-09T04:27:36.7518154Z === SKIP: . Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_CustomKubeletConfig_Scriptless (13.51s)
+2026-04-09T04:27:36.7519096Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_CustomKubeletConfig_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7519640Z
+2026-04-09T04:27:36.7520282Z === SKIP: . Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_CustomKubeletConfig (13.51s)
+2026-04-09T04:27:36.7521281Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags_CustomKubeletConfig": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7521892Z
+2026-04-09T04:27:36.7522492Z === SKIP: . Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags (13.51s)
+2026-04-09T04:27:36.7523572Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_DisableKubeletServingCertificateRotationWithTags": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7524171Z
+2026-04-09T04:27:36.7524719Z === SKIP: . Test_Ubuntu2204_ContainerdHasCurrentVersion (13.51s)
+2026-04-09T04:27:36.7525586Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ContainerdHasCurrentVersion": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7526118Z
+2026-04-09T04:27:36.7526708Z === SKIP: . Test_Ubuntu2204_ContainerdURL_IMDSRestrictionFilterTable_Scriptless (13.51s)
+2026-04-09T04:27:36.7527830Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ContainerdURL_IMDSRestrictionFilterTable_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7528405Z
+2026-04-09T04:27:36.7528981Z === SKIP: . Test_Ubuntu2204_ContainerdURL_IMDSRestrictionFilterTable (13.51s)
+2026-04-09T04:27:36.7529841Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ContainerdURL_IMDSRestrictionFilterTable": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7530397Z
+2026-04-09T04:27:36.7530885Z === SKIP: . Test_Ubuntu2204_GPUA100 (13.51s)
+2026-04-09T04:27:36.7531699Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_GPUA100": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7532217Z
+2026-04-09T04:27:36.7532725Z === SKIP: . Test_Ubuntu2204_PMC_Install (13.51s)
+2026-04-09T04:27:36.7533694Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_PMC_Install": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7534206Z
+2026-04-09T04:27:36.7534763Z === SKIP: . Test_Ubuntu2204_CustomSysctls_Scriptless (13.51s)
+2026-04-09T04:27:36.7535631Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_CustomSysctls_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7536350Z
+2026-04-09T04:27:36.7537042Z === SKIP: . Test_Ubuntu2204_CustomSysctls (13.51s)
+2026-04-09T04:27:36.7537875Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_CustomSysctls": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7538544Z
+2026-04-09T04:27:36.7539089Z === SKIP: . Test_Ubuntu2204_CustomCATrust_Scriptless (13.51s)
+2026-04-09T04:27:36.7539940Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_CustomCATrust_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7540386Z
+2026-04-09T04:27:36.7540874Z === SKIP: . Test_Ubuntu2204_CustomCATrust (13.51s)
+2026-04-09T04:27:36.7541548Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_CustomCATrust": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7542053Z
+2026-04-09T04:27:36.7542503Z === SKIP: . Test_Ubuntu2204_NetworkIsolatedCluster_NonAnonymousACR (13.50s)
+2026-04-09T04:27:36.7543333Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_NetworkIsolatedCluster_NonAnonymousACR": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7543860Z
+2026-04-09T04:27:36.7544392Z === SKIP: . Test_Ubuntu2204_DisableSSH (13.50s)
+2026-04-09T04:27:36.7545059Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_DisableSSH": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7545432Z
+2026-04-09T04:27:36.7545999Z === SKIP: . Test_Ubuntu2204_***SSH_Scriptless (13.50s)
+2026-04-09T04:27:36.7546550Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_***SSH_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7546846Z
+2026-04-09T04:27:36.7547269Z === SKIP: . Test_Ubuntu2204_***SSH (13.50s)
+2026-04-09T04:27:36.7547901Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_***SSH": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7548352Z
+2026-04-09T04:27:36.7548797Z === SKIP: . Test_Ubuntu2204 (13.50s)
+2026-04-09T04:27:36.7549276Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7549553Z
+2026-04-09T04:27:36.7550045Z === SKIP: . Test_Ubuntu2204_ScriptlessCSECmd_Hotfix (13.50s)
+2026-04-09T04:27:36.7550682Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ScriptlessCSECmd_Hotfix": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7551092Z
+2026-04-09T04:27:36.7551575Z === SKIP: . Test_Ubuntu2204_ChronyRestarts_Taints_And_Tolerations_Scriptless (13.50s)
+2026-04-09T04:27:36.7552320Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_ChronyRestarts_Taints_And_Tolerations_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7552765Z
+2026-04-09T04:27:36.7553463Z === SKIP: . Test_Ubuntu2204_Early_Failure_Scriptless (13.50s)
+2026-04-09T04:27:36.7554182Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_Early_Failure_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7554542Z
+2026-04-09T04:27:36.7554914Z === SKIP: . Test_Ubuntu2204_Failure_Scriptless (13.50s)
+2026-04-09T04:27:36.7555427Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_Failure_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7556129Z
+2026-04-09T04:27:36.7556634Z === SKIP: . Test_Ubuntu2204_Scriptless (13.50s)
+2026-04-09T04:27:36.7557287Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7557730Z
+2026-04-09T04:27:36.7558173Z === SKIP: . Test_Ubuntu2204_NvidiaDevicePluginRunning_WithoutVMSSTag (13.50s)
+2026-04-09T04:27:36.7558914Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_NvidiaDevicePluginRunning_WithoutVMSSTag": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7559428Z
+2026-04-09T04:27:36.7559974Z === SKIP: . Test_Ubuntu2204_GPUNoDriver_Scriptless (13.50s)
+2026-04-09T04:27:36.7560768Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_GPUNoDriver_Scriptless": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7561305Z
+2026-04-09T04:27:36.7561833Z === SKIP: . Test_Ubuntu2204_NvidiaDevicePluginRunning (13.50s)
+2026-04-09T04:27:36.7562682Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204_NvidiaDevicePluginRunning": could not find image for VHD aks-ubuntu-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7563385Z
+2026-04-09T04:27:36.7563906Z === SKIP: . Test_AzureLinux3OSGuard_PMC_Install (13.65s)
+2026-04-09T04:27:36.7564710Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-osguard-gen2-fips-tl/overview
+2026-04-09T04:27:36.7566036Z     azure.go:536: [13.654s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-osguard-gen2-fips-tl/overview
+2026-04-09T04:27:36.7567720Z     test_helpers.go:355: skipping scenario "Test_AzureLinux3OSGuard_PMC_Install": could not find image for VHD aks-azurelinux-v3-osguard-gen2-fips-tl due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7568580Z
+2026-04-09T04:27:36.7569307Z === SKIP: . Test_AzureLinux3OSGuard (13.64s)
+2026-04-09T04:27:36.7570221Z     test_helpers.go:355: skipping scenario "Test_AzureLinux3OSGuard": could not find image for VHD aks-azurelinux-v3-osguard-gen2-fips-tl due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7570805Z
+2026-04-09T04:27:36.7571415Z === SKIP: . Test_Ubuntu2404Gen1 (13.82s)
+2026-04-09T04:27:36.7572622Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04/overview
+2026-04-09T04:27:36.7574313Z     azure.go:536: [13.823s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04/overview
+2026-04-09T04:27:36.7575589Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404Gen1": could not find image for VHD aks-ubuntu-containerd-24.04 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7576145Z
+2026-04-09T04:27:36.7576859Z === SKIP: . Test_Ubuntu2204ARM64 (17.00s)
+2026-04-09T04:27:36.7578123Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-arm64-containerd-22.04-gen2/overview
+2026-04-09T04:27:36.7579924Z     azure.go:536: [17.005s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-arm64-containerd-22.04-gen2/overview
+2026-04-09T04:27:36.7581255Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204ARM64": could not find image for VHD aks-ubuntu-arm64-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7581807Z
+2026-04-09T04:27:36.7582709Z === SKIP: . Test_Ubuntu2204ARM64_KubeletCustomConfig (17.00s)
+2026-04-09T04:27:36.7583908Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204ARM64_KubeletCustomConfig": could not find image for VHD aks-ubuntu-arm64-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7584547Z
+2026-04-09T04:27:36.7585104Z === SKIP: . Test_AzureLinuxV3_MA35D_Scriptless (17.14s)
+2026-04-09T04:27:36.7586096Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-gen2/overview
+2026-04-09T04:27:36.7587617Z     azure.go:536: [17.143s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-gen2/overview
+2026-04-09T04:27:36.7588996Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_MA35D_Scriptless": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7589729Z
+2026-04-09T04:27:36.7590308Z === SKIP: . Test_AzureLinuxV3_MA35D (17.14s)
+2026-04-09T04:27:36.7591292Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_MA35D": could not find image for VHD aks-azurelinux-v3-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7591886Z
+2026-04-09T04:27:36.7592577Z === SKIP: . Test_Ubuntu2204Gen2FIPSTL (17.69s)
+2026-04-09T04:27:36.7593650Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-fips-containerd-22.04-tl-gen2/overview
+2026-04-09T04:27:36.7595013Z     azure.go:536: [17.687s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-fips-containerd-22.04-tl-gen2/overview
+2026-04-09T04:27:36.7596584Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2FIPSTL": could not find image for VHD aks-ubuntu-fips-containerd-22.04-tl-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7597135Z
+2026-04-09T04:27:36.7597759Z === SKIP: . Test_Ubuntu2204Gen2FIPS (18.29s)
+2026-04-09T04:27:36.7598768Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-fips-containerd-22.04-gen2/overview
+2026-04-09T04:27:36.7600510Z     azure.go:536: [18.286s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-fips-containerd-22.04-gen2/overview
+2026-04-09T04:27:36.7601882Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204Gen2FIPS": could not find image for VHD aks-ubuntu-fips-containerd-22.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7602448Z
+2026-04-09T04:27:36.7603246Z === SKIP: . Test_Ubuntu2204FIPS (19.71s)
+2026-04-09T04:27:36.7604305Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-fips-containerd-22.04/overview
+2026-04-09T04:27:36.7605794Z     azure.go:536: [19.710s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-fips-containerd-22.04/overview
+2026-04-09T04:27:36.7607062Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2204FIPS": could not find image for VHD aks-ubuntu-fips-containerd-22.04 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7607605Z
+2026-04-09T04:27:36.7608227Z === SKIP: . Test_AzureLinuxV3_ARM64 (20.11s)
+2026-04-09T04:27:36.7609280Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-arm64-gen2/overview
+2026-04-09T04:27:36.7611042Z     azure.go:536: [20.108s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-azurelinux-v3-arm64-gen2/overview
+2026-04-09T04:27:36.7612438Z     test_helpers.go:355: skipping scenario "Test_AzureLinuxV3_ARM64": could not find image for VHD aks-azurelinux-v3-arm64-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7613055Z
+2026-04-09T04:27:36.7613780Z === SKIP: . Test_Flatcar_NetworkIsolatedCluster_NonAnonymousACR (21.15s)
+2026-04-09T04:27:36.7615016Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-flatcar-gen2/overview
+2026-04-09T04:27:36.7616517Z     azure.go:536: [21.146s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-flatcar-gen2/overview
+2026-04-09T04:27:36.7617806Z     test_helpers.go:355: skipping scenario "Test_Flatcar_NetworkIsolatedCluster_NonAnonymousACR": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7618317Z
+2026-04-09T04:27:36.7618945Z === SKIP: . Test_Flatcar_DisableSSH (21.15s)
+2026-04-09T04:27:36.7619845Z     test_helpers.go:355: skipping scenario "Test_Flatcar_DisableSSH": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7620479Z
+2026-04-09T04:27:36.7621107Z === SKIP: . Test_Flatcar_Scriptless (21.15s)
+2026-04-09T04:27:36.7621836Z     test_helpers.go:355: skipping scenario "Test_Flatcar_Scriptless": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7622364Z
+2026-04-09T04:27:36.7623208Z === SKIP: . Test_Flatcar_SecureTLSBootstrapping_BootstrapToken_Fallback (21.15s)
+2026-04-09T04:27:36.7624000Z     test_helpers.go:355: skipping scenario "Test_Flatcar_SecureTLSBootstrapping_BootstrapToken_Fallback": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7624515Z
+2026-04-09T04:27:36.7625141Z === SKIP: . Test_Flatcar_AzureCNI_ChronyRestarts_Scriptless (21.15s)
+2026-04-09T04:27:36.7626015Z     test_helpers.go:355: skipping scenario "Test_Flatcar_AzureCNI_ChronyRestarts_Scriptless": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7626610Z
+2026-04-09T04:27:36.7627084Z === SKIP: . Test_Flatcar_AzureCNI_ChronyRestarts (21.15s)
+2026-04-09T04:27:36.7627624Z     test_helpers.go:355: skipping scenario "Test_Flatcar_AzureCNI_ChronyRestarts": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7627935Z
+2026-04-09T04:27:36.7628356Z === SKIP: . Test_Flatcar_AzureCNI (21.15s)
+2026-04-09T04:27:36.7629024Z     test_helpers.go:355: skipping scenario "Test_Flatcar_AzureCNI": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7629505Z
+2026-04-09T04:27:36.7629999Z === SKIP: . Test_Flatcar_CustomCATrust (21.14s)
+2026-04-09T04:27:36.7630516Z     test_helpers.go:355: skipping scenario "Test_Flatcar_CustomCATrust": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7630799Z
+2026-04-09T04:27:36.7631277Z === SKIP: . Test_Flatcar (21.14s)
+2026-04-09T04:27:36.7631905Z     test_helpers.go:355: skipping scenario "Test_Flatcar": could not find image for VHD aks-flatcar-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7632203Z
+2026-04-09T04:27:36.7632515Z === SKIP: . Test_ACL_ARM64 (21.81s)
+2026-04-09T04:27:36.7633265Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-acl-arm64-gen2-tl/overview
+2026-04-09T04:27:36.7634224Z     azure.go:536: [21.807s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-acl-arm64-gen2-tl/overview
+2026-04-09T04:27:36.7635470Z     test_helpers.go:355: skipping scenario "Test_ACL_ARM64": could not find image for VHD aks-acl-arm64-gen2-tl due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7636098Z
+2026-04-09T04:27:36.7636582Z === SKIP: . Test_Flatcar_ARM64 (23.97s)
+2026-04-09T04:27:36.7637331Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-flatcar-arm64-gen2/overview
+2026-04-09T04:27:36.7638322Z     azure.go:536: [23.971s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-flatcar-arm64-gen2/overview
+2026-04-09T04:27:36.7639777Z     test_helpers.go:355: skipping scenario "Test_Flatcar_ARM64": could not find image for VHD aks-flatcar-arm64-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7640826Z
+2026-04-09T04:27:36.7641361Z === SKIP: . Test_Ubuntu2404_GPU_H100 (31.40s)
+2026-04-09T04:27:36.7642572Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7644026Z     azure.go:536: [31.404s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7645284Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_GPU_H100": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7645767Z
+2026-04-09T04:27:36.7646366Z === SKIP: . Test_Ubuntu2404_GPU_A100 (35.98s)
+2026-04-09T04:27:36.7647381Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7648844Z     azure.go:536: [35.981s] Could not find VHD with tag buildId=159811463 in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-24.04-gen2/overview
+2026-04-09T04:27:36.7650271Z     test_helpers.go:355: skipping scenario "Test_Ubuntu2404_GPU_A100": could not find image for VHD aks-ubuntu-containerd-24.04-gen2 due to failed to get latest image by tag buildId=159811463: not found
+2026-04-09T04:27:36.7651074Z
+2026-04-09T04:27:36.7651597Z === Failed
+2026-04-09T04:27:36.7652304Z === FAIL: . Test_ACL_AzureCNI_ChronyRestarts_Scriptless (270.04s)
+2026-04-09T04:27:36.7653752Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_AzureCNI_ChronyRestarts_Scriptless ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:true VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.7655504Z     test_helpers.go:199: [25.333s] → running scenario...
+2026-04-09T04:27:36.7656523Z     cluster.go:63: [25.337s] → preparing cluster...
+2026-04-09T04:27:36.7657523Z     cluster.go:236: [25.337s] → get or create cluster abe2e-azure-network-v3-f69fa...
+2026-04-09T04:27:36.7658575Z     cluster.go:244: [26.548s] ✓ get or create cluster abe2e-azure-network-v3-f69fa done (1.2s)
+2026-04-09T04:27:36.7659468Z     aks_model.go:304: [28.980s] → adding firewall rules...
+2026-04-09T04:27:36.7660506Z     aks_model.go:314: [29.782s] ✓ adding firewall rules done (0.8s)
+2026-04-09T04:27:36.7661408Z     kube.go:368: [29.782s] Creating daemonset debug-mariner-tolerated with image mcr.microsoft.com/cbl-mariner/base/core:2.0
+2026-04-09T04:27:36.7662323Z     kube.go:368: [29.948s] Creating daemonset debugnonhost-mariner-tolerated with image mcr.microsoft.com/cbl-mariner/base/core:2.0
+2026-04-09T04:27:36.7663945Z     cluster.go:698: [29.972s] → collecting garbage VMSS...
+2026-04-09T04:27:36.7665222Z     cluster.go:732: [32.467s] ✓ collecting garbage VMSS done (2.5s)
+2026-04-09T04:27:36.7666253Z     cluster.go:134: [32.544s] ✓ preparing cluster done (7.2s)
+2026-04-09T04:27:36.7667186Z     test_helpers.go:231: [32.544s] → preparing AKS node...
+2026-04-09T04:27:36.7668436Z     vmss.go:311: [39.879s] → creating VMSS txvt-2026-04-09-aclazurecnichronyrestartsscriptless...
+2026-04-09T04:27:36.7669571Z     vmss.go:65: [39.879s] compiling aks-node-controller: "/home/cloudtest/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.12.linux-amd64/bin/go build -o aks-node-controller-amd64 -v"
+2026-04-09T04:27:36.7670585Z     vmss.go:43: [49.125s] uploading aks-node-controller binary to blob path 2026-04-09-04-19-45/aks-node-controller-27f7ok
+2026-04-09T04:27:36.7671817Z     vmss.go:232: [50.526s] VMSS portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/txvt-2026-04-09-aclazurecnichronyrestartsscriptless/overview
+2026-04-09T04:27:36.7673454Z     vmss.go:238: [50.526s] Managed cluster portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.ContainerService/managedClusters/abe2e-azure-network-v3-f69fa/overview
+2026-04-09T04:27:36.7674675Z     vmss.go:344: [55.556s] VM will be automatically deleted after the test finishes, to preserve it for debugging purposes set KEEP_VMSS=true or pause the test with a breakpoint before the test finishes or failed
+2026-04-09T04:27:36.7675363Z     vmss.go:348: [55.556s] SSH Instructions: (may take a few minutes for the VM to be ready for SSH)
+2026-04-09T04:27:36.7675998Z         ========================
+2026-04-09T04:27:36.7676979Z         az network bastion ssh --target-resource-id "/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/txvt-2026-04-09-aclazurecnichronyrestartsscriptless/virtualMachines/0" --name "abe2e-azure-network-v3-f69fa-bastion" --resource-group MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3 --auth-type ssh-key --username azureuser --ssh-key /tmp/private-key-3622280210
+2026-04-09T04:27:36.7677914Z
+2026-04-09T04:27:36.7678441Z     bastionssh.go:304: [247.304s] Attempt 1/5 establishing SSH over bastion to 10.224.1.149
+2026-04-09T04:27:36.7679140Z     vmss.go:398: [249.173s] VM reached running state
+2026-04-09T04:27:36.7680083Z     vmss.go:368: [249.173s] ✓ creating VMSS txvt-2026-04-09-aclazurecnichronyrestartsscriptless done (209.3s)
+2026-04-09T04:27:36.7681313Z     kube.go:149: [249.173s] → waiting for node txvt-2026-04-09-aclazurecnichronyrestartsscriptless to be ready...
+2026-04-09T04:27:36.7683108Z     kube.go:181: [249.318s] node txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000 is ready. Taints: null Conditions: [{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:05Z","lastTransitionTime":"2026-04-09T04:22:14Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:05Z","lastTransitionTime":"2026-04-09T04:22:14Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:05Z","lastTransitionTime":"2026-04-09T04:22:14Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2026-04-09T04:23:05Z","lastTransitionTime":"2026-04-09T04:22:14Z","reason":"KubeletReady","message":"kubelet is posting ready status"}]
+2026-04-09T04:27:36.7684768Z     kube.go:182: [249.318s] ✓ waiting for node txvt-2026-04-09-aclazurecnichronyrestartsscriptless to be ready done (0.1s)
+2026-04-09T04:27:36.7711306Z ##[warning] Node txvt-2026-04-09-aclazurecnichronyrestartsscriptless took 3m29.293653081s to be created and 145.018618ms to be ready
+2026-04-09T04:27:36.7720678Z     test_helpers.go:316: [249.318s] ✓ preparing AKS node done (216.8s)
+2026-04-09T04:27:36.7721821Z     test_helpers.go:224: [249.318s] Choosing the private ACR "abe2eprivatewestus3" for the vm validation
+2026-04-09T04:27:36.7722852Z     test_helpers.go:380: [249.318s] → validating VM...
+2026-04-09T04:27:36.7723787Z     test_helpers.go:774: [249.603s] SSH connectivity to 10.224.1.149 verified successfully
+2026-04-09T04:27:36.7724440Z     validators.go:1929: [249.604s] truncated pod name "txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000-test-pod" to "txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000-test"
+2026-04-09T04:27:36.7858369Z     validation.go:126: [249.604s] creating pod "txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000-test"
+2026-04-09T04:27:36.7860254Z     kube.go:77: [249.682s] → waiting for pod  metadata.name=txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000-test in "default" namespace...
+2026-04-09T04:27:36.7861371Z     kube.go:141: [252.754s] ✓ waiting for pod  metadata.name=txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000-test in "default" namespace done (3.1s)
+2026-04-09T04:27:36.7862171Z     validation.go:150: [252.754s] Time for pod "txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000-test" to get ready was 3.150724304s
+2026-04-09T04:27:36.7862885Z     validation.go:151: [252.754s] node health validation: test pod "txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000-test" is running on node "txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000"
+2026-04-09T04:27:36.7863803Z     validators.go:65: [253.721s] will validate bootstrapping mode: secure TLS bootstrapping
+2026-04-09T04:27:36.7864372Z     validators.go:127: [253.926s] will validate linux KSCR enablement
+2026-04-09T04:27:36.7864974Z     validation.go:46: [256.529s] VM has 2 CPUs, expecting rx buffer size: 1024
+2026-04-09T04:27:36.7865566Z     validation.go:46: [256.986s] NICs to configure:
+2026-04-09T04:27:36.7866076Z         === NICs to Configure ===
+2026-04-09T04:27:36.7866471Z         enP14770s1
+2026-04-09T04:27:36.7866947Z     validation.go:46: [256.986s] Parsed NICs list: [enP14770s1] (count: 1)
+2026-04-09T04:27:36.7867801Z     validation.go:46: [256.986s] Validating network interface config for NIC: enP14770s1
+2026-04-09T04:27:36.7868313Z     validation.go:46: [257.158s] Full ethtool output for enP14770s1:
+2026-04-09T04:27:36.7868772Z         === Full ethtool output for enP14770s1 ===
+2026-04-09T04:27:36.7869195Z         Ring parameters for enP14770s1:
+2026-04-09T04:27:36.7869620Z         Pre-set maximums:
+2026-04-09T04:27:36.7869998Z         RX:			8192
+2026-04-09T04:27:36.7870361Z         RX Mini:		n/a
+2026-04-09T04:27:36.7870755Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.7871145Z         TX:			8192
+2026-04-09T04:27:36.7871521Z         TX push buff len:	n/a
+2026-04-09T04:27:36.7871921Z         Current hardware settings:
+2026-04-09T04:27:36.7872320Z         RX:			1024
+2026-04-09T04:27:36.7872689Z         RX Mini:		n/a
+2026-04-09T04:27:36.7873271Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.7873663Z         TX:			1024
+2026-04-09T04:27:36.7874058Z         RX Buf Len:		n/a
+2026-04-09T04:27:36.7874476Z         CQE Size:		n/a
+2026-04-09T04:27:36.7874886Z         TX Push:		off
+2026-04-09T04:27:36.7875278Z         RX Push:		off
+2026-04-09T04:27:36.7875667Z         TX push buff len:	n/a
+2026-04-09T04:27:36.7876079Z         TCP data split:		off
+2026-04-09T04:27:36.7876569Z     validation.go:46: [257.308s] Ethtool setting rx for NIC enP14770s1: expected=1024, actual=1024
+2026-04-09T04:27:36.7877150Z     validation.go:47: [257.937s] No critical kernel issues found
+2026-04-09T04:27:36.7877713Z     validation.go:48: [257.937s] Skipping waagent log validation: not applicable for aks-acl-gen2-tl
+2026-04-09T04:27:36.7878430Z     validation.go:50: [258.064s] Skipping node-exporter validation: sentinel file /etc/node-exporter.d/skip_vhd_node_exporter not found (VHD does not have node-exporter installed)
+2026-04-09T04:27:36.7879217Z     validation.go:80: [258.782s] Skipping Inspektor Gadget validation: sentinel file /etc/ig.d/skip_vhd_ig not found (VHD does not have IG installed)
+2026-04-09T04:27:36.7880727Z     kube.go:77: [258.938s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000 in "default" namespace...
+2026-04-09T04:27:36.7881803Z     kube.go:141: [259.016s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.7883042Z     kube.go:77: [263.304s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000 in "default" namespace...
+2026-04-09T04:27:36.7884142Z     kube.go:141: [263.378s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=txvt-2026-04-09-aclazurecnichronyrestartsscriptless000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.7885371Z     validators.go:860: [267.957s] 🔴 FAIL: the following systemd units have unexpectedly entered a failed state: [kms.service mig-partition.service] - failed unit logs will be included in scenario log bundle within <service-name>.service.log
+2026-04-09T04:27:36.7886270Z     panic.go:636: [267.957s] ✗ validating VM failed (18.6s)
+2026-04-09T04:27:36.7886917Z     panic.go:636: [267.957s] ✗ running scenario failed (242.6s)
+2026-04-09T04:27:36.7887526Z     vmss.go:531: [269.265s] extracted VM logs to scenario-logs-1775708187/Test_ACL_AzureCNI_ChronyRestarts_Scriptless
+2026-04-09T04:27:36.7888181Z     vmss.go:814: [269.952s] vmss "txvt-2026-04-09-aclazurecnichronyrestartsscriptless" deleted successfully
+2026-04-09T04:27:36.7888478Z
+2026-04-09T04:27:36.7888961Z === FAIL: . Test_ACL_AzureCNI_ChronyRestarts (290.00s)
+2026-04-09T04:27:36.7889980Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_AzureCNI_ChronyRestarts ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.7891412Z     test_helpers.go:199: [25.333s] → running scenario...
+2026-04-09T04:27:36.7892078Z     test_helpers.go:231: [32.544s] → preparing AKS node...
+2026-04-09T04:27:36.7892824Z     vmss.go:311: [39.879s] → creating VMSS 0p9k-2026-04-09-aclazurecnichronyrestarts...
+2026-04-09T04:27:36.7893900Z     vmss.go:232: [40.340s] VMSS portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/0p9k-2026-04-09-aclazurecnichronyrestarts/overview
+2026-04-09T04:27:36.7895119Z     vmss.go:238: [40.340s] Managed cluster portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.ContainerService/managedClusters/abe2e-azure-network-v3-f69fa/overview
+2026-04-09T04:27:36.7896175Z     vmss.go:344: [46.445s] VM will be automatically deleted after the test finishes, to preserve it for debugging purposes set KEEP_VMSS=true or pause the test with a breakpoint before the test finishes or failed
+2026-04-09T04:27:36.7896936Z     vmss.go:348: [46.445s] SSH Instructions: (may take a few minutes for the VM to be ready for SSH)
+2026-04-09T04:27:36.7897487Z         ========================
+2026-04-09T04:27:36.7898485Z         az network bastion ssh --target-resource-id "/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/0p9k-2026-04-09-aclazurecnichronyrestarts/virtualMachines/0" --name "abe2e-azure-network-v3-f69fa-bastion" --resource-group MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3 --auth-type ssh-key --username azureuser --ssh-key /tmp/private-key-3622280210
+2026-04-09T04:27:36.7899631Z
+2026-04-09T04:27:36.7900120Z     bastionssh.go:304: [268.366s] Attempt 1/5 establishing SSH over bastion to 10.224.0.131
+2026-04-09T04:27:36.7900699Z     vmss.go:398: [269.711s] VM reached running state
+2026-04-09T04:27:36.7901509Z     vmss.go:368: [269.711s] ✓ creating VMSS 0p9k-2026-04-09-aclazurecnichronyrestarts done (229.8s)
+2026-04-09T04:27:36.7902324Z     kube.go:149: [269.712s] → waiting for node 0p9k-2026-04-09-aclazurecnichronyrestarts to be ready...
+2026-04-09T04:27:36.7904063Z     kube.go:181: [269.732s] node 0p9k-2026-04-09-aclazurecnichronyrestarts000000 is ready. Taints: null Conditions: [{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:50Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:50Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:50Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:50Z","reason":"KubeletReady","message":"kubelet is posting ready status"}]
+2026-04-09T04:27:36.7905965Z     kube.go:182: [269.733s] ✓ waiting for node 0p9k-2026-04-09-aclazurecnichronyrestarts to be ready done (0.0s)
+2026-04-09T04:27:36.7909203Z ##[warning] Node 0p9k-2026-04-09-aclazurecnichronyrestarts took 3m49.832450848s to be created and 20.919081ms to be ready
+2026-04-09T04:27:36.7911159Z     test_helpers.go:316: [269.733s] ✓ preparing AKS node done (237.2s)
+2026-04-09T04:27:36.7911805Z     test_helpers.go:224: [269.733s] Choosing the private ACR "abe2eprivatewestus3" for the vm validation
+2026-04-09T04:27:36.7912461Z     test_helpers.go:380: [269.733s] → validating VM...
+2026-04-09T04:27:36.7934417Z     test_helpers.go:774: [270.186s] SSH connectivity to 10.224.0.131 verified successfully
+2026-04-09T04:27:36.7935455Z     validation.go:126: [270.186s] creating pod "0p9k-2026-04-09-aclazurecnichronyrestarts000000-test-pod"
+2026-04-09T04:27:36.7936618Z     kube.go:77: [270.252s] → waiting for pod  metadata.name=0p9k-2026-04-09-aclazurecnichronyrestarts000000-test-pod in "default" namespace...
+2026-04-09T04:27:36.7937737Z     kube.go:141: [273.325s] ✓ waiting for pod  metadata.name=0p9k-2026-04-09-aclazurecnichronyrestarts000000-test-pod in "default" namespace done (3.1s)
+2026-04-09T04:27:36.7938577Z     validation.go:150: [273.325s] Time for pod "0p9k-2026-04-09-aclazurecnichronyrestarts000000-test-pod" to get ready was 3.139224763s
+2026-04-09T04:27:36.7939473Z     validation.go:151: [273.325s] node health validation: test pod "0p9k-2026-04-09-aclazurecnichronyrestarts000000-test-pod" is running on node "0p9k-2026-04-09-aclazurecnichronyrestarts000000"
+2026-04-09T04:27:36.7940321Z     validators.go:65: [274.060s] will validate bootstrapping mode: secure TLS bootstrapping
+2026-04-09T04:27:36.7940976Z     validators.go:127: [274.248s] will validate linux KSCR enablement
+2026-04-09T04:27:36.7941618Z     validation.go:46: [276.596s] VM has 2 CPUs, expecting rx buffer size: 1024
+2026-04-09T04:27:36.7942334Z     validation.go:46: [277.040s] NICs to configure:
+2026-04-09T04:27:36.7942895Z         === NICs to Configure ===
+2026-04-09T04:27:36.7943539Z         enP63550s1
+2026-04-09T04:27:36.7944104Z     validation.go:46: [277.040s] Parsed NICs list: [enP63550s1] (count: 1)
+2026-04-09T04:27:36.7944783Z     validation.go:46: [277.040s] Validating network interface config for NIC: enP63550s1
+2026-04-09T04:27:36.7945463Z     validation.go:46: [277.207s] Full ethtool output for enP63550s1:
+2026-04-09T04:27:36.7946062Z         === Full ethtool output for enP63550s1 ===
+2026-04-09T04:27:36.7946612Z         Ring parameters for enP63550s1:
+2026-04-09T04:27:36.7947122Z         Pre-set maximums:
+2026-04-09T04:27:36.7947820Z         RX:			8192
+2026-04-09T04:27:36.7948287Z         RX Mini:		n/a
+2026-04-09T04:27:36.7948757Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.7949216Z         TX:			8192
+2026-04-09T04:27:36.7949684Z         TX push buff len:	n/a
+2026-04-09T04:27:36.7950197Z         Current hardware settings:
+2026-04-09T04:27:36.7950697Z         RX:			1024
+2026-04-09T04:27:36.7951172Z         RX Mini:		n/a
+2026-04-09T04:27:36.7951640Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.7952107Z         TX:			1024
+2026-04-09T04:27:36.7952579Z         RX Buf Len:		n/a
+2026-04-09T04:27:36.7953408Z         CQE Size:		n/a
+2026-04-09T04:27:36.7953930Z         TX Push:		off
+2026-04-09T04:27:36.7954398Z         RX Push:		off
+2026-04-09T04:27:36.7954877Z         TX push buff len:	n/a
+2026-04-09T04:27:36.7955374Z         TCP data split:		off
+2026-04-09T04:27:36.7955982Z     validation.go:46: [277.342s] Ethtool setting rx for NIC enP63550s1: expected=1024, actual=1024
+2026-04-09T04:27:36.7956662Z     validation.go:47: [277.942s] No critical kernel issues found
+2026-04-09T04:27:36.7957350Z     validation.go:48: [277.942s] Skipping waagent log validation: not applicable for aks-acl-gen2-tl
+2026-04-09T04:27:36.7958204Z     validation.go:50: [278.060s] Skipping node-exporter validation: sentinel file /etc/node-exporter.d/skip_vhd_node_exporter not found (VHD does not have node-exporter installed)
+2026-04-09T04:27:36.7959153Z     validation.go:80: [278.703s] Skipping Inspektor Gadget validation: sentinel file /etc/ig.d/skip_vhd_ig not found (VHD does not have IG installed)
+2026-04-09T04:27:36.7960436Z     kube.go:77: [278.844s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=0p9k-2026-04-09-aclazurecnichronyrestarts000000 in "default" namespace...
+2026-04-09T04:27:36.7961675Z     kube.go:141: [278.921s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=0p9k-2026-04-09-aclazurecnichronyrestarts000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.7962867Z     kube.go:77: [283.233s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=0p9k-2026-04-09-aclazurecnichronyrestarts000000 in "default" namespace...
+2026-04-09T04:27:36.7964500Z     kube.go:141: [283.337s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=0p9k-2026-04-09-aclazurecnichronyrestarts000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.7965974Z     validators.go:860: [287.887s] 🔴 FAIL: the following systemd units have unexpectedly entered a failed state: [kms.service mig-partition.service] - failed unit logs will be included in scenario log bundle within <service-name>.service.log
+2026-04-09T04:27:36.7966973Z     panic.go:636: [287.887s] ✗ validating VM failed (18.2s)
+2026-04-09T04:27:36.7967733Z     panic.go:636: [287.887s] ✗ running scenario failed (262.6s)
+2026-04-09T04:27:36.7968421Z     vmss.go:531: [289.297s] extracted VM logs to scenario-logs-1775708187/Test_ACL_AzureCNI_ChronyRestarts
+2026-04-09T04:27:36.7969147Z     vmss.go:814: [289.923s] vmss "0p9k-2026-04-09-aclazurecnichronyrestarts" deleted successfully
+2026-04-09T04:27:36.7970222Z
+2026-04-09T04:27:36.7970792Z === FAIL: . Test_ACL_AzureCNI (290.76s)
+2026-04-09T04:27:36.7971933Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_AzureCNI ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.7973454Z     test_helpers.go:199: [25.334s] → running scenario...
+2026-04-09T04:27:36.7974215Z     test_helpers.go:231: [32.544s] → preparing AKS node...
+2026-04-09T04:27:36.7975001Z     vmss.go:311: [39.880s] → creating VMSS 9iyv-2026-04-09-aclazurecni...
+2026-04-09T04:27:36.7976019Z     vmss.go:232: [40.311s] VMSS portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/9iyv-2026-04-09-aclazurecni/overview
+2026-04-09T04:27:36.7977614Z     vmss.go:238: [40.311s] Managed cluster portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.ContainerService/managedClusters/abe2e-azure-network-v3-f69fa/overview
+2026-04-09T04:27:36.7978860Z     vmss.go:344: [46.394s] VM will be automatically deleted after the test finishes, to preserve it for debugging purposes set KEEP_VMSS=true or pause the test with a breakpoint before the test finishes or failed
+2026-04-09T04:27:36.7979726Z     vmss.go:348: [46.394s] SSH Instructions: (may take a few minutes for the VM to be ready for SSH)
+2026-04-09T04:27:36.7980352Z         ========================
+2026-04-09T04:27:36.7981520Z         az network bastion ssh --target-resource-id "/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/9iyv-2026-04-09-aclazurecni/virtualMachines/0" --name "abe2e-azure-network-v3-f69fa-bastion" --resource-group MC_abe2e-westus3_abe2e-azure-network-v3-f69fa_westus3 --auth-type ssh-key --username azureuser --ssh-key /tmp/private-key-3622280210
+2026-04-09T04:27:36.7982653Z
+2026-04-09T04:27:36.7983398Z     bastionssh.go:304: [269.216s] Attempt 1/5 establishing SSH over bastion to 10.224.1.120
+2026-04-09T04:27:36.8004830Z     vmss.go:398: [270.847s] VM reached running state
+2026-04-09T04:27:36.8005722Z     vmss.go:368: [270.847s] ✓ creating VMSS 9iyv-2026-04-09-aclazurecni done (231.0s)
+2026-04-09T04:27:36.8006213Z     kube.go:149: [270.848s] → waiting for node 9iyv-2026-04-09-aclazurecni to be ready...
+2026-04-09T04:27:36.8007207Z     kube.go:181: [270.885s] node 9iyv-2026-04-09-aclazurecni000000 is ready. Taints: null Conditions: [{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:50Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:50Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:50Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2026-04-09T04:23:21Z","lastTransitionTime":"2026-04-09T04:22:51Z","reason":"KubeletReady","message":"kubelet is posting ready status"}]
+2026-04-09T04:27:36.8008520Z     kube.go:182: [270.886s] ✓ waiting for node 9iyv-2026-04-09-aclazurecni to be ready done (0.0s)
+2026-04-09T04:27:36.8010120Z ##[warning] Node 9iyv-2026-04-09-aclazurecni took 3m50.968044s to be created and 37.951909ms to be ready
+2026-04-09T04:27:36.8011375Z     test_helpers.go:316: [270.886s] ✓ preparing AKS node done (238.3s)
+2026-04-09T04:27:36.8011789Z     test_helpers.go:224: [270.886s] Choosing the private ACR "abe2eprivatewestus3" for the vm validation
+2026-04-09T04:27:36.8012237Z     test_helpers.go:380: [270.886s] → validating VM...
+2026-04-09T04:27:36.8012611Z     test_helpers.go:774: [271.007s] SSH connectivity to 10.224.1.120 verified successfully
+2026-04-09T04:27:36.8013219Z     validation.go:126: [271.007s] creating pod "9iyv-2026-04-09-aclazurecni000000-test-pod"
+2026-04-09T04:27:36.8013824Z     kube.go:77: [271.064s] → waiting for pod  metadata.name=9iyv-2026-04-09-aclazurecni000000-test-pod in "default" namespace...
+2026-04-09T04:27:36.8014408Z     kube.go:141: [274.154s] ✓ waiting for pod  metadata.name=9iyv-2026-04-09-aclazurecni000000-test-pod in "default" namespace done (3.1s)
+2026-04-09T04:27:36.8014855Z     validation.go:150: [274.154s] Time for pod "9iyv-2026-04-09-aclazurecni000000-test-pod" to get ready was 3.146773164s
+2026-04-09T04:27:36.8015462Z     validation.go:151: [274.154s] node health validation: test pod "9iyv-2026-04-09-aclazurecni000000-test-pod" is running on node "9iyv-2026-04-09-aclazurecni000000"
+2026-04-09T04:27:36.8015924Z     validators.go:65: [274.853s] will validate bootstrapping mode: secure TLS bootstrapping
+2026-04-09T04:27:36.8016301Z     validators.go:127: [275.043s] will validate linux KSCR enablement
+2026-04-09T04:27:36.8016672Z     validation.go:46: [277.419s] VM has 2 CPUs, expecting rx buffer size: 1024
+2026-04-09T04:27:36.8017027Z     validation.go:46: [277.857s] NICs to configure:
+2026-04-09T04:27:36.8017329Z         === NICs to Configure ===
+2026-04-09T04:27:36.8017630Z         enP20004s1
+2026-04-09T04:27:36.8017945Z     validation.go:46: [277.857s] Parsed NICs list: [enP20004s1] (count: 1)
+2026-04-09T04:27:36.8018333Z     validation.go:46: [277.857s] Validating network interface config for NIC: enP20004s1
+2026-04-09T04:27:36.8018712Z     validation.go:46: [278.005s] Full ethtool output for enP20004s1:
+2026-04-09T04:27:36.8019057Z         === Full ethtool output for enP20004s1 ===
+2026-04-09T04:27:36.8019374Z         Ring parameters for enP20004s1:
+2026-04-09T04:27:36.8019674Z         Pre-set maximums:
+2026-04-09T04:27:36.8019963Z         RX:			8192
+2026-04-09T04:27:36.8020239Z         RX Mini:		n/a
+2026-04-09T04:27:36.8020507Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.8020784Z         TX:			8192
+2026-04-09T04:27:36.8021062Z         TX push buff len:	n/a
+2026-04-09T04:27:36.8021354Z         Current hardware settings:
+2026-04-09T04:27:36.8021638Z         RX:			1024
+2026-04-09T04:27:36.8021981Z         RX Mini:		n/a
+2026-04-09T04:27:36.8022246Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.8022525Z         TX:			1024
+2026-04-09T04:27:36.8022807Z         RX Buf Len:		n/a
+2026-04-09T04:27:36.8023310Z         CQE Size:		n/a
+2026-04-09T04:27:36.8023592Z         TX Push:		off
+2026-04-09T04:27:36.8023870Z         RX Push:		off
+2026-04-09T04:27:36.8024140Z         TX push buff len:	n/a
+2026-04-09T04:27:36.8024432Z         TCP data split:		off
+2026-04-09T04:27:36.8024889Z     validation.go:46: [278.146s] Ethtool setting rx for NIC enP20004s1: expected=1024, actual=1024
+2026-04-09T04:27:36.8025268Z     validation.go:47: [278.753s] No critical kernel issues found
+2026-04-09T04:27:36.8025648Z     validation.go:48: [278.753s] Skipping waagent log validation: not applicable for aks-acl-gen2-tl
+2026-04-09T04:27:36.8026113Z     validation.go:50: [278.870s] Skipping node-exporter validation: sentinel file /etc/node-exporter.d/skip_vhd_node_exporter not found (VHD does not have node-exporter installed)
+2026-04-09T04:27:36.8026605Z     validation.go:80: [279.535s] Skipping Inspektor Gadget validation: sentinel file /etc/ig.d/skip_vhd_ig not found (VHD does not have IG installed)
+2026-04-09T04:27:36.8027267Z     kube.go:77: [279.680s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=9iyv-2026-04-09-aclazurecni000000 in "default" namespace...
+2026-04-09T04:27:36.8027913Z     kube.go:141: [279.757s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=9iyv-2026-04-09-aclazurecni000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.8028539Z     kube.go:77: [284.070s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=9iyv-2026-04-09-aclazurecni000000 in "default" namespace...
+2026-04-09T04:27:36.8029167Z     kube.go:141: [284.144s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=9iyv-2026-04-09-aclazurecni000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.8029929Z     validators.go:860: [288.774s] 🔴 FAIL: the following systemd units have unexpectedly entered a failed state: [kms.service mig-partition.service] - failed unit logs will be included in scenario log bundle within <service-name>.service.log
+2026-04-09T04:27:36.8030468Z     panic.go:636: [288.774s] ✗ validating VM failed (17.9s)
+2026-04-09T04:27:36.8030898Z     panic.go:636: [288.774s] ✗ running scenario failed (263.4s)
+2026-04-09T04:27:36.8031273Z     vmss.go:531: [290.031s] extracted VM logs to scenario-logs-1775708187/Test_ACL_AzureCNI
+2026-04-09T04:27:36.8031746Z     vmss.go:814: [290.669s] vmss "9iyv-2026-04-09-aclazurecni" deleted successfully
+2026-04-09T04:27:36.8031924Z
+2026-04-09T04:27:36.8032213Z === FAIL: . Test_Ubuntu2204_PrivateKubePkg (473.87s)
+2026-04-09T04:27:36.8032674Z     azure.go:658: [0.004s] Looking up images for gallery subscription c4c3550e-a965-4993-a50c-628fd38cd3e1 resource group aksvhdtestbuildrg gallery name PackerSigGalleryEastUS image name 2204Gen2 version 1.1704411049.2812
+2026-04-09T04:27:36.8033460Z     azure.go:558: [10.651s] Image version /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2204Gen2/versions/1.1704411049.2812 is already in region westus3
+2026-04-09T04:27:36.8034147Z     vhd.go:312: [10.651s] Got image by version: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-ubuntu-containerd-22.04-gen2/versions/1.1704411049.2812/overview
+2026-04-09T04:27:36.8035087Z     test_helpers.go:360: [10.651s] TAGS {Name:Test_Ubuntu2204_PrivateKubePkg ImageName:2204Gen2 OS:ubuntu Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8035879Z     test_helpers.go:199: [25.334s] → running scenario...
+2026-04-09T04:27:36.8036363Z     cluster.go:63: [25.334s] → preparing cluster...
+2026-04-09T04:27:36.8036870Z     cluster.go:236: [25.335s] → get or create cluster abe2e-kubenet-v4-e1f58...
+2026-04-09T04:27:36.8038037Z ##[warning]Unexpected cluster provisioning state abe2e-kubenet-v4-e1f58: Creating
+2026-04-09T04:27:36.8039233Z     cluster.go:244: [356.654s] ✓ get or create cluster abe2e-kubenet-v4-e1f58 done (331.3s)
+2026-04-09T04:27:36.8039817Z     cluster.go:489: [418.398s] → creating bastion abe2e-kubenet-v4-e1f58-bastion...
+2026-04-09T04:27:36.8040481Z     cluster.go:544: [472.435s] creating bastion public IP abe2e-kubenet-v4-e1f58-bastion-pip (rg MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3)
+2026-04-09T04:27:36.8041124Z     cluster.go:581: [473.622s] creating bastion abe2e-kubenet-v4-e1f58-bastion (native client/tunneling enabled) in rg MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3
+2026-04-09T04:27:36.8041779Z     cluster.go:584: [473.872s] ✓ creating bastion abe2e-kubenet-v4-e1f58-bastion done (55.5s)
+2026-04-09T04:27:36.8042312Z     cluster.go:74: [473.872s] ✓ preparing cluster done (448.5s)
+2026-04-09T04:27:36.8042804Z     test_helpers.go:205: [473.872s] 🔴 FAIL:
+2026-04-09T04:27:36.8043481Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8043907Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8044313Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:1556
+2026-04-09T04:27:36.8044734Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8045307Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8045910Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8046330Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8046720Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8047147Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8047546Z         	            	{
+2026-04-09T04:27:36.8047894Z         	            	  "error": {
+2026-04-09T04:27:36.8048392Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8048990Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8049575Z         	            	    "details": []
+2026-04-09T04:27:36.8049907Z         	            	  }
+2026-04-09T04:27:36.8050295Z         	            	}
+2026-04-09T04:27:36.8050718Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8051159Z         	Test:       	Test_Ubuntu2204_PrivateKubePkg
+2026-04-09T04:27:36.8051554Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8052066Z     test_helpers.go:205: [473.872s] 🔴 FAIL:
+2026-04-09T04:27:36.8052591Z     panic.go:636: [473.872s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8052779Z
+2026-04-09T04:27:36.8053333Z === FAIL: . Test_ACL_GPUA100_Scriptless (473.87s)
+2026-04-09T04:27:36.8053956Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_GPUA100_Scriptless ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:true WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8054648Z     test_helpers.go:199: [25.329s] → running scenario...
+2026-04-09T04:27:36.8055055Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8055400Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8055736Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8056065Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:411
+2026-04-09T04:27:36.8056403Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:403
+2026-04-09T04:27:36.8056893Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8057563Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8058131Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8058476Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8058778Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8059134Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8059468Z         	            	{
+2026-04-09T04:27:36.8059778Z         	            	  "error": {
+2026-04-09T04:27:36.8060081Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8060603Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8061096Z         	            	    "details": []
+2026-04-09T04:27:36.8061372Z         	            	  }
+2026-04-09T04:27:36.8061643Z         	            	}
+2026-04-09T04:27:36.8061970Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8062313Z         	Test:       	Test_ACL_GPUA100_Scriptless
+2026-04-09T04:27:36.8062624Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8063283Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8063896Z     panic.go:636: [473.866s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8064081Z
+2026-04-09T04:27:36.8064361Z === FAIL: . Test_ACL_GPUA10_Scriptless (473.87s)
+2026-04-09T04:27:36.8064958Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_GPUA10_Scriptless ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:true WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8065650Z     test_helpers.go:199: [25.329s] → running scenario...
+2026-04-09T04:27:36.8066046Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8066377Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8066714Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8067042Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:440
+2026-04-09T04:27:36.8067377Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:407
+2026-04-09T04:27:36.8067705Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8068188Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8068707Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8069054Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8069367Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8069720Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8070044Z         	            	{
+2026-04-09T04:27:36.8070304Z         	            	  "error": {
+2026-04-09T04:27:36.8070604Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8071205Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8071703Z         	            	    "details": []
+2026-04-09T04:27:36.8071977Z         	            	  }
+2026-04-09T04:27:36.8072245Z         	            	}
+2026-04-09T04:27:36.8072579Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8073054Z         	Test:       	Test_ACL_GPUA10_Scriptless
+2026-04-09T04:27:36.8073437Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8073849Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8074249Z     panic.go:636: [473.866s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8074438Z
+2026-04-09T04:27:36.8074720Z === FAIL: . Test_ACL_DisableSSH (473.87s)
+2026-04-09T04:27:36.8075340Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_DisableSSH ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8076016Z     test_helpers.go:199: [25.332s] → running scenario...
+2026-04-09T04:27:36.8076414Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8076803Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8077141Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8077472Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:377
+2026-04-09T04:27:36.8077795Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8078373Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8078910Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8079257Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8079552Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8079907Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8080231Z         	            	{
+2026-04-09T04:27:36.8080503Z         	            	  "error": {
+2026-04-09T04:27:36.8080803Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8081320Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8081819Z         	            	    "details": []
+2026-04-09T04:27:36.8082098Z         	            	  }
+2026-04-09T04:27:36.8082365Z         	            	}
+2026-04-09T04:27:36.8082681Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8083130Z         	Test:       	Test_ACL_DisableSSH
+2026-04-09T04:27:36.8083455Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8083849Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8084266Z     panic.go:636: [473.866s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8084445Z
+2026-04-09T04:27:36.8084714Z === FAIL: . Test_ACL (473.87s)
+2026-04-09T04:27:36.8085279Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8086088Z     test_helpers.go:199: [25.333s] → running scenario...
+2026-04-09T04:27:36.8086489Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8086814Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8087152Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8087489Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:203
+2026-04-09T04:27:36.8087817Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8088302Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8088830Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8089183Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8089500Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8089855Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8090187Z         	            	{
+2026-04-09T04:27:36.8090450Z         	            	  "error": {
+2026-04-09T04:27:36.8090735Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8091252Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8091824Z         	            	    "details": []
+2026-04-09T04:27:36.8092100Z         	            	  }
+2026-04-09T04:27:36.8092371Z         	            	}
+2026-04-09T04:27:36.8092706Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8093197Z         	Test:       	Test_ACL
+2026-04-09T04:27:36.8093521Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8093926Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8094333Z     panic.go:636: [473.866s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8094513Z
+2026-04-09T04:27:36.8094793Z === FAIL: . Test_ACL_GPUNC_Scriptless (473.87s)
+2026-04-09T04:27:36.8095400Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_GPUNC_Scriptless ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:true WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8096089Z     test_helpers.go:199: [25.333s] → running scenario...
+2026-04-09T04:27:36.8096484Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8096825Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8097164Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8097488Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:411
+2026-04-09T04:27:36.8097821Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:399
+2026-04-09T04:27:36.8098137Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8098628Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8099240Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8099583Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8099890Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8100242Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8100562Z         	            	{
+2026-04-09T04:27:36.8100831Z         	            	  "error": {
+2026-04-09T04:27:36.8101125Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8101645Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8102146Z         	            	    "details": []
+2026-04-09T04:27:36.8102424Z         	            	  }
+2026-04-09T04:27:36.8102690Z         	            	}
+2026-04-09T04:27:36.8103138Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8103549Z         	Test:       	Test_ACL_GPUNC_Scriptless
+2026-04-09T04:27:36.8103859Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8104260Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8104673Z     panic.go:636: [473.866s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8104852Z
+2026-04-09T04:27:36.8105111Z === FAIL: . Test_ACL_CustomCATrust (473.87s)
+2026-04-09T04:27:36.8105716Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_CustomCATrust ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8106521Z     test_helpers.go:199: [25.333s] → running scenario...
+2026-04-09T04:27:36.8106906Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8107247Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8107587Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8107926Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:267
+2026-04-09T04:27:36.8108252Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8108739Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8109265Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8109610Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8109931Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8110293Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8110622Z         	            	{
+2026-04-09T04:27:36.8110884Z         	            	  "error": {
+2026-04-09T04:27:36.8111180Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8111699Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8112318Z         	            	    "details": []
+2026-04-09T04:27:36.8112624Z         	            	  }
+2026-04-09T04:27:36.8112895Z         	            	}
+2026-04-09T04:27:36.8113433Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8113787Z         	Test:       	Test_ACL_CustomCATrust
+2026-04-09T04:27:36.8114097Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8114505Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8114915Z     panic.go:636: [473.866s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8115103Z
+2026-04-09T04:27:36.8115429Z === FAIL: . Test_ACL_SecureTLSBootstrapping_BootstrapToken_Fallback (473.87s)
+2026-04-09T04:27:36.8116150Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_SecureTLSBootstrapping_BootstrapToken_Fallback ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:true KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8116865Z     test_helpers.go:199: [25.333s] → running scenario...
+2026-04-09T04:27:36.8117265Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8117607Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8117944Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8118274Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:330
+2026-04-09T04:27:36.8118605Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8119078Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8119709Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8120062Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8120363Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8120719Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8121046Z         	            	{
+2026-04-09T04:27:36.8121321Z         	            	  "error": {
+2026-04-09T04:27:36.8121621Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8122136Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8122635Z         	            	    "details": []
+2026-04-09T04:27:36.8123008Z         	            	  }
+2026-04-09T04:27:36.8123279Z         	            	}
+2026-04-09T04:27:36.8123590Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8123964Z         	Test:       	Test_ACL_SecureTLSBootstrapping_BootstrapToken_Fallback
+2026-04-09T04:27:36.8124290Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8124677Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8125094Z     panic.go:636: [473.867s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8125273Z
+2026-04-09T04:27:36.8125564Z === FAIL: . Test_ACL_Scriptless (473.87s)
+2026-04-09T04:27:36.8126143Z     test_helpers.go:360: [22.955s] TAGS {Name:Test_ACL_Scriptless ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:false NonAnonymousACR:false GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:true VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8126908Z     test_helpers.go:199: [25.333s] → running scenario...
+2026-04-09T04:27:36.8127305Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8127632Z         	Error Trace:	/mnt/vss/_work/1/s/e2e/test_helpers.go:205
+2026-04-09T04:27:36.8127968Z         	            				/mnt/vss/_work/1/s/e2e/test_helpers.go:86
+2026-04-09T04:27:36.8128293Z         	            				/mnt/vss/_work/1/s/e2e/scenario_test.go:249
+2026-04-09T04:27:36.8128620Z         	Error:      	Received unexpected error:
+2026-04-09T04:27:36.8129106Z         	            	get or create bastion: failed to start creating bastion: PUT https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-kubenet-v4-e1f58_westus3/providers/Microsoft.Network/bastionHosts/abe2e-kubenet-v4-e1f58-bastion
+2026-04-09T04:27:36.8129626Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8129988Z         	            	RESPONSE 409: 409 Conflict
+2026-04-09T04:27:36.8130302Z         	            	ERROR CODE: AnotherOperationInProgress
+2026-04-09T04:27:36.8130660Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8130990Z         	            	{
+2026-04-09T04:27:36.8131266Z         	            	  "error": {
+2026-04-09T04:27:36.8131551Z         	            	    "code": "AnotherOperationInProgress",
+2026-04-09T04:27:36.8132068Z         	            	    "message": "Another operation on this or dependent resource is in progress. To retrieve status of the operation use uri: https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.Network/locations/westus3/operations/a79ea471-1acb-4407-8986-821561f69cb7?api-version=2025-01-01.",
+2026-04-09T04:27:36.8132576Z         	            	    "details": []
+2026-04-09T04:27:36.8132987Z         	            	  }
+2026-04-09T04:27:36.8133372Z         	            	}
+2026-04-09T04:27:36.8133718Z         	            	--------------------------------------------------------------------------------
+2026-04-09T04:27:36.8134063Z         	Test:       	Test_ACL_Scriptless
+2026-04-09T04:27:36.8134372Z         	Messages:   	failed to get cluster
+2026-04-09T04:27:36.8134773Z     test_helpers.go:205: [473.866s] 🔴 FAIL:
+2026-04-09T04:27:36.8135197Z     panic.go:636: [473.866s] ✗ running scenario failed (448.5s)
+2026-04-09T04:27:36.8135365Z
+2026-04-09T04:27:36.8135685Z === FAIL: . Test_ACL_NetworkIsolatedCluster_NonAnonymousACR (491.87s)
+2026-04-09T04:27:36.8136206Z     azure.go:469: [0.000s] Looking up images in https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-acl-gen2-tl/overview
+2026-04-09T04:27:36.8136877Z     azure.go:558: [22.956s] Image version /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775706005.10861 is already in region westus3
+2026-04-09T04:27:36.8137573Z     vhd.go:320: [22.956s] got version by tag buildId=159811463: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aks-acl-gen2-tl/versions/1.1775706005.10861/overview
+2026-04-09T04:27:36.8138420Z     test_helpers.go:360: [22.956s] TAGS {Name:Test_ACL_NetworkIsolatedCluster_NonAnonymousACR ImageName:aclgen2TL OS:azurecontainerlinux Arch:amd64 NetworkIsolated:true NonAnonymousACR:true GPU:false WASM:false BootstrapTokenFallback:false KubeletCustomConfig:false Scriptless:false VHDCaching:false MockAzureChinaCloud:false VMSeriesCoverageTest:false}
+2026-04-09T04:27:36.8139135Z     test_helpers.go:199: [25.330s] → running scenario...
+2026-04-09T04:27:36.8139661Z     test_helpers.go:231: [46.238s] → preparing AKS node...
+2026-04-09T04:27:36.8140155Z     vmss.go:311: [46.238s] → creating VMSS kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr...
+2026-04-09T04:27:36.8140743Z     vmss.go:232: [46.929s] VMSS portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-networkisolated-v1-7939b_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr/overview
+2026-04-09T04:27:36.8141529Z     vmss.go:238: [46.929s] Managed cluster portal link: https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-networkisolated-v1-7939b_westus3/providers/Microsoft.ContainerService/managedClusters/abe2e-azure-networkisolated-v1-7939b/overview
+2026-04-09T04:27:36.8142201Z     vmss.go:344: [54.296s] VM will be automatically deleted after the test finishes, to preserve it for debugging purposes set KEEP_VMSS=true or pause the test with a breakpoint before the test finishes or failed
+2026-04-09T04:27:36.8142680Z     vmss.go:348: [54.296s] SSH Instructions: (may take a few minutes for the VM to be ready for SSH)
+2026-04-09T04:27:36.8143123Z         ========================
+2026-04-09T04:27:36.8143789Z         az network bastion ssh --target-resource-id "/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/resourceGroups/MC_abe2e-westus3_abe2e-azure-networkisolated-v1-7939b_westus3/providers/Microsoft.Compute/virtualMachineScaleSets/kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr/virtualMachines/0" --name "abe2e-azure-networkisolated-v1-7939b-bastion" --resource-group MC_abe2e-westus3_abe2e-azure-networkisolated-v1-7939b_westus3 --auth-type ssh-key --username azureuser --ssh-key /tmp/private-key-3622280210
+2026-04-09T04:27:36.8144502Z
+2026-04-09T04:27:36.8144839Z     bastionssh.go:304: [458.043s] Attempt 1/5 establishing SSH over bastion to 10.224.1.62
+2026-04-09T04:27:36.8145213Z     vmss.go:398: [460.043s] VM reached running state
+2026-04-09T04:27:36.8145719Z     vmss.go:368: [460.043s] ✓ creating VMSS kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr done (413.8s)
+2026-04-09T04:27:36.8146263Z     kube.go:149: [460.043s] → waiting for node kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr to be ready...
+2026-04-09T04:27:36.8147348Z     kube.go:181: [460.144s] node kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000 is ready. Taints: [{"key":"node.cloudprovider.kubernetes.io/uninitialized","value":"true","effect":"NoSchedule"}] Conditions: [{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:26:31Z","lastTransitionTime":"2026-04-09T04:26:27Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:26:31Z","lastTransitionTime":"2026-04-09T04:26:27Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2026-04-09T04:26:31Z","lastTransitionTime":"2026-04-09T04:26:27Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2026-04-09T04:26:31Z","lastTransitionTime":"2026-04-09T04:26:31Z","reason":"KubeletReady","message":"kubelet is posting ready status"}]
+2026-04-09T04:27:36.8148602Z     kube.go:182: [460.145s] ✓ waiting for node kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr to be ready done (0.1s)
+2026-04-09T04:27:36.8150052Z ##[warning] Node kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr took 6m53.805648047s to be created and 101.217289ms to be ready
+2026-04-09T04:27:36.8151405Z     test_helpers.go:316: [460.145s] ✓ preparing AKS node done (413.9s)
+2026-04-09T04:27:36.8151835Z     test_helpers.go:224: [460.145s] Choosing the private ACR "abe2eprivatenonanonwestus3" for the vm validation
+2026-04-09T04:27:36.8152399Z     test_helpers.go:380: [460.145s] → validating VM...
+2026-04-09T04:27:36.8152762Z     test_helpers.go:774: [461.647s] SSH connectivity to 10.224.1.62 verified successfully
+2026-04-09T04:27:36.8153470Z     validators.go:1929: [461.647s] truncated pod name "kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000-test-pod" to "kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000"
+2026-04-09T04:27:36.8153961Z     validation.go:126: [461.647s] creating pod "kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000"
+2026-04-09T04:27:36.8154560Z     kube.go:77: [461.826s] → waiting for pod  metadata.name=kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000 in "default" namespace...
+2026-04-09T04:27:36.8155199Z     kube.go:141: [473.906s] ✓ waiting for pod  metadata.name=kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000 in "default" namespace done (12.1s)
+2026-04-09T04:27:36.8155687Z     validation.go:150: [473.906s] Time for pod "kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000" to get ready was 12.258906676s
+2026-04-09T04:27:36.8156216Z     validation.go:151: [473.906s] node health validation: test pod "kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000" is running on node "kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000"
+2026-04-09T04:27:36.8156715Z     validators.go:65: [474.784s] will validate bootstrapping mode: secure TLS bootstrapping
+2026-04-09T04:27:36.8157094Z     validators.go:127: [475.028s] will validate linux KSCR enablement
+2026-04-09T04:27:36.8157461Z     validation.go:46: [478.057s] VM has 2 CPUs, expecting rx buffer size: 1024
+2026-04-09T04:27:36.8157820Z     validation.go:46: [478.905s] NICs to configure:
+2026-04-09T04:27:36.8158139Z         === NICs to Configure ===
+2026-04-09T04:27:36.8158429Z         enP55091s1
+2026-04-09T04:27:36.8158752Z     validation.go:46: [478.905s] Parsed NICs list: [enP55091s1] (count: 1)
+2026-04-09T04:27:36.8159232Z     validation.go:46: [478.905s] Validating network interface config for NIC: enP55091s1
+2026-04-09T04:27:36.8159598Z     validation.go:46: [479.043s] Full ethtool output for enP55091s1:
+2026-04-09T04:27:36.8159972Z         === Full ethtool output for enP55091s1 ===
+2026-04-09T04:27:36.8160286Z         Ring parameters for enP55091s1:
+2026-04-09T04:27:36.8160592Z         Pre-set maximums:
+2026-04-09T04:27:36.8160885Z         RX:			8192
+2026-04-09T04:27:36.8161168Z         RX Mini:		n/a
+2026-04-09T04:27:36.8161448Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.8161711Z         TX:			8192
+2026-04-09T04:27:36.8161993Z         TX push buff len:	n/a
+2026-04-09T04:27:36.8162295Z         Current hardware settings:
+2026-04-09T04:27:36.8162579Z         RX:			1024
+2026-04-09T04:27:36.8162854Z         RX Mini:		n/a
+2026-04-09T04:27:36.8163223Z         RX Jumbo:		n/a
+2026-04-09T04:27:36.8163485Z         TX:			1024
+2026-04-09T04:27:36.8163762Z         RX Buf Len:		n/a
+2026-04-09T04:27:36.8164043Z         CQE Size:		n/a
+2026-04-09T04:27:36.8164324Z         TX Push:		off
+2026-04-09T04:27:36.8164600Z         RX Push:		off
+2026-04-09T04:27:36.8164879Z         TX push buff len:	n/a
+2026-04-09T04:27:36.8165158Z         TCP data split:		off
+2026-04-09T04:27:36.8165504Z     validation.go:46: [479.182s] Ethtool setting rx for NIC enP55091s1: expected=1024, actual=1024
+2026-04-09T04:27:36.8165925Z     validation.go:47: [479.782s] No critical kernel issues found
+2026-04-09T04:27:36.8166305Z     validation.go:48: [479.782s] Skipping waagent log validation: not applicable for aks-acl-gen2-tl
+2026-04-09T04:27:36.8166768Z     validation.go:50: [479.902s] Skipping node-exporter validation: sentinel file /etc/node-exporter.d/skip_vhd_node_exporter not found (VHD does not have node-exporter installed)
+2026-04-09T04:27:36.8167265Z     validation.go:80: [480.591s] Skipping Inspektor Gadget validation: sentinel file /etc/ig.d/skip_vhd_ig not found (VHD does not have IG installed)
+2026-04-09T04:27:36.8167946Z     kube.go:77: [480.739s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000 in "default" namespace...
+2026-04-09T04:27:36.8168752Z     kube.go:141: [480.804s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.8169435Z     kube.go:77: [485.078s] → waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000 in "default" namespace...
+2026-04-09T04:27:36.8170128Z     kube.go:141: [485.142s] ✓ waiting for pod app=debugnonhost-mariner-tolerated spec.nodeName=kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr000000 in "default" namespace done (0.1s)
+2026-04-09T04:27:36.8170886Z     validators.go:860: [489.721s] 🔴 FAIL: the following systemd units have unexpectedly entered a failed state: [kms.service mig-partition.service] - failed unit logs will be included in scenario log bundle within <service-name>.service.log
+2026-04-09T04:27:36.8171434Z     panic.go:636: [489.721s] ✗ validating VM failed (29.6s)
+2026-04-09T04:27:36.8171857Z     panic.go:636: [489.721s] ✗ running scenario failed (464.4s)
+2026-04-09T04:27:36.8172253Z     vmss.go:531: [491.157s] extracted VM logs to scenario-logs-1775708187/Test_ACL_NetworkIsolatedCluster_NonAnonymousACR
+2026-04-09T04:27:36.8172687Z     vmss.go:814: [491.795s] vmss "kl0b-2026-04-09-aclnetworkisolatedclusternonanonymousacr" deleted successfully
+2026-04-09T04:27:36.8172900Z
+2026-04-09T04:27:36.8173413Z DONE 147 tests, 127 skipped, 13 failures in 549.009s
+2026-04-09T04:27:37.9425006Z
+2026-04-09T04:27:37.9426725Z ##[error]Script failed with exit code: 1
+2026-04-09T04:27:37.9428715Z [command]/usr/bin/az account clear
+2026-04-09T04:27:37.9439249Z ##[section]Async Command Start: Upload Artifact
+2026-04-09T04:27:37.9440545Z Uploading 1 files
+2026-04-09T04:27:38.4433976Z Using default max parallelism.
+2026-04-09T04:27:38.4434827Z Creating dedup client:
+2026-04-09T04:27:38.4435049Z  - Max dedup parallelism: 192
+2026-04-09T04:27:38.4435236Z  - Using blobstore domain: 0
+2026-04-09T04:27:38.4435440Z  - Using redirect timeout:
+2026-04-09T04:27:38.4435658Z  - Hash type: Dedup64K
+2026-04-09T04:27:38.4435851Z Building file tree
+2026-04-09T04:27:38.4436050Z Uploaded 0 out of 505,948 bytes.
+2026-04-09T04:27:38.9445113Z Uploaded 505,948 out of 505,948 bytes.
+2026-04-09T04:27:38.9445976Z Associating files
+2026-04-09T04:27:38.9446343Z Total files: 1 ---- Associated files: 0 (0%)
+2026-04-09T04:27:39.1228155Z File upload succeed.
+2026-04-09T04:27:39.1228961Z Upload '/mnt/vss/_work/1/s/e2e/test-log.json' to file container: '#/314741199/test-results'
+2026-04-09T04:27:39.1229469Z Associated artifact 623831760 with build 159811463
+2026-04-09T04:27:39.1230001Z ##[section]Async Command End: Upload Artifact
+2026-04-09T04:27:39.1231959Z ##[section]Finishing: Run AgentBaker E2E

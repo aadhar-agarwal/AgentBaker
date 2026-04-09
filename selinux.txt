@@ -1,0 +1,23 @@
+https://msazure.visualstudio.com/CloudNativeCompute/_build/results?buildId=158179201&view=results
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1774460385.29642
+
+
+az aks create \
+   --resource-group aadagarwal \
+   --name acl-selinux-byoi \
+   --location westus3 \
+   --generate-ssh-keys \
+   --node-vm-size Standard_D2s_v3 \
+   --aks-custom-headers \
+AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,\
+OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,\
+OSImageResourceGroup=aksvhdtestbuildrg,\
+OSImageGallery=PackerSigGalleryEastUS,\
+OSImageName=aclgen2TL,\
+OSImageVersion=1.1774460385.29642,\
+OSSKU=Flatcar,\
+OSDistro=CustomizedImageLinuxGuard \
+   --nodepool-tags AzSecPackAutoConfigReady=true \
+   --node-os-upgrade-channel None

@@ -1,0 +1,9 @@
+uki image
+AB E2Es pass - https://msazure.visualstudio.com/CloudNativeCompute/_build/results?buildId=159118486&view=results
+
+Re running to replicate to eastus2 - https://msazure.visualstudio.com/CloudNativeCompute/_build/results?buildId=159129878&view=results
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775155101.4778
+
+AKS E2E run -> https://dev.azure.com/msazure/CloudNativeCompute/_build/results?buildId=159136718&view=results
