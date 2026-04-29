@@ -1,0 +1,75 @@
+[0;32m[INFO][0m Step 3: Getting cluster credentials...
+WARNING: The behavior of this command has been altered by the following extension: aks-preview
+WARNING: Merged "repro-defender-acl" as current context in /home/aadhar/.kube/config
+[0;32m[INFO][0m Step 4: Verifying kernel version and lockdown state...
+[0;32m[INFO][0m   Node: aks-nodepool1-14363973-vmss000000
+[0;32m[INFO][0m   Kernel version: 6.6.130.1-3.azl3
+[1;33m[WARN][0m   Kernel 6.6.130.x detected — this is the AFFECTED kernel
+[0;32m[INFO][0m Step 4b: Verifying kernel lockdown is the cause (direct evidence)...
+[0;32m[INFO][0m   [Evidence 1] Reading /sys/kernel/security/lockdown...
+[0;32m[INFO][0m   Lockdown state: none [integrity] confidentiality
+[1;33m[WARN][0m   lockdown=integrity is ACTIVE — restricts perf_event_open()
+[0;32m[INFO][0m   [Evidence 2] Checking dmesg for lockdown/perf denials...
+[0;32m[INFO][0m   No lockdown denials in dmesg yet (may appear after Defender starts)
+[0;32m[INFO][0m   [Evidence 3] Reading perf_event_paranoid sysctl...
+[0;32m[INFO][0m   kernel.perf_event_paranoid = 2
+[0;32m[INFO][0m   (Note: under lockdown=integrity the kernel overrides this for tracepoint access)
+[0;32m[INFO][0m   [Evidence 4] Testing perf_event_open() syscall directly...
+[1;33m[WARN][0m   perf tool not installed on this image; relying on evidence 1-3 and LLC logs
+
+[0;32m[INFO][0m   --- Causation summary ---
+[0;32m[INFO][0m   Kernel lockdown=integrity is active on kernel 6.6.130.1-3.azl3
+[0;32m[INFO][0m   This blocks perf_event_open(PERF_TYPE_TRACEPOINT) which Defenders
+[0;32m[INFO][0m   LowLevelCollector (Inspektor Gadget ig trace exec) requires for eBPF.
+
+[0;32m[INFO][0m Step 5: Waiting for Defender pods to start (up to 5 minutes)...
+[0;32m[INFO][0m   Defender pods are running
+[0;32m[INFO][0m Step 6: Checking LowLevelCollector for permission denied errors...
+[0;32m[INFO][0m   No permission denied errors detected (test may pass)
+[0;32m[INFO][0m Step 7: Deploying Defender test RBAC and test job...
+namespace/defender-tests configured
+clusterrole.rbac.authorization.k8s.io/defender-test-policy-operator unchanged
+clusterrolebinding.rbac.authorization.k8s.io/defender-test-policy-rb-sa-default unchanged
+job.batch "defender-test-job" deleted
+job.batch/defender-test-job created
+[0;32m[INFO][0m Step 8: Waiting for test job to complete (up to 3 minutes)...
+.
+[0;32m[INFO][0m Step 9: Test results
+
+========================================================================
+  JOB STATUS
+========================================================================
+NAME                STATUS   COMPLETIONS   DURATION   AGE   CONTAINERS       IMAGES                                                             SELECTOR
+defender-test-job   Failed   0/1           11s        11s   defender-tests   mcr.microsoft.com/azuredefender/stable/integration-tests:2.0.211   batch.kubernetes.io/controller-uid=143e4af7-de36-4f09-8676-0987a5e795fb
+
+========================================================================
+  POD LOGS (defender-test-job)
+========================================================================
+--- FAIL: TestContainerProcessCollection (0.01s)
+    test.go:14: Test: TestContainerProcessCollection failed, error message: Failed to read file: open /host/var/log/microsoft-defender-for-cloud/collectors/LowLevelCollector/process_creation_events: no such file or directory
+Test: TestPolicySync passed
+--- FAIL: TestHostProcessCollection (0.00s)
+    test.go:14: Test: TestHostProcessCollection failed, error message: Failed to read file: open /host/var/log/microsoft-defender-for-cloud/collectors/LowLevelCollector/process_creation_events: no such file or directory
+Test: TestPodsCollection passed
+FAIL
+Tearing down tests...
+Successfully deleted policy simple-policy
+Post-test cleanup completed
+
+========================================================================
+  SUMMARY
+========================================================================
+[0;31m[ERROR][0m Test job FAILED — Defender LowLevelCollector is broken on this image
+[0;31m[ERROR][0m 
+[0;31m[ERROR][0m Root Cause: Kernel 6.6.130.1-3.azl3 tightened perf_event_open() enforcement
+[0;31m[ERROR][0m under lockdown=integrity, blocking Defender eBPF process tracing.
+[0;31m[ERROR][0m 
+[0;31m[ERROR][0m Workarounds:
+[0;31m[ERROR][0m   1. Use a VHD built with lockdown=none (apply the lockdown disable patch)
+[0;31m[ERROR][0m   2. Pin kernel to 6.6.126.1-1.azl3 in the ACL image build
+[0;31m[ERROR][0m   3. Get the upstream kernel fix for BPF tracepoint access under lockdown=integrity
+
+========================================================================
+  CLEANUP
+========================================================================
+To clean up: ./scripts/repro-defender-lockdown.sh --cleanup

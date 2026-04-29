@@ -1,0 +1,123 @@
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775722206.22369
+
+az aks create    --resource-group aadagarwal    --name acl-byoi-49  --location westus3    --generate-ssh-keys    --node-vm-size Standard_D2ads_v5    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1775722206.22369,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/flatcargen2/versions/1.1775722038.9414
+
+
+az aks create    --resource-group aadagarwal    --name fc-byoi-49  --location westus3    --generate-ssh-keys    --node-vm-size Standard_D2ads_v5  --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=flatcargen2,OSImageVersion=1.1775722038.9414,OSSKU=Flatcar,OSDistro=CustomizedImage    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+flatcar:
+ci-syslog-watcher.path                    enabled disabled
+update_certs.path                         enabled disabled
+aks-node-controller.service               enabled disabled
+ci-syslog-watcher.service                 enabled disabled
+containerd.service                        enabled disabled
+disk_queue.service                        enabled disabled
+ignition-bootcmds.service                 enabled enabled
+ignition-file-extract.service             enabled enabled
+kubelet.service                           enabled disabled
+measure-tls-bootstrapping-latency.service enabled disabled
+node-exporter.service                     enabled disabled
+node-problem-detector.service             enabled disabled
+sync-container-logs.service               enabled disabled
+waagent-network-setup.service             enabled disabled
+aks-log-collector.timer                   enabled disabled
+cgroup-memory-telemetry.timer             enabled disabled
+cgroup-pressure-telemetry.timer           enabled disabled
+google-oslogin-cache.timer                enabled enabled
+logrotate.timer                           enabled disabled
+
+TODO: create byoi acl with new image
+
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1775754932.27715
+
+
+
+az aks create    --resource-group aadagarwal    --name acl-byoi-49-preset  --location westus3    --generate-ssh-keys    --node-vm-size Standard_D2ads_v5    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1775754932.27715,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+The aks-preview extension version 20.0.0b1 has the ossku azurecontainerlinux changes, and the aks-rp release has rolled out to eastus2euap - We can create a prod ACL cluster there :)
+
+az extension add --name aks-preview
+az extension update --name aks-preview
+az extension show --name aks-preview
+
+az aks create -g aadagarwal -n acl-prod-cluster --os-sku AzureContainerLinux --node-vm-size Standard_D2ads_v5 --node-count 1 --location eastus2euap
+
+az aks get-credentials -g aadagarwal -n acl-prod-cluster
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1776110197.20023
+
+
+az aks create    --resource-group aadagarwal --name acl-byoi-413-148  --location westcentralus    --generate-ssh-keys    --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1776110197.20023,OSSKU=AzureContainerLinux,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1776067644.30138
+
+
+az aks create    --resource-group aadagarwal --name acl-byoi-413-main  --location westus3    --generate-ssh-keys    --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1776067644.30138,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1776106275.4582
+
+
+az aks create    --resource-group aadagarwal --name acl-byoi-413-e2e  --location westus3    --generate-ssh-keys    --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1776106275.4582,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+
+az aks create    --resource-group aadagarwal --name acl-byoi-413-main  --location westus3    --generate-ssh-keys    --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1776067644.30138,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+aadhar [ ~/repos/AgentBaker ]$ az aks get-credentials -g aadagarwal -n acl-byoi-413-main
+The behavior of this command has been altered by the following extension: aks-preview
+Merged "acl-byoi-413-main" as current context in /home/aadhar/.kube/config
+aadhar [ ~/repos/AgentBaker ]$
+aadhar [ ~/repos/AgentBaker ]$ k get nodes -o wide -A
+NAME                                STATUS   ROLES    AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                                       KERNEL-VERSION     CONTAINER-RUNTIME
+aks-nodepool1-25478158-vmss000000   Ready    <none>   2m30s   v1.34.4   10.224.0.4    <none>        Microsoft Azure Container Linux 3.0.20260304   6.6.126.1-1.azl3   containerd://2.0.0
+aadhar [ ~/repos/AgentBaker ]$ kubectl-node_shell
+Please specify node name
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1776129207.25346
+
+az aks create    --resource-group aadagarwal --name acl-byoi-413-mid  --location westcentralus    --generate-ssh-keys    --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1776129207.25346,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/flatcargen2/versions/1.1776067626.7218
+
+
+az aks create    --resource-group aadagarwal --name fc-byoi-413-main  --location westcentralus    --generate-ssh-keys    --node-vm-size Standard_D2ads_v6  --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=flatcargen2,OSImageVersion=1.1776067626.7218,OSSKU=Flatcar,OSDistro=CustomizedImage   --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1776129207.25346
+
+
+SIG image version published: /subscriptions/035db282-f1c8-4ce7-b78f-2a7265d5398c/resourceGroups/MarinerAKSTest/providers/Microsoft.Compute/galleries/MarinerAKSSig/images/AzureLinuxaclgen2-Dev/versions/1.1776234220.4841
+
+
+az aks create --resource-group aadagarwal --name acl-dev-test2 --location westus3 --generate-ssh-keys    --node-vm-size Standard_D2ads_v5 --enable-secure-boot --enable-vtpm --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=035db282-f1c8-4ce7-b78f-2a7265d5398c,OSImageResourceGroup=MarinerAKSTest,OSImageGallery=MarinerAKSSig,OSImageName=AzureLinuxaclgen2-Dev,OSImageVersion=1.1776234220.4841,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard --nodepool-tags AzSecPackAutoConfigReady=true --node-os-upgrade-channel None --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1776909273.27453
+
+
+az aks create    --resource-group aadagarwal --name acl-byoi-423-c216  --location westus3   --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1776909273.27453,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1776989278.20867
+
+az aks create    --resource-group aadagarwal --name acl-byoi-4-24  --location westus3   --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1776989278.20867,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1
+
+
+ManagedImageSharedImageGalleryId: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777053798.6825
+
+
+az aks create    --resource-group aadagarwal --name acl-byoi-4-24-main-ab  --location westus3   --node-vm-size Standard_D2ads_v6    --enable-secure-boot    --enable-vtpm    --aks-custom-headers AKSHTTPCustomFeatures=Microsoft.ContainerService/UseCustomizedOSImage,OSImageSubscriptionID=c4c3550e-a965-4993-a50c-628fd38cd3e1,OSImageResourceGroup=aksvhdtestbuildrg,OSImageGallery=PackerSigGalleryEastUS,OSImageName=aclgen2TL,OSImageVersion=1.1777053798.6825,OSSKU=Flatcar,OSDistro=CustomizedImageLinuxGuard    --nodepool-tags AzSecPackAutoConfigReady=true    --node-os-upgrade-channel None --node-count 1

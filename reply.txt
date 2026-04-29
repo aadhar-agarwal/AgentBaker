@@ -1,0 +1,1 @@
+Ignition runs during Packer VHD build (run #1, sets userConfigProvided=true), then is supposed to run again on each new customer VM (run #2, overwrites with fresh state). GRUB has always triggered run #2; UKI never has — it just didn't matter until the disable * preset made oem-cloudinit depend on it.
