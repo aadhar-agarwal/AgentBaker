@@ -1,0 +1,193 @@
+[[_TOC_]]
+
+# Overview
+
+This document will be an overview of the workflow for testing changes to CSE (custom script extensions) used for provisioning AKS agent nodes within a standalone environment. The need to perform this kind of testing will usually crop up when you need to verify the change you made to CSE actually did its job by having access to and inspecting the state of the node's OS **after CSE has completed**. There already exists a **much** simpler and faster path for testing out CSE changes where you do not need to examine the state of the provisioned node after CSE has completed and just need to inspect the provisioning logs, check that out [here](https://msazure.visualstudio.com/CloudNativeCompute/_wiki/wikis/CloudNativeCompute.wiki/227754/AgentBaker-E2E-Testing).
+
+## Clone the aks-rp & AgentBaker Repos
+Head over to [aks-rp](https://dev.azure.com/msazure/CloudNativeCompute/_git/aks-rp) and clone the repo to your local development machine if needed.
+
+Secondly, create a personal fork of the [AgentBaker](https://github.com/Azure/AgentBaker) repo and clone the fork to your local development machine if you haven't already. It's preferable to use a personal AgentBaker fork for testing out CSE changes in this fashion since it will allow us to create a valid semver tag which we'll then vendor into RP. If you were to work off the AgentBaker repo directly, you'd see valid semver tags get rejected by the remote because of some recently added guardrails around tag management.
+
+
+## Make a change to the CSE code in AgentBaker
+
+*Feel free to skip this section if you've already made a change of your own.*
+
+Firstly, make sure to create your own branch off AgentBaker/master:
+
+- `cd path/to/local/AgentBaker/fork`
+- `git checkout master`
+- `git pull`
+- sync the master branch of your fork with the offical AgentBaker master branch if needed:
+    - `git remote add origin https://github.com/Azure/AgentBaker.git`
+    - `git fetch AgentBaker master`
+- `git checkout -b <branch name>`
+
+You need to make some sort of change to the CSE code in AgentBaker to test out in a new standalone environment. For the purposes of this guide, we'll simply add a new file to the custom data via cloud-init and have it appended to by CSE, which we'll then verify in our standalone environment. There's many files in the AgentBaker repo that pertain to CSE and cloud-init that you should take the time to become somewhat familiar with at the least in order to make these sorts of changes. However, for the purposes of this guide, we only need to take note of `/parts/linux/cloud-init/artifacts/cse_main.sh`, `/parts/linux/cloud-init/nodecustomdata.yaml`, `/pkg/agent/const.go`, and `/pkg/agent/baker.go`.
+
+We'll make the following changes:
+
+1. Add the following near the top of `cse_main.sh`:
+
+    ```bash
+    wait_for_file 3600 1 {{GetExampleFilepath}} || exit $ERR_FILE_WATCH_TIMEOUT
+    echo "modifying the example file from CSE!" >> {{GetExampleFilepath}}
+    ```
+
+2. Add the following entry to `nodecustomdata.yml`:
+
+    ```yaml
+    - path: {{GetExampleFilepath}}
+      permissions: "0644"
+      owner: root
+      content: |
+        This is a new example file created by cloud-init.
+        #EOF
+    ```
+
+3. Add the following definition to the bottom of `const.go` within the const-block preceded by `// cloud-init destination file references`:
+
+    ```go
+    newExampleFilepath                   = "/opt/azure/containers/example.txt"
+    ```
+
+4. Lastly, add the following key:value literal to the return value of `getContainerServiceFuncMap` in `baker.go`:
+
+    ```go
+    "GetExampleFilepath": func() string {
+        return newExampleFilepath
+    },
+    ```
+
+Before you commit these changes, make sure to run `make generate` within the root directory of your AgentBaker repo and add the generated changes to your commit to update the associated test data & templates:
+
+- `make generate`
+- `git add .`
+- `git commit -m "making an example change to AgentBaker CSE"`
+- `git push --set-upstream origin <branch name>`
+
+## Tag your changes
+
+We now need to **tag** these changes such that we can vendor them into RP. We can do that by performing the following commands:
+
+- `git tag v0.YYYYMMDD.<alias><index>`
+- `git push origin --tags`
+
+A note regarding tag format: in order for your new tag to be properly resolved by RP in the following steps, you should make sure to use the following format: v0.YYYYMMDD.\<your-alias>\<daily-idx> where \<your-alias> is your MSFT alias and \<daily-idx> is the tag number for the given day starting at 0. There are other formats that are accpetable, however I've had the most success personally using this format. My tag for this working example is the following: `v0.20221111.cameissner0`
+
+## Vendoring your tag into RP
+
+Now that we've tagged our changes within our AgentBaker fork, we can now vendor said tag into RP on another personal branch. Firstly, set up your own branch off RP/master:
+
+- `cd ~/go/src/go.goms.io/aks/rp/` (or wherever it is on your machine)
+- `git checkout master`
+- `git pull`
+- `git checkout -b <branch name>`
+
+The AgentBaker vendoring process in RP is already implemented and reusable via a make-target called `update_agent_baker`. This make-target will ask for two things when run: the username of the GitHub account under which the forked repo resides, and the name of the tag. In my case, this will be `cameronmeissner` and `v0.20221111.cameissner0`.
+
+Run the make-target from the root of the RP repo:
+
+- `cd ~/go/src/go.goms.io/aks/rp/`
+- `make update_agent_baker`
+
+Type in the correct username and press enter (or enter without typing a username if you wanted to do this without an AgentBaker fork). At the next prompt, type in the tag name. Your terminal should look something like this:
+
+![0.png](/.attachments/make-update-agent-baker-terminal-example.png)
+
+After completing both prompts, press enter and the make-target will execute. For reference, the target takes ~15-20 minutes to run on my machine. A fair number of files within the RP repo will be updated automatically for you in order to bump the AgentBaker tag to your own. You'll need to make sure you commit and push the changes generated by the target for the tag to actually be be used in the standalone environment.
+
+I see the following output when running `git status` after the target has finished executing:
+
+![1.png](/.attachments/make-update-agent-baker-changes.png)
+
+## Deploying and running a standalone with the new tag
+
+Now that we've committed the changes made by `update_agent_baker`, the new tag should be vendored into your branch of RP and you can now proceed with deploying a standalone environment with the [AKS Dev Deploy Pipeline](https://dev.azure.com/msazure/CloudNativeCompute/_build?definitionId=68881&_a=summary). Start a new build of this pipeline off of your branch and let it complete - this usually takes around an hour or so. After the pipeline has finished running, download the `azureconfig.yaml` file from the output build artifacts and place it in the same directory as your `aksdev` binary. The pipeline will also output an `aksdev` binary for you if you don't already have it built on your local machine.
+
+Now we can create a cluster and test your CSE changes with the following steps:
+
+- (vpn on) Run `./aksdev cluster create testcsechanges --wait` - this will create a default cluster with a single agent node, provisioned by CSE
+- (vpn off) Grab the new cluster's kubeconfig: `./aksdev cluster kubeconfig testcsechanges > ~/.kube/config`
+
+You can now interact with your new test cluster. The primary way I personally like to poke around the agent node's OS in my test clusters is with the [node-shell utility](https://github.com/kvaps/kubectl-node-shell), though manually spawning a pod running a container that enters the required host namespaces and `exec`'ing into it will also work fine.
+
+Now that you're in the node's host operating system, you can verify everything and anything you need to in order to make sure your changes have worked as expected. In our case, we verify both the `cluster-provision.log` file contains the expected content with new logs pertaining to the creation of the example file, and that our new example file exits in the correct location and contains the expected content:
+
+![2.png](/.attachments/cse-example-final-output.png)
+
+### Debugging provisioning failures
+If you attempt to create your standalone environment with the `./aksdev create ...` command mentioned above and never see your cluster's agent pool provisioning state update from `"Creating"` to `"Succeeded"`, this most likely means that there was an agent node provisioning failure. Note that you might not actually see the provisioning state go to `"Failed"` (though this should be the case after long enough), in my experience it's much more common to see the status simply hang on `"Creating"`.
+
+In order to confirm this, you'll want to start expecting relevant logs either via pod logs on the containerservice-async pod(s) within your standalone environment's svc-underlay cluster, or via Kusto:
+
+- **Raw pod logs**: connect to your standalone's svc-underlay by using `./aksdev sd connect` and choosing `svc-0` from the displayed menu (you should see 3 clusters: your svc-underlay and your 2 cx-underlays), list pods in the `containerservice-async` namespace to identify the name of the containerservice-async pod, use `kubectl logs` and specify the `containerservice-async` namespace, the name of the containerservice-async pod, and the name of the containerservice-async container: `containerserviceasync`.
+
+    On my end, this comes out to be:
+    `kubectl logs -n containerservice-async containerserviceasync-5f6c49d67d-t7j8k -c containerserviceasync`
+
+    To find logs relevant to node provisioning/CSE execution, search for the string `vmssCSE`. In the case where the was indeed a provisioning failure because of a CSE/custom data problem, you should be able to see the details using this method. An example of what this looks like on my machine is below (this shows what a successful provisioning looks like):
+
+    ![3.png](/.attachments/containerservice-async-debugging-pod-logs.png)
+
+- **Kusto:** try executing this query using your own build version string (`ebld63959376` in my case):
+https://kusto.azure.com/clusters/akse2e/databases/AKSE2EVstsPipelineStatus?query=H4sIAAAAAAAAA12NMQ7CMBAEe15xSp0uIihliOiR4APkvAqH7BjdGYMlHk/SIEQ9s7O9lZmHOCe8Us9JsqSyeVNUB6WxkI/TUcFiOEsAORgv+HmFggyahbF/iHfES+Mis1GF0bu26bZds2urrxxs+nFyMBtOhxXfNd7A6e+pJo8MX6+7DxQla3SkAAAA
+
+     The `msg` column should show the same output as the raw pod logs above since both methods display from the same underlying log source. The below is an example of what you'd see when CSE failed to execute:
+
+    ![4.png](/.attachments/kusto-node-provisioning-failure.png)
+
+Using either of the two aforementioned methods, you should be able to determine the reason CSE failed to execute. You'll see the precise error which caused the failure emitted by bash, as well as an exit code. The exit code can be useful for finding exactly which portion of CSE was executing when the failure occured. You can reference [cse_helpers.sh](https://github.com/Azure/AgentBaker/blob/master/parts/linux/cloud-init/artifacts/cse_helpers.sh) to find which exit code you received.
+
+## Conclusion
+
+We've now gone through the entire process from beginning to end of making a change to CSE/custom data from AgentBaker and testing it within an RP standalone environment. You can use this workflow in a more general sense to test any kind of change you make to AgentBaker. We're in the process of streamlining this workflow, so hopefully it's not quite as cumbersome in the future. Although, to reiterate, if you need to make a change to AgentBaker CSE/custom data but do not necessarily need to manually verify the change on the node's OS after provisioning, you will find [this workflow](https://msazure.visualstudio.com/CloudNativeCompute/_wiki/wikis/CloudNativeCompute.wiki/227754/AgentBaker-E2E-Testing) extremely useful.
+
+## Troubleshooting
+
+We've noticed that sometimes you won't be able to run the `make update_agent_baker` target due to errors that look like the following: `get <tag> 404 Not Found` when it tries to download your new tag. Double-check you're using the correct tag name. Otherwise, this is most likely an issue where our goproxy can't download and host the tag due to one of the tag's subdirectories being too large (>500 MB). To confirm, try running [this query](https://dataexplorer.azure.com/clusters/aksdevinfragbprod.westus2/databases/AKSDevInfra?query=H4sIAAAAAAAAA23KsQrCMBCA4d2nODKpQ0naXRAEEZdCfYEzPWMwyZVLWi348Dqpg8u//N/22O1oOqSL4J5b4ccMiyfcryQErZD1mU4+UlcwDrABdLw0/epD1mA5FfQpg0JHqZzxRqL+/klXta4bY0xTBR/mAZP+ysDux0bux0CQeRRLUITeYYaA4ki9ABX1Vme0AAAA) with your tag:
+
+```
+AKSDevInfraGoProxy
+| where PreciseTimeStamp > ago(1d)
+| where * contains "agentbaker"
+| where * contains "<tag>"
+| where log contains "module source tree too large"
+```
+
+you then should find logs that look like:
+
+```
+server response: not found: create zip: module source tree too large (max size is 524288000 bytes)	http-method=GET http-path=/github.com/lilypan26/agentbaker/@v/v0.20231113.lilypan0.info request-id=6da45361-69af-42ab-81c4-5ff261658278
+```
+
+If is is the case, you'll need to reduce the size of your tag. The best way would probably be deleting the `AKSUbuntu` release notes directory within `vhdbuilder`. If you checkout your tag and run `du -h -d 1`, you should see output similar to:
+
+```
+518M	./vhdbuilder
+156K	./.pipelines
+8.0K	./cmd
+ 12K	./tools
+508K	./staging
+4.0K	./example
+104K	./self-contained
+ 94M	./hack
+4.0K	./.devcontainer
+8.0K	./schemas
+ 88K	./.github
+572K	./parts
+4.0K	./doc
+ 20K	./apiserver
+8.0K	./fuzz
+279M	./.git
+524K	./e2e
+ 12K	./.clusterfuzzlite
+ 19M	./pkg
+ 20K	./.idea
+912M	.
+```
+if you see the `vhdbuilder` (or any other) directory is larger than `500M` (like in the above example), the tag won't be capable of being hosted by the goproxy, and thus you'll see the 404's when trying to run the make target.
+
+
+

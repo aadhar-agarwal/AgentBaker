@@ -1,0 +1,14 @@
+IMAGE_ID="/SharedGalleries/b3e01d89-bd55-414f-bbb4-cdfeb2628caa-ACL/Images/acl-arm64/Versions/3.0.20260401"
+
+
+az vm create \
+  --resource-group "aadagarwal" \
+  --location "westus3" \
+  --name "test-acl-arm-430" \
+  --image "$IMAGE_ID" \
+  --size Standard_D4ps_v6 \
+  --security-type TrustedLaunch \
+  --enable-secure-boot true \
+  --enable-vtpm true \
+  --ssh-key-values ~/.ssh/id_rsa.pub \
+  --public-ip-sku Standard

@@ -1,0 +1,920 @@
+2026-05-01T00:02:30.9018868Z ##[section]Starting: Test, Scan, and Cleanup
+2026-05-01T00:02:30.9027117Z ==============================================================================
+2026-05-01T00:02:30.9027403Z Task         : Azure CLI
+2026-05-01T00:02:30.9027612Z Description  : Run Azure CLI commands against an Azure subscription in a PowerShell Core/Shell script when running on Linux agent or PowerShell/PowerShell Core/Batch script when running on Windows agent.
+2026-05-01T00:02:30.9027977Z Version      : 2.272.3
+2026-05-01T00:02:30.9028214Z Author       : Microsoft Corporation
+2026-05-01T00:02:30.9028423Z Help         : https://docs.microsoft.com/azure/devops/pipelines/tasks/deploy/azure-cli
+2026-05-01T00:02:30.9028676Z ==============================================================================
+2026-05-01T00:02:31.1538140Z [command]/usr/bin/az version
+2026-05-01T00:02:33.9955978Z {
+2026-05-01T00:02:33.9956791Z   "azure-cli": "2.77.0",
+2026-05-01T00:02:33.9957239Z   "azure-cli-core": "2.77.0",
+2026-05-01T00:02:33.9957601Z   "azure-cli-telemetry": "1.1.0",
+2026-05-01T00:02:33.9958049Z   "extensions": {
+2026-05-01T00:02:33.9958419Z     "azure-devops": "1.0.2"
+2026-05-01T00:02:33.9958742Z   }
+2026-05-01T00:02:33.9959082Z }
+2026-05-01T00:02:33.9975681Z Setting AZURE_CONFIG_DIR env variable to: /mnt/vss/_work/_temp/.azclitask
+2026-05-01T00:02:33.9980434Z Setting active cloud to: AzureCloud
+2026-05-01T00:02:33.9984587Z [command]/usr/bin/az cloud set -n AzureCloud
+2026-05-01T00:02:34.6802494Z [command]/usr/bin/az login --service-principal -u *** --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47 --allow-no-subscriptions --federated-token ***
+2026-05-01T00:02:35.4958061Z [
+2026-05-01T00:02:35.4959001Z   {
+2026-05-01T00:02:35.4959499Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.4960054Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4960632Z     "id": "4be8920b-2978-43d7-ab14-04d8549c1d05",
+2026-05-01T00:02:35.4961069Z     "isDefault": true,
+2026-05-01T00:02:35.4961792Z     "managedByTenants": [],
+2026-05-01T00:02:35.4962285Z     "name": "AKS Dev Infra",
+2026-05-01T00:02:35.4962748Z     "state": "Enabled",
+2026-05-01T00:02:35.4963143Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4963573Z     "user": {
+2026-05-01T00:02:35.4964095Z       "name": "***",
+2026-05-01T00:02:35.4964502Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.4965014Z     }
+2026-05-01T00:02:35.4965449Z   },
+2026-05-01T00:02:35.4965846Z   {
+2026-05-01T00:02:35.4966310Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.4966833Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4967412Z     "id": "8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8",
+2026-05-01T00:02:35.4967929Z     "isDefault": false,
+2026-05-01T00:02:35.4968390Z     "managedByTenants": [
+2026-05-01T00:02:35.4969274Z       {
+2026-05-01T00:02:35.4969782Z         "tenantId": "1380f944-a410-47c1-b4ff-2ed76692603e"
+2026-05-01T00:02:35.4970208Z       },
+2026-05-01T00:02:35.4970590Z       {
+2026-05-01T00:02:35.4971044Z         "tenantId": "b5ce0030-ec42-4a62-bc94-3025993e790c"
+2026-05-01T00:02:35.4971663Z       }
+2026-05-01T00:02:35.4972073Z     ],
+2026-05-01T00:02:35.4972529Z     "name": "Azure Container Service - Test (AKS Standalone)",
+2026-05-01T00:02:35.4972956Z     "state": "Enabled",
+2026-05-01T00:02:35.4973454Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4973918Z     "user": {
+2026-05-01T00:02:35.4974415Z       "name": "***",
+2026-05-01T00:02:35.4974875Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.4975308Z     }
+2026-05-01T00:02:35.4975678Z   },
+2026-05-01T00:02:35.4976087Z   {
+2026-05-01T00:02:35.4976530Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.4977013Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4977640Z     "id": "c4c3550e-a965-4993-a50c-628fd38cd3e1",
+2026-05-01T00:02:35.4978199Z     "isDefault": false,
+2026-05-01T00:02:35.4978704Z     "managedByTenants": [],
+2026-05-01T00:02:35.4979236Z     "name": "AKS Node SIG",
+2026-05-01T00:02:35.4979740Z     "state": "Enabled",
+2026-05-01T00:02:35.4980639Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4981172Z     "user": {
+2026-05-01T00:02:35.4981909Z       "name": "***",
+2026-05-01T00:02:35.4982419Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.4982921Z     }
+2026-05-01T00:02:35.4983390Z   },
+2026-05-01T00:02:35.4983820Z   {
+2026-05-01T00:02:35.4984329Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.4984898Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4985487Z     "id": "1c8c4edc-b188-4199-9580-3173033d75f7",
+2026-05-01T00:02:35.4985951Z     "isDefault": false,
+2026-05-01T00:02:35.4986408Z     "managedByTenants": [],
+2026-05-01T00:02:35.4986911Z     "name": "CoreOS_DPLAT_WCCT_Demo",
+2026-05-01T00:02:35.4987339Z     "state": "Enabled",
+2026-05-01T00:02:35.4987814Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4988283Z     "user": {
+2026-05-01T00:02:35.4988821Z       "name": "***",
+2026-05-01T00:02:35.4989306Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.4989732Z     }
+2026-05-01T00:02:35.4990153Z   },
+2026-05-01T00:02:35.4990497Z   {
+2026-05-01T00:02:35.4990913Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.4991525Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4992021Z     "id": "3be1ff13-7eef-458c-b1ef-97a01af1b2f4",
+2026-05-01T00:02:35.4992394Z     "isDefault": false,
+2026-05-01T00:02:35.4992755Z     "managedByTenants": [],
+2026-05-01T00:02:35.4993139Z     "name": "AzCoreLinux Flatcar community & CI",
+2026-05-01T00:02:35.4993493Z     "state": "Enabled",
+2026-05-01T00:02:35.4993885Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4994277Z     "user": {
+2026-05-01T00:02:35.4994767Z       "name": "***",
+2026-05-01T00:02:35.4995216Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.4995595Z     }
+2026-05-01T00:02:35.4995892Z   },
+2026-05-01T00:02:35.4996216Z   {
+2026-05-01T00:02:35.4996606Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.4997065Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.4997504Z     "id": "a15c116e-99e3-4c59-aebc-8f864929b4a0",
+2026-05-01T00:02:35.4997942Z     "isDefault": false,
+2026-05-01T00:02:35.4998331Z     "managedByTenants": [],
+2026-05-01T00:02:35.4998721Z     "name": "AKS VHD Image Release",
+2026-05-01T00:02:35.4999150Z     "state": "Enabled",
+2026-05-01T00:02:35.4999620Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.5000093Z     "user": {
+2026-05-01T00:02:35.5000610Z       "name": "***",
+2026-05-01T00:02:35.5000975Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.5001722Z     }
+2026-05-01T00:02:35.5002141Z   },
+2026-05-01T00:02:35.5002492Z   {
+2026-05-01T00:02:35.5002892Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.5003620Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.5004133Z     "id": "035db282-f1c8-4ce7-b78f-2a7265d5398c",
+2026-05-01T00:02:35.5004543Z     "isDefault": false,
+2026-05-01T00:02:35.5004894Z     "managedByTenants": [],
+2026-05-01T00:02:35.5005463Z     "name": "EdgeOS_Mariner_Platform_AKS_test",
+2026-05-01T00:02:35.5005932Z     "state": "Enabled",
+2026-05-01T00:02:35.5006298Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.5006747Z     "user": {
+2026-05-01T00:02:35.5007224Z       "name": "***",
+2026-05-01T00:02:35.5007606Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.5007970Z     }
+2026-05-01T00:02:35.5008319Z   },
+2026-05-01T00:02:35.5008624Z   {
+2026-05-01T00:02:35.5008980Z     "cloudName": "AzureCloud",
+2026-05-01T00:02:35.5009379Z     "homeTenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.5010280Z     "id": "b8f169b2-5b23-444a-ae4b-19a31b5e3652",
+2026-05-01T00:02:35.5010899Z     "isDefault": false,
+2026-05-01T00:02:35.5011398Z     "managedByTenants": [],
+2026-05-01T00:02:35.5011810Z     "name": "EdgeOS_Mariner_Platform_dev",
+2026-05-01T00:02:35.5012216Z     "state": "Enabled",
+2026-05-01T00:02:35.5012655Z     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+2026-05-01T00:02:35.5013250Z     "user": {
+2026-05-01T00:02:35.5013682Z       "name": "***",
+2026-05-01T00:02:35.5014099Z       "type": "servicePrincipal"
+2026-05-01T00:02:35.5014488Z     }
+2026-05-01T00:02:35.5014857Z   }
+2026-05-01T00:02:35.5015253Z ]
+2026-05-01T00:02:35.5015813Z [command]/usr/bin/az account set --subscription c4c3550e-a965-4993-a50c-628fd38cd3e1
+2026-05-01T00:02:36.0747778Z [command]/usr/bin/bash /mnt/vss/_work/_temp/azureclitaskscript1777593751151.sh
+2026-05-01T00:02:36.0892350Z Using the subscription c4c3550e-a965-4993-a50c-628fd38cd3e1
+2026-05-01T00:02:36.6598144Z Present working directory: /mnt/vss/_work/1/s
+2026-05-01T00:02:36.6599724Z Using GALLERY_SUBSCRIPTION_ID: c4c3550e-a965-4993-a50c-628fd38cd3e1
+2026-05-01T00:02:37.8818505Z
+2026-05-01T00:02:37.8819891Z ENVIRONMENT test, OS_VERSION acl, SKIP_SCANNING: false
+2026-05-01T00:02:37.8820609Z Running scanning step
+2026-05-01T00:02:38.6320774Z Obtained storage token that expires at 2026-05-02 00:02:37.000000
+2026-05-01T00:02:38.6322283Z
+2026-05-01T00:02:38.6323495Z Running the following scripts: ./vhdbuilder/packer/cleanup.sh ./vhdbuilder/packer/test/run-test.sh ./vhdbuilder/packer/vhd-scanning.sh
+2026-05-01T00:02:38.6324934Z
+2026-05-01T00:02:38.6344042Z
+2026-05-01T00:02:38.6345419Z Checking exit codes for each script...
+2026-05-01T00:04:03.1148006Z ##[group]run-test
+2026-05-01T00:04:03.1148960Z Running ./vhdbuilder/packer/test/run-test.sh with 2 retries
+2026-05-01T00:04:03.1149514Z run-test failed 2 times
+2026-05-01T00:04:03.1149920Z + : false
+2026-05-01T00:04:03.1150396Z + source ./parts/linux/cloud-init/artifacts/cse_benchmark_functions.sh
+2026-05-01T00:04:03.1150845Z +++ date +%s
+2026-05-01T00:04:03.1151222Z ++ script_start_stopwatch=1777593758
+2026-05-01T00:04:03.1152122Z +++ date +%s
+2026-05-01T00:04:03.1152520Z ++ section_start_stopwatch=1777593758
+2026-05-01T00:04:03.1152966Z +++ basename ./vhdbuilder/packer/test/run-test.sh .sh
+2026-05-01T00:04:03.1153559Z ++ SCRIPT_NAME=run-test
+2026-05-01T00:04:03.1154047Z ++ SCRIPT_NAME=run_test
+2026-05-01T00:04:03.1154492Z ++ benchmarks=()
+2026-05-01T00:04:03.1154927Z ++ declare -A benchmarks
+2026-05-01T00:04:03.1155422Z ++ benchmarks_order=()
+2026-05-01T00:04:03.1155857Z ++ declare -a benchmarks_order
+2026-05-01T00:04:03.1156378Z + PERFORMANCE_DATA_FILE=vhd-build-performance-data.json
+2026-05-01T00:04:03.1156912Z + LINUX_SCRIPT_PATH=linux-vhd-content-test.sh
+2026-05-01T00:04:03.1157474Z + WIN_SCRIPT_PATH=windows-vhd-content-test.ps1
+2026-05-01T00:04:03.1157973Z + TEST_RESOURCE_PREFIX=vhd-test
+2026-05-01T00:04:03.1158467Z + TEST_VM_ADMIN_USERNAME=azureuser
+2026-05-01T00:04:03.1159266Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211 ']'
+2026-05-01T00:04:03.1160583Z + echo 'SIG image version ID from packer output: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211'
+2026-05-01T00:04:03.1172527Z SIG image version ID from packer output: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211
+2026-05-01T00:04:03.1173703Z + set +x
+2026-05-01T00:04:03.1174201Z + '[' linux = linux ']'
+2026-05-01T00:04:03.1175665Z + '[' -z westus3 ']'
+2026-05-01T00:04:03.1176245Z + AZURE_LOCATION=westus3
+2026-05-01T00:04:03.1176793Z + '[' linux = linux ']'
+2026-05-01T00:04:03.1177316Z ++ date +%s
+2026-05-01T00:04:03.1177904Z + TEST_VM_RESOURCE_GROUP_NAME=vhd-test-1777593758-24739
+2026-05-01T00:04:03.1178472Z ++ date +%s
+2026-05-01T00:04:03.1179157Z + az group create --name vhd-test-1777593758-24739 --location westus3 --tags source=AgentBaker now=1777593758 branch=refs/heads/aadagarwal/acl-beta
+2026-05-01T00:04:03.1179766Z {
+2026-05-01T00:04:03.1180303Z   "id": "/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593758-24739",
+2026-05-01T00:04:03.1181848Z   "location": "westus3",
+2026-05-01T00:04:03.1182414Z   "managedBy": null,
+2026-05-01T00:04:03.1182961Z   "name": "vhd-test-1777593758-24739",
+2026-05-01T00:04:03.1183501Z   "properties": {
+2026-05-01T00:04:03.1184006Z     "provisioningState": "Succeeded"
+2026-05-01T00:04:03.1184441Z   },
+2026-05-01T00:04:03.1184921Z   "tags": {
+2026-05-01T00:04:03.1185449Z     "branch": "refs/heads/aadagarwal/acl-beta",
+2026-05-01T00:04:03.1185997Z     "now": "1777593758",
+2026-05-01T00:04:03.1186543Z     "source": "AgentBaker"
+2026-05-01T00:04:03.1186969Z   },
+2026-05-01T00:04:03.1187458Z   "type": "Microsoft.Resources/resourceGroups"
+2026-05-01T00:04:03.1187915Z }
+2026-05-01T00:04:03.1188397Z + trap cleanup EXIT
+2026-05-01T00:04:03.1188933Z + VM_NAME=vhd-test-vm
+2026-05-01T00:04:03.1189550Z + capture_benchmark run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1190162Z + local title=run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1190784Z + title=run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1191515Z + title=run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1192070Z + local is_final_section=false
+2026-05-01T00:04:03.1192590Z + local current_time
+2026-05-01T00:04:03.1193043Z ++ date +%s
+2026-05-01T00:04:03.1193500Z + current_time=1777593760
+2026-05-01T00:04:03.1194031Z + '[' false = true ']'
+2026-05-01T00:04:03.1194537Z + local start_time=1777593758
+2026-05-01T00:04:03.1195038Z + local total_time_elapsed
+2026-05-01T00:04:03.1195585Z ++ date -d@2 -u +%H:%M:%S
+2026-05-01T00:04:03.1196172Z + total_time_elapsed=00:00:02
+2026-05-01T00:04:03.1196718Z + benchmarks[$title]=00:00:02
+2026-05-01T00:04:03.1197292Z + benchmarks_order+=($title)
+2026-05-01T00:04:03.1197798Z ++ date +%s
+2026-05-01T00:04:03.1198298Z + section_start_stopwatch=1777593760
+2026-05-01T00:04:03.1198831Z + set -x
+2026-05-01T00:04:03.1199376Z + TARGET_COMMAND_STRING=
+2026-05-01T00:04:03.1199941Z + '[' x86_64 = arm64 ']'
+2026-05-01T00:04:03.1200395Z + TARGET_COMMAND_STRING='--size Standard_D2ds_v5'
+2026-05-01T00:04:03.1200822Z + '[' Linux = Linux ']'
+2026-05-01T00:04:03.1201224Z + '[' true = true ']'
+2026-05-01T00:04:03.1201830Z + '[' -n '--size Standard_D2ds_v5' ']'
+2026-05-01T00:04:03.1202270Z + TARGET_COMMAND_STRING+=' '
+2026-05-01T00:04:03.1202846Z + TARGET_COMMAND_STRING+='--security-type TrustedLaunch --enable-secure-boot true --enable-vtpm true'
+2026-05-01T00:04:03.1203431Z + '[' Linux = Linux ']'
+2026-05-01T00:04:03.1203859Z + grep -q cvm
+2026-05-01T00:04:03.1204309Z + '[' Linux = Linux ']'
+2026-05-01T00:04:03.1204916Z + grep -q GB200
+2026-05-01T00:04:03.1205385Z + '[' linux = linux ']'
+2026-05-01T00:04:03.1206429Z + PACKER_SUBNET_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer
+2026-05-01T00:04:03.1207416Z ++ az network vnet subnet show --ids /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer
+2026-05-01T00:04:03.1208098Z ++ jq -r .id
+2026-05-01T00:04:03.1208739Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer ']'
+2026-05-01T00:04:03.1209518Z ++ jq -r .NewNIC.id
+2026-05-01T00:04:03.1210025Z +++ date +%s
+2026-05-01T00:04:03.1210887Z ++ az network nic create --resource-group vhd-test-1777593758-24739 --name testing177759376123887 --subnet /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer
+2026-05-01T00:04:03.1212248Z + TESTING_NIC_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593758-24739/providers/Microsoft.Network/networkInterfaces/testing177759376123887
+2026-05-01T00:04:03.1213394Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593758-24739/providers/Microsoft.Network/networkInterfaces/testing177759376123887 ']'
+2026-05-01T00:04:03.1214913Z + az vm create --resource-group vhd-test-1777593758-24739 --name vhd-test-vm --image /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211 --admin-username azureuser --admin-password TestVM@1777593758 --nics /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593758-24739/providers/Microsoft.Network/networkInterfaces/testing177759376123887 --size Standard_D2ds_v5 --security-type TrustedLaunch --enable-secure-boot true --enable-vtpm true
+2026-05-01T00:04:03.1216377Z WARNING: The default value of '--size' will be changed to 'Standard_D2s_v5' from 'Standard_DS1_v2' in a future release.
+2026-05-01T00:04:03.1218847Z ERROR: {"status":"Failed","error":{"code":"DeploymentFailed","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593758-24739/providers/Microsoft.Resources/deployments/vm_deploy_1wTEc7RwwbrfQSdIbiSKYVHOT0icqgbg","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.","details":[{"code":"ResourceDeploymentFailure","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593758-24739/providers/Microsoft.Compute/virtualMachines/vhd-test-vm","message":"The resource write operation failed to complete successfully, because it reached terminal provisioning state 'Failed'.","details":[{"code":"SecureBootClientError","message":"Virtual machine 'vhd-test-vm' failed to start because Secure Boot detected an unsigned operating system boot component. Trusted launch requires all OS boot components to be signed for foundational security. To bypass this error, you can temporarily disable Secure Boot in the VM UEFI settings. Please note that turning off Secure Boot may expose your VM to security risks. It's recommended to sign the OS boot components or use a signed OS image to maintain the integrity of your VM. For more details, visit Troubleshooting boot issues in FAQ page at https://aka.ms/TrustedLaunch-FAQ"}]}]}}
+2026-05-01T00:04:03.1222596Z + cleanup
+2026-05-01T00:04:03.1223274Z + '[' False = True ']'
+2026-05-01T00:04:03.1223841Z + echo 'Deleting resource group vhd-test-1777593758-24739'
+2026-05-01T00:04:03.1224459Z Deleting resource group vhd-test-1777593758-24739
+2026-05-01T00:04:03.1225216Z + az group delete --name vhd-test-1777593758-24739 --yes --no-wait
+2026-05-01T00:04:03.1225546Z
+2026-05-01T00:04:03.1225771Z
+2026-05-01T00:04:03.1226219Z Next Attempt:
+2026-05-01T00:04:03.1226475Z
+2026-05-01T00:04:03.1226699Z
+2026-05-01T00:04:03.1227138Z + : false
+2026-05-01T00:04:03.1227754Z + source ./parts/linux/cloud-init/artifacts/cse_benchmark_functions.sh
+2026-05-01T00:04:03.1228316Z +++ date +%s
+2026-05-01T00:04:03.1228816Z ++ script_start_stopwatch=1777593802
+2026-05-01T00:04:03.1229366Z +++ date +%s
+2026-05-01T00:04:03.1229881Z ++ section_start_stopwatch=1777593802
+2026-05-01T00:04:03.1230461Z +++ basename ./vhdbuilder/packer/test/run-test.sh .sh
+2026-05-01T00:04:03.1231052Z ++ SCRIPT_NAME=run-test
+2026-05-01T00:04:03.1231741Z ++ SCRIPT_NAME=run_test
+2026-05-01T00:04:03.1232185Z ++ benchmarks=()
+2026-05-01T00:04:03.1232682Z ++ declare -A benchmarks
+2026-05-01T00:04:03.1233211Z ++ benchmarks_order=()
+2026-05-01T00:04:03.1233730Z ++ declare -a benchmarks_order
+2026-05-01T00:04:03.1234275Z + PERFORMANCE_DATA_FILE=vhd-build-performance-data.json
+2026-05-01T00:04:03.1234860Z + LINUX_SCRIPT_PATH=linux-vhd-content-test.sh
+2026-05-01T00:04:03.1235435Z + WIN_SCRIPT_PATH=windows-vhd-content-test.ps1
+2026-05-01T00:04:03.1236018Z + TEST_RESOURCE_PREFIX=vhd-test
+2026-05-01T00:04:03.1236727Z + TEST_VM_ADMIN_USERNAME=azureuser
+2026-05-01T00:04:03.1237480Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211 ']'
+2026-05-01T00:04:03.1238561Z + echo 'SIG image version ID from packer output: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211'
+2026-05-01T00:04:03.1239642Z SIG image version ID from packer output: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211
+2026-05-01T00:04:03.1240486Z + set +x
+2026-05-01T00:04:03.1240984Z + '[' linux = linux ']'
+2026-05-01T00:04:03.1241595Z + '[' -z westus3 ']'
+2026-05-01T00:04:03.1242117Z + AZURE_LOCATION=westus3
+2026-05-01T00:04:03.1242621Z + '[' linux = linux ']'
+2026-05-01T00:04:03.1243114Z ++ date +%s
+2026-05-01T00:04:03.1243666Z + TEST_VM_RESOURCE_GROUP_NAME=vhd-test-1777593802-29566
+2026-05-01T00:04:03.1244169Z ++ date +%s
+2026-05-01T00:04:03.1244833Z + az group create --name vhd-test-1777593802-29566 --location westus3 --tags source=AgentBaker now=1777593802 branch=refs/heads/aadagarwal/acl-beta
+2026-05-01T00:04:03.1245480Z {
+2026-05-01T00:04:03.1246073Z   "id": "/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593802-29566",
+2026-05-01T00:04:03.1246707Z   "location": "westus3",
+2026-05-01T00:04:03.1247223Z   "managedBy": null,
+2026-05-01T00:04:03.1247749Z   "name": "vhd-test-1777593802-29566",
+2026-05-01T00:04:03.1248287Z   "properties": {
+2026-05-01T00:04:03.1248827Z     "provisioningState": "Succeeded"
+2026-05-01T00:04:03.1249321Z   },
+2026-05-01T00:04:03.1249760Z   "tags": {
+2026-05-01T00:04:03.1250287Z     "branch": "refs/heads/aadagarwal/acl-beta",
+2026-05-01T00:04:03.1250836Z     "now": "1777593802",
+2026-05-01T00:04:03.1251518Z     "source": "AgentBaker"
+2026-05-01T00:04:03.1252020Z   },
+2026-05-01T00:04:03.1252517Z   "type": "Microsoft.Resources/resourceGroups"
+2026-05-01T00:04:03.1253021Z }
+2026-05-01T00:04:03.1253505Z + trap cleanup EXIT
+2026-05-01T00:04:03.1254001Z + VM_NAME=vhd-test-vm
+2026-05-01T00:04:03.1254597Z + capture_benchmark run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1255250Z + local title=run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1255886Z + title=run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1256550Z + title=run_test_set_variables_and_create_test_resource_group
+2026-05-01T00:04:03.1257135Z + local is_final_section=false
+2026-05-01T00:04:03.1257832Z + local current_time
+2026-05-01T00:04:03.1258337Z ++ date +%s
+2026-05-01T00:04:03.1258844Z + current_time=1777593804
+2026-05-01T00:04:03.1259358Z + '[' false = true ']'
+2026-05-01T00:04:03.1259873Z + local start_time=1777593802
+2026-05-01T00:04:03.1260427Z + local total_time_elapsed
+2026-05-01T00:04:03.1260970Z ++ date -d@2 -u +%H:%M:%S
+2026-05-01T00:04:03.1261789Z + total_time_elapsed=00:00:02
+2026-05-01T00:04:03.1262367Z + benchmarks[$title]=00:00:02
+2026-05-01T00:04:03.1262888Z + benchmarks_order+=($title)
+2026-05-01T00:04:03.1263389Z ++ date +%s
+2026-05-01T00:04:03.1263918Z + section_start_stopwatch=1777593804
+2026-05-01T00:04:03.1264416Z + set -x
+2026-05-01T00:04:03.1264914Z + TARGET_COMMAND_STRING=
+2026-05-01T00:04:03.1265418Z + '[' x86_64 = arm64 ']'
+2026-05-01T00:04:03.1265955Z + TARGET_COMMAND_STRING='--size Standard_D2ds_v5'
+2026-05-01T00:04:03.1266544Z + '[' Linux = Linux ']'
+2026-05-01T00:04:03.1267048Z + '[' true = true ']'
+2026-05-01T00:04:03.1267558Z + '[' -n '--size Standard_D2ds_v5' ']'
+2026-05-01T00:04:03.1268111Z + TARGET_COMMAND_STRING+=' '
+2026-05-01T00:04:03.1268747Z + TARGET_COMMAND_STRING+='--security-type TrustedLaunch --enable-secure-boot true --enable-vtpm true'
+2026-05-01T00:04:03.1269365Z + '[' Linux = Linux ']'
+2026-05-01T00:04:03.1270054Z + grep -q cvm
+2026-05-01T00:04:03.1270564Z + '[' Linux = Linux ']'
+2026-05-01T00:04:03.1271046Z + grep -q GB200
+2026-05-01T00:04:03.1271681Z + '[' linux = linux ']'
+2026-05-01T00:04:03.1272417Z + PACKER_SUBNET_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer
+2026-05-01T00:04:03.1273497Z ++ az network vnet subnet show --ids /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer
+2026-05-01T00:04:03.1274281Z ++ jq -r .id
+2026-05-01T00:04:03.1275031Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer ']'
+2026-05-01T00:04:03.1275829Z ++ jq -r .NewNIC.id
+2026-05-01T00:04:03.1276334Z +++ date +%s
+2026-05-01T00:04:03.1277179Z ++ az network nic create --resource-group vhd-test-1777593802-29566 --name testing177759380532536 --subnet /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/packer
+2026-05-01T00:04:03.1278299Z + TESTING_NIC_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593802-29566/providers/Microsoft.Network/networkInterfaces/testing177759380532536
+2026-05-01T00:04:03.1279285Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593802-29566/providers/Microsoft.Network/networkInterfaces/testing177759380532536 ']'
+2026-05-01T00:04:03.1280827Z + az vm create --resource-group vhd-test-1777593802-29566 --name vhd-test-vm --image /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211 --admin-username azureuser --admin-password TestVM@1777593802 --nics /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593802-29566/providers/Microsoft.Network/networkInterfaces/testing177759380532536 --size Standard_D2ds_v5 --security-type TrustedLaunch --enable-secure-boot true --enable-vtpm true
+2026-05-01T00:04:03.1282573Z WARNING: The default value of '--size' will be changed to 'Standard_D2s_v5' from 'Standard_DS1_v2' in a future release.
+2026-05-01T00:04:03.1285000Z ERROR: {"status":"Failed","error":{"code":"DeploymentFailed","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593802-29566/providers/Microsoft.Resources/deployments/vm_deploy_nRNj18qXAaWSZglio8BsKP1fOjJey1gq","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.","details":[{"code":"ResourceDeploymentFailure","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-test-1777593802-29566/providers/Microsoft.Compute/virtualMachines/vhd-test-vm","message":"The resource write operation failed to complete successfully, because it reached terminal provisioning state 'Failed'.","details":[{"code":"SecureBootClientError","message":"Virtual machine 'vhd-test-vm' failed to start because Secure Boot detected an unsigned operating system boot component. Trusted launch requires all OS boot components to be signed for foundational security. To bypass this error, you can temporarily disable Secure Boot in the VM UEFI settings. Please note that turning off Secure Boot may expose your VM to security risks. It's recommended to sign the OS boot components or use a signed OS image to maintain the integrity of your VM. For more details, visit Troubleshooting boot issues in FAQ page at https://aka.ms/TrustedLaunch-FAQ"}]}]}}
+2026-05-01T00:04:03.1287662Z + cleanup
+2026-05-01T00:04:03.1288395Z + '[' False = True ']'
+2026-05-01T00:04:03.1288954Z + echo 'Deleting resource group vhd-test-1777593802-29566'
+2026-05-01T00:04:03.1289590Z Deleting resource group vhd-test-1777593802-29566
+2026-05-01T00:04:03.1290210Z + az group delete --name vhd-test-1777593802-29566 --yes --no-wait
+2026-05-01T00:04:03.1290782Z ##[endgroup]run-test
+2026-05-01T00:04:04.6965429Z ##[group]vhd-scanning
+2026-05-01T00:04:04.6966403Z Running ./vhdbuilder/packer/vhd-scanning.sh with 2 retries
+2026-05-01T00:04:04.6966979Z vhd-scanning failed 2 times
+2026-05-01T00:04:04.6968021Z + source ./parts/linux/cloud-init/artifacts/cse_benchmark_functions.sh
+2026-05-01T00:04:04.6968874Z +++ date +%s
+2026-05-01T00:04:04.6969301Z ++ script_start_stopwatch=1777593758
+2026-05-01T00:04:04.6969724Z +++ date +%s
+2026-05-01T00:04:04.6970181Z ++ section_start_stopwatch=1777593758
+2026-05-01T00:04:04.6970732Z +++ basename ./vhdbuilder/packer/vhd-scanning.sh .sh
+2026-05-01T00:04:04.6971216Z ++ SCRIPT_NAME=vhd-scanning
+2026-05-01T00:04:04.6971850Z ++ SCRIPT_NAME=vhd_scanning
+2026-05-01T00:04:04.6972350Z ++ benchmarks=()
+2026-05-01T00:04:04.6972794Z ++ declare -A benchmarks
+2026-05-01T00:04:04.6973231Z ++ benchmarks_order=()
+2026-05-01T00:04:04.6973807Z ++ declare -a benchmarks_order
+2026-05-01T00:04:04.6974258Z + '[' -z westus3 ']'
+2026-05-01T00:04:04.6974705Z ++ date +%s
+2026-05-01T00:04:04.6975219Z + CURRENT_TIME=1777593758
+2026-05-01T00:04:04.6975668Z + TRIVY_SCRIPT_PATH=trivy-scan.sh
+2026-05-01T00:04:04.6976153Z + SCAN_RESOURCE_PREFIX=vhd-scanning
+2026-05-01T00:04:04.6976681Z + SCAN_VM_NAME=vhd-scanning-vm-1777593758-5338
+2026-05-01T00:04:04.6977416Z + VHD_IMAGE=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211
+2026-05-01T00:04:04.6978141Z + SIG_CONTAINER_NAME=vhd-scans
+2026-05-01T00:04:04.6978597Z + SCAN_VM_ADMIN_USERNAME=azureuser
+2026-05-01T00:04:04.6979058Z + '[' test = tme ']'
+2026-05-01T00:04:04.6979505Z ++ pwd
+2026-05-01T00:04:04.6979980Z + RELEASE_NOTES_FILEPATH=/mnt/vss/_work/1/s/release-notes.txt
+2026-05-01T00:04:04.6980566Z + '[' '!' -f /mnt/vss/_work/1/s/release-notes.txt ']'
+2026-05-01T00:04:04.6981430Z + SCANNING_SUBNET_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning
+2026-05-01T00:04:04.6982441Z ++ az network vnet subnet show --ids /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning
+2026-05-01T00:04:04.6983134Z ++ jq -r .id
+2026-05-01T00:04:04.6983689Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning ']'
+2026-05-01T00:04:04.6984446Z + BLOB_URL_REGEX='^https:\/\/.+\.blob\.core\.windows\.net\/vhd(s)?$'
+2026-05-01T00:04:04.6984923Z + [[ https://vhdbuildereastustest.blob.core.windows.net/vhd =~ ^https:\/\/.+\.blob\.core\.windows\.net\/vhd(s)?$ ]]
+2026-05-01T00:04:04.6985383Z ++ echo https://vhdbuildereastustest.blob.core.windows.net/vhd
+2026-05-01T00:04:04.6986138Z ++ sed -E 's|https://(.*)\.blob\.core\.windows\.net(:443)?/(.*)?|\1|'
+2026-05-01T00:04:04.6986562Z + STORAGE_ACCOUNT_NAME=vhdbuildereastustest
+2026-05-01T00:04:04.6986970Z + set +x
+2026-05-01T00:04:04.6987359Z + RESOURCE_GROUP_NAME=vhd-scanning-1777593758-7603
+2026-05-01T00:04:04.6987832Z + az group create --name vhd-scanning-1777593758-7603 --location westus3 --tags source=AgentBaker now=1777593758 branch=refs/heads/aadagarwal/acl-beta
+2026-05-01T00:04:04.6988294Z {
+2026-05-01T00:04:04.6988719Z   "id": "/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593758-7603",
+2026-05-01T00:04:04.6989130Z   "location": "westus3",
+2026-05-01T00:04:04.6989502Z   "managedBy": null,
+2026-05-01T00:04:04.6990037Z   "name": "vhd-scanning-1777593758-7603",
+2026-05-01T00:04:04.6990396Z   "properties": {
+2026-05-01T00:04:04.6990778Z     "provisioningState": "Succeeded"
+2026-05-01T00:04:04.6991205Z   },
+2026-05-01T00:04:04.6991818Z   "tags": {
+2026-05-01T00:04:04.6992430Z     "branch": "refs/heads/aadagarwal/acl-beta",
+2026-05-01T00:04:04.6993029Z     "now": "1777593758",
+2026-05-01T00:04:04.6993428Z     "source": "AgentBaker"
+2026-05-01T00:04:04.6993888Z   },
+2026-05-01T00:04:04.6994523Z   "type": "Microsoft.Resources/resourceGroups"
+2026-05-01T00:04:04.6995061Z }
+2026-05-01T00:04:04.6995622Z + trap cleanup EXIT
+2026-05-01T00:04:04.6996308Z + capture_benchmark vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.6996947Z + local title=vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.6997755Z + title=vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.6998273Z + title=vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.6998680Z + local is_final_section=false
+2026-05-01T00:04:04.6999073Z + local current_time
+2026-05-01T00:04:04.6999445Z ++ date +%s
+2026-05-01T00:04:04.6999809Z + current_time=1777593763
+2026-05-01T00:04:04.7000197Z + '[' false = true ']'
+2026-05-01T00:04:04.7000583Z + local start_time=1777593758
+2026-05-01T00:04:04.7000945Z + local total_time_elapsed
+2026-05-01T00:04:04.7001470Z ++ date -d@5 -u +%H:%M:%S
+2026-05-01T00:04:04.7001885Z + total_time_elapsed=00:00:05
+2026-05-01T00:04:04.7002262Z + benchmarks[$title]=00:00:05
+2026-05-01T00:04:04.7002651Z + benchmarks_order+=($title)
+2026-05-01T00:04:04.7003011Z ++ date +%s
+2026-05-01T00:04:04.7003361Z + section_start_stopwatch=1777593763
+2026-05-01T00:04:04.7003741Z + VM_SIZE=Standard_D8ds_v5
+2026-05-01T00:04:04.7004107Z + VM_OPTIONS='--size Standard_D8ds_v5'
+2026-05-01T00:04:04.7004488Z + [[ x86_64 == \a\r\m\6\4 ]]
+2026-05-01T00:04:04.7004848Z + '[' Linux = Linux ']'
+2026-05-01T00:04:04.7005186Z + '[' true = true ']'
+2026-05-01T00:04:04.7005603Z + VM_OPTIONS+=' --security-type TrustedLaunch --enable-secure-boot true --enable-vtpm true'
+2026-05-01T00:04:04.7006032Z + '[' Linux = Linux ']'
+2026-05-01T00:04:04.7006360Z + grep -q cvm
+2026-05-01T00:04:04.7006713Z + '[' Linux = Linux ']'
+2026-05-01T00:04:04.7007070Z + grep -q GB200
+2026-05-01T00:04:04.7007615Z ++ az network nic create --resource-group vhd-scanning-1777593758-7603 --name scanning1777593758853 --subnet /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning
+2026-05-01T00:04:04.7008295Z ++ jq -r .NewNIC.id
+2026-05-01T00:04:04.7008768Z + SCANNING_NIC_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593758-7603/providers/Microsoft.Network/networkInterfaces/scanning1777593758853
+2026-05-01T00:04:04.7009527Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593758-7603/providers/Microsoft.Network/networkInterfaces/scanning1777593758853 ']'
+2026-05-01T00:04:04.7010017Z + '[' AzureContainerLinux = Ubuntu ']'
+2026-05-01T00:04:04.7010389Z + echo 'Creating VM using standard az vm create command...'
+2026-05-01T00:04:04.7010800Z Creating VM using standard az vm create command...
+2026-05-01T00:04:04.7011166Z + set +x
+2026-05-01T00:04:04.7012011Z WARNING: The default value of '--size' will be changed to 'Standard_D2s_v5' from 'Standard_DS1_v2' in a future release.
+2026-05-01T00:04:04.7013463Z ERROR: {"status":"Failed","error":{"code":"DeploymentFailed","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593758-7603/providers/Microsoft.Resources/deployments/vm_deploy_eReJeGoKors0OGDQWNvPHXMzGJAjhAm1","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.","details":[{"code":"ResourceDeploymentFailure","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593758-7603/providers/Microsoft.Compute/virtualMachines/vhd-scanning-vm-1777593758-5338","message":"The resource write operation failed to complete successfully, because it reached terminal provisioning state 'Failed'.","details":[{"code":"SecureBootClientError","message":"Virtual machine 'vhd-scanning-vm-1777593758-5338' failed to start because Secure Boot detected an unsigned operating system boot component. Trusted launch requires all OS boot components to be signed for foundational security. To bypass this error, you can temporarily disable Secure Boot in the VM UEFI settings. Please note that turning off Secure Boot may expose your VM to security risks. It's recommended to sign the OS boot components or use a signed OS image to maintain the integrity of your VM. For more details, visit Troubleshooting boot issues in FAQ page at https://aka.ms/TrustedLaunch-FAQ"}]}]}}
+2026-05-01T00:04:04.7015006Z Deleting resource group vhd-scanning-1777593758-7603
+2026-05-01T00:04:04.7015183Z
+2026-05-01T00:04:04.7015392Z
+2026-05-01T00:04:04.7015784Z Next Attempt:
+2026-05-01T00:04:04.7015925Z
+2026-05-01T00:04:04.7016122Z
+2026-05-01T00:04:04.7016527Z + source ./parts/linux/cloud-init/artifacts/cse_benchmark_functions.sh
+2026-05-01T00:04:04.7016928Z +++ date +%s
+2026-05-01T00:04:04.7017301Z ++ script_start_stopwatch=1777593803
+2026-05-01T00:04:04.7017647Z +++ date +%s
+2026-05-01T00:04:04.7018015Z ++ section_start_stopwatch=1777593803
+2026-05-01T00:04:04.7018429Z +++ basename ./vhdbuilder/packer/vhd-scanning.sh .sh
+2026-05-01T00:04:04.7018799Z ++ SCRIPT_NAME=vhd-scanning
+2026-05-01T00:04:04.7019178Z ++ SCRIPT_NAME=vhd_scanning
+2026-05-01T00:04:04.7019546Z ++ benchmarks=()
+2026-05-01T00:04:04.7019883Z ++ declare -A benchmarks
+2026-05-01T00:04:04.7020269Z ++ benchmarks_order=()
+2026-05-01T00:04:04.7020645Z ++ declare -a benchmarks_order
+2026-05-01T00:04:04.7020989Z + '[' -z westus3 ']'
+2026-05-01T00:04:04.7021449Z ++ date +%s
+2026-05-01T00:04:04.7021828Z + CURRENT_TIME=1777593803
+2026-05-01T00:04:04.7022196Z + TRIVY_SCRIPT_PATH=trivy-scan.sh
+2026-05-01T00:04:04.7022590Z + SCAN_RESOURCE_PREFIX=vhd-scanning
+2026-05-01T00:04:04.7022994Z + SCAN_VM_NAME=vhd-scanning-vm-1777593803-18843
+2026-05-01T00:04:04.7023504Z + VHD_IMAGE=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/aclgen2TL/versions/1.1777592617.28211
+2026-05-01T00:04:04.7024020Z + SIG_CONTAINER_NAME=vhd-scans
+2026-05-01T00:04:04.7024410Z + SCAN_VM_ADMIN_USERNAME=azureuser
+2026-05-01T00:04:04.7024756Z + '[' test = tme ']'
+2026-05-01T00:04:04.7025109Z ++ pwd
+2026-05-01T00:04:04.7025495Z + RELEASE_NOTES_FILEPATH=/mnt/vss/_work/1/s/release-notes.txt
+2026-05-01T00:04:04.7026010Z + '[' '!' -f /mnt/vss/_work/1/s/release-notes.txt ']'
+2026-05-01T00:04:04.7026553Z + SCANNING_SUBNET_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning
+2026-05-01T00:04:04.7027242Z ++ az network vnet subnet show --ids /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning
+2026-05-01T00:04:04.7027750Z ++ jq -r .id
+2026-05-01T00:04:04.7028247Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning ']'
+2026-05-01T00:04:04.7028757Z + BLOB_URL_REGEX='^https:\/\/.+\.blob\.core\.windows\.net\/vhd(s)?$'
+2026-05-01T00:04:04.7029225Z + [[ https://vhdbuildereastustest.blob.core.windows.net/vhd =~ ^https:\/\/.+\.blob\.core\.windows\.net\/vhd(s)?$ ]]
+2026-05-01T00:04:04.7029694Z ++ echo https://vhdbuildereastustest.blob.core.windows.net/vhd
+2026-05-01T00:04:04.7030178Z ++ sed -E 's|https://(.*)\.blob\.core\.windows\.net(:443)?/(.*)?|\1|'
+2026-05-01T00:04:04.7030677Z + STORAGE_ACCOUNT_NAME=vhdbuildereastustest
+2026-05-01T00:04:04.7031057Z + set +x
+2026-05-01T00:04:04.7031534Z + RESOURCE_GROUP_NAME=vhd-scanning-1777593803-243
+2026-05-01T00:04:04.7032012Z + az group create --name vhd-scanning-1777593803-243 --location westus3 --tags source=AgentBaker now=1777593803 branch=refs/heads/aadagarwal/acl-beta
+2026-05-01T00:04:04.7032458Z {
+2026-05-01T00:04:04.7032879Z   "id": "/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593803-243",
+2026-05-01T00:04:04.7033283Z   "location": "westus3",
+2026-05-01T00:04:04.7033659Z   "managedBy": null,
+2026-05-01T00:04:04.7034041Z   "name": "vhd-scanning-1777593803-243",
+2026-05-01T00:04:04.7034400Z   "properties": {
+2026-05-01T00:04:04.7034786Z     "provisioningState": "Succeeded"
+2026-05-01T00:04:04.7035157Z   },
+2026-05-01T00:04:04.7035484Z   "tags": {
+2026-05-01T00:04:04.7035867Z     "branch": "refs/heads/aadagarwal/acl-beta",
+2026-05-01T00:04:04.7036268Z     "now": "1777593803",
+2026-05-01T00:04:04.7036629Z     "source": "AgentBaker"
+2026-05-01T00:04:04.7036989Z   },
+2026-05-01T00:04:04.7037376Z   "type": "Microsoft.Resources/resourceGroups"
+2026-05-01T00:04:04.7037722Z }
+2026-05-01T00:04:04.7038072Z + trap cleanup EXIT
+2026-05-01T00:04:04.7038487Z + capture_benchmark vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.7038923Z + local title=vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.7039371Z + title=vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.7039812Z + title=vhd_scanning_set_variables_and_create_scan_resource_group
+2026-05-01T00:04:04.7040194Z + local is_final_section=false
+2026-05-01T00:04:04.7040573Z + local current_time
+2026-05-01T00:04:04.7040939Z ++ date +%s
+2026-05-01T00:04:04.7041368Z + current_time=1777593807
+2026-05-01T00:04:04.7041835Z + '[' false = true ']'
+2026-05-01T00:04:04.7042228Z + local start_time=1777593803
+2026-05-01T00:04:04.7042600Z + local total_time_elapsed
+2026-05-01T00:04:04.7043013Z ++ date -d@4 -u +%H:%M:%S
+2026-05-01T00:04:04.7043424Z + total_time_elapsed=00:00:04
+2026-05-01T00:04:04.7043809Z + benchmarks[$title]=00:00:04
+2026-05-01T00:04:04.7044211Z + benchmarks_order+=($title)
+2026-05-01T00:04:04.7044592Z ++ date +%s
+2026-05-01T00:04:04.7044960Z + section_start_stopwatch=1777593807
+2026-05-01T00:04:04.7045367Z + VM_SIZE=Standard_D8ds_v5
+2026-05-01T00:04:04.7045768Z + VM_OPTIONS='--size Standard_D8ds_v5'
+2026-05-01T00:04:04.7046139Z + [[ x86_64 == \a\r\m\6\4 ]]
+2026-05-01T00:04:04.7046522Z + '[' Linux = Linux ']'
+2026-05-01T00:04:04.7046877Z + '[' true = true ']'
+2026-05-01T00:04:04.7047312Z + VM_OPTIONS+=' --security-type TrustedLaunch --enable-secure-boot true --enable-vtpm true'
+2026-05-01T00:04:04.7047928Z + '[' Linux = Linux ']'
+2026-05-01T00:04:04.7048306Z + grep -q cvm
+2026-05-01T00:04:04.7048663Z + '[' Linux = Linux ']'
+2026-05-01T00:04:04.7049060Z + grep -q GB200
+2026-05-01T00:04:04.7049652Z ++ az network nic create --resource-group vhd-scanning-1777593803-243 --name scanning17775938032166 --subnet /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/nodesig-test-westus3-packer-vnet-rg/providers/Microsoft.Network/virtualNetworks/nodesig-packer-vnet-westus3/subnets/scanning
+2026-05-01T00:04:04.7050254Z ++ jq -r .NewNIC.id
+2026-05-01T00:04:04.7050764Z + SCANNING_NIC_ID=/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593803-243/providers/Microsoft.Network/networkInterfaces/scanning17775938032166
+2026-05-01T00:04:04.7051559Z + '[' -z /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593803-243/providers/Microsoft.Network/networkInterfaces/scanning17775938032166 ']'
+2026-05-01T00:04:04.7052092Z + '[' AzureContainerLinux = Ubuntu ']'
+2026-05-01T00:04:04.7052505Z + echo 'Creating VM using standard az vm create command...'
+2026-05-01T00:04:04.7052939Z Creating VM using standard az vm create command...
+2026-05-01T00:04:04.7053341Z + set +x
+2026-05-01T00:04:04.7053765Z WARNING: The default value of '--size' will be changed to 'Standard_D2s_v5' from 'Standard_DS1_v2' in a future release.
+2026-05-01T00:04:04.7055328Z ERROR: {"status":"Failed","error":{"code":"DeploymentFailed","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593803-243/providers/Microsoft.Resources/deployments/vm_deploy_MLUJHbTRT8a0HO1ZhJPIxESCqVL6PjgN","message":"At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/arm-deployment-operations for usage details.","details":[{"code":"ResourceDeploymentFailure","target":"/subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/vhd-scanning-1777593803-243/providers/Microsoft.Compute/virtualMachines/vhd-scanning-vm-1777593803-18843","message":"The resource write operation failed to complete successfully, because it reached terminal provisioning state 'Failed'.","details":[{"code":"SecureBootClientError","message":"Virtual machine 'vhd-scanning-vm-1777593803-18843' failed to start because Secure Boot detected an unsigned operating system boot component. Trusted launch requires all OS boot components to be signed for foundational security. To bypass this error, you can temporarily disable Secure Boot in the VM UEFI settings. Please note that turning off Secure Boot may expose your VM to security risks. It's recommended to sign the OS boot components or use a signed OS image to maintain the integrity of your VM. For more details, visit Troubleshooting boot issues in FAQ page at https://aka.ms/TrustedLaunch-FAQ"}]}]}}
+2026-05-01T00:04:04.7056793Z Deleting resource group vhd-scanning-1777593803-243
+2026-05-01T00:04:04.7057192Z ##[endgroup]vhd-scanning
+2026-05-01T00:05:06.9244927Z ##[group]cleanup
+2026-05-01T00:05:06.9246094Z Running ./vhdbuilder/packer/cleanup.sh with 2 retries
+2026-05-01T00:05:06.9246599Z + source ./parts/linux/cloud-init/artifacts/cse_benchmark_functions.sh
+2026-05-01T00:05:06.9247045Z +++ date +%s
+2026-05-01T00:05:06.9247447Z ++ script_start_stopwatch=1777593758
+2026-05-01T00:05:06.9247883Z +++ date +%s
+2026-05-01T00:05:06.9248401Z ++ section_start_stopwatch=1777593758
+2026-05-01T00:05:06.9249033Z +++ basename ./vhdbuilder/packer/cleanup.sh .sh
+2026-05-01T00:05:06.9249605Z ++ SCRIPT_NAME=cleanup
+2026-05-01T00:05:06.9250117Z ++ SCRIPT_NAME=cleanup
+2026-05-01T00:05:06.9250589Z ++ benchmarks=()
+2026-05-01T00:05:06.9251059Z ++ declare -A benchmarks
+2026-05-01T00:05:06.9252727Z ++ benchmarks_order=()
+2026-05-01T00:05:06.9253335Z ++ declare -a benchmarks_order
+2026-05-01T00:05:06.9253842Z + EXPIRATION_IN_HOURS=168
+2026-05-01T00:05:06.9254332Z + ((  expirationInSecs = 168 * 60 * 60  ))
+2026-05-01T00:05:06.9254804Z ++ date +%s
+2026-05-01T00:05:06.9255292Z + ((  deadline=1777593758-604800  ))
+2026-05-01T00:05:06.9256121Z + '[' -z PackerSigGalleryEastUS ']'
+2026-05-01T00:05:06.9256603Z + '[' -n pkr-Resource-Group-7kxrouj7td ']'
+2026-05-01T00:05:06.9257087Z ++ jq .id
+2026-05-01T00:05:06.9257567Z ++ az group show --name pkr-Resource-Group-7kxrouj7td
+2026-05-01T00:05:06.9258221Z ERROR: (ResourceGroupNotFound) Resource group 'pkr-Resource-Group-7kxrouj7td' could not be found.
+2026-05-01T00:05:06.9258858Z Code: ResourceGroupNotFound
+2026-05-01T00:05:06.9259561Z Message: Resource group 'pkr-Resource-Group-7kxrouj7td' could not be found.
+2026-05-01T00:05:06.9260147Z + id=
+2026-05-01T00:05:06.9260598Z + '[' -n '' ']'
+2026-05-01T00:05:06.9261059Z + echo 'Packer resource group already successfully deleted'
+2026-05-01T00:05:06.9261742Z Packer resource group already successfully deleted
+2026-05-01T00:05:06.9262297Z + capture_benchmark cleanup_delete_packer_rg
+2026-05-01T00:05:06.9262818Z + local title=cleanup_delete_packer_rg
+2026-05-01T00:05:06.9263289Z + title=cleanup_delete_packer_rg
+2026-05-01T00:05:06.9263745Z + title=cleanup_delete_packer_rg
+2026-05-01T00:05:06.9264225Z + local is_final_section=false
+2026-05-01T00:05:06.9264696Z + local current_time
+2026-05-01T00:05:06.9265158Z ++ date +%s
+2026-05-01T00:05:06.9265584Z + current_time=1777593759
+2026-05-01T00:05:06.9266507Z + '[' false = true ']'
+2026-05-01T00:05:06.9267532Z + local start_time=1777593758
+2026-05-01T00:05:06.9268047Z + local total_time_elapsed
+2026-05-01T00:05:06.9268578Z ++ date -d@1 -u +%H:%M:%S
+2026-05-01T00:05:06.9269092Z + total_time_elapsed=00:00:01
+2026-05-01T00:05:06.9269646Z + benchmarks[$title]=00:00:01
+2026-05-01T00:05:06.9270113Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9270548Z ++ date +%s
+2026-05-01T00:05:06.9270981Z + section_start_stopwatch=1777593759
+2026-05-01T00:05:06.9271556Z ++ az group show --name
+2026-05-01T00:05:06.9271963Z ++ jq .id
+2026-05-01T00:05:06.9272398Z ERROR: argument --name/-n/--resource-group/-g: expected one argument
+2026-05-01T00:05:06.9272662Z
+2026-05-01T00:05:06.9273047Z Examples from AI knowledge base:
+2026-05-01T00:05:06.9273563Z az group show --resource-group myresourcegroup
+2026-05-01T00:05:06.9274030Z Gets a resource group. (autogenerated)
+2026-05-01T00:05:06.9274272Z
+2026-05-01T00:05:06.9274717Z az group list --query "[?location=='westus']"
+2026-05-01T00:05:06.9275193Z List all resource groups located in the West US region.
+2026-05-01T00:05:06.9275413Z
+2026-05-01T00:05:06.9275903Z https://docs.microsoft.com/en-US/cli/azure/group#az_group_show
+2026-05-01T00:05:06.9276447Z Read more about the command in reference docs
+2026-05-01T00:05:06.9276891Z + id=
+2026-05-01T00:05:06.9277337Z + '[' -n '' ']'
+2026-05-01T00:05:06.9277780Z + capture_benchmark cleanup_delete_test_vm_rg
+2026-05-01T00:05:06.9278256Z + local title=cleanup_delete_test_vm_rg
+2026-05-01T00:05:06.9278720Z + title=cleanup_delete_test_vm_rg
+2026-05-01T00:05:06.9279170Z + title=cleanup_delete_test_vm_rg
+2026-05-01T00:05:06.9279670Z + local is_final_section=false
+2026-05-01T00:05:06.9280175Z + local current_time
+2026-05-01T00:05:06.9280618Z ++ date +%s
+2026-05-01T00:05:06.9281084Z + current_time=1777593761
+2026-05-01T00:05:06.9281951Z + '[' false = true ']'
+2026-05-01T00:05:06.9282457Z + local start_time=1777593759
+2026-05-01T00:05:06.9282930Z + local total_time_elapsed
+2026-05-01T00:05:06.9283429Z ++ date -d@2 -u +%H:%M:%S
+2026-05-01T00:05:06.9283938Z + total_time_elapsed=00:00:02
+2026-05-01T00:05:06.9284439Z + benchmarks[$title]=00:00:02
+2026-05-01T00:05:06.9284890Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9285372Z ++ date +%s
+2026-05-01T00:05:06.9285861Z + section_start_stopwatch=1777593761
+2026-05-01T00:05:06.9286359Z + '[' -n aksvhdtestbuildrg ']'
+2026-05-01T00:05:06.9286890Z + '[' -n aclgen2TL-1.1777592617.28211 ']'
+2026-05-01T00:05:06.9287411Z + [[ x86_64 != \a\r\m\6\4 ]]
+2026-05-01T00:05:06.9287966Z ++ az image show -n aclgen2TL-1.1777592617.28211 -g aksvhdtestbuildrg
+2026-05-01T00:05:06.9288483Z ++ jq .id
+2026-05-01T00:05:06.9289231Z ERROR: (ResourceNotFound) The Resource 'Microsoft.Compute/images/aclgen2TL-1.1777592617.28211' under resource group 'aksvhdtestbuildrg' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+2026-05-01T00:05:06.9290263Z Code: ResourceNotFound
+2026-05-01T00:05:06.9291000Z Message: The Resource 'Microsoft.Compute/images/aclgen2TL-1.1777592617.28211' under resource group 'aksvhdtestbuildrg' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix
+2026-05-01T00:05:06.9291920Z + id=
+2026-05-01T00:05:06.9292437Z + '[' -n '' ']'
+2026-05-01T00:05:06.9292994Z + capture_benchmark cleanup_delete_managed_image
+2026-05-01T00:05:06.9293582Z + local title=cleanup_delete_managed_image
+2026-05-01T00:05:06.9294160Z + title=cleanup_delete_managed_image
+2026-05-01T00:05:06.9294645Z + title=cleanup_delete_managed_image
+2026-05-01T00:05:06.9295158Z + local is_final_section=false
+2026-05-01T00:05:06.9295691Z + local current_time
+2026-05-01T00:05:06.9296159Z ++ date +%s
+2026-05-01T00:05:06.9296651Z + current_time=1777593762
+2026-05-01T00:05:06.9297170Z + '[' false = true ']'
+2026-05-01T00:05:06.9297659Z + local start_time=1777593761
+2026-05-01T00:05:06.9298165Z + local total_time_elapsed
+2026-05-01T00:05:06.9298685Z ++ date -d@1 -u +%H:%M:%S
+2026-05-01T00:05:06.9299211Z + total_time_elapsed=00:00:01
+2026-05-01T00:05:06.9299755Z + benchmarks[$title]=00:00:01
+2026-05-01T00:05:06.9300456Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9300925Z ++ date +%s
+2026-05-01T00:05:06.9301590Z + section_start_stopwatch=1777593762
+2026-05-01T00:05:06.9302092Z + '[' -n '' ']'
+2026-05-01T00:05:06.9302521Z + '[' -n '' ']'
+2026-05-01T00:05:06.9303003Z + '[' -n '' ']'
+2026-05-01T00:05:06.9303553Z + capture_benchmark cleanup_cleanup_imported_image
+2026-05-01T00:05:06.9304091Z + local title=cleanup_cleanup_imported_image
+2026-05-01T00:05:06.9304626Z + title=cleanup_cleanup_imported_image
+2026-05-01T00:05:06.9305127Z + title=cleanup_cleanup_imported_image
+2026-05-01T00:05:06.9305626Z + local is_final_section=false
+2026-05-01T00:05:06.9306148Z + local current_time
+2026-05-01T00:05:06.9306624Z ++ date +%s
+2026-05-01T00:05:06.9307103Z + current_time=1777593762
+2026-05-01T00:05:06.9307614Z + '[' false = true ']'
+2026-05-01T00:05:06.9308092Z + local start_time=1777593762
+2026-05-01T00:05:06.9308614Z + local total_time_elapsed
+2026-05-01T00:05:06.9309142Z ++ date -d@0 -u +%H:%M:%S
+2026-05-01T00:05:06.9309699Z + total_time_elapsed=00:00:00
+2026-05-01T00:05:06.9310238Z + benchmarks[$title]=00:00:00
+2026-05-01T00:05:06.9310754Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9311206Z ++ date +%s
+2026-05-01T00:05:06.9311909Z + section_start_stopwatch=1777593762
+2026-05-01T00:05:06.9312412Z + '[' linuxVhdMode = windowsVhdMode ']'
+2026-05-01T00:05:06.9312852Z + '[' -n '' ']'
+2026-05-01T00:05:06.9313328Z + capture_benchmark cleanup_cleanup_temp_storage
+2026-05-01T00:05:06.9313825Z + local title=cleanup_cleanup_temp_storage
+2026-05-01T00:05:06.9314327Z + title=cleanup_cleanup_temp_storage
+2026-05-01T00:05:06.9314863Z + title=cleanup_cleanup_temp_storage
+2026-05-01T00:05:06.9315369Z + local is_final_section=false
+2026-05-01T00:05:06.9315864Z + local current_time
+2026-05-01T00:05:06.9316329Z ++ date +%s
+2026-05-01T00:05:06.9316844Z + current_time=1777593762
+2026-05-01T00:05:06.9317309Z + '[' false = true ']'
+2026-05-01T00:05:06.9317773Z + local start_time=1777593762
+2026-05-01T00:05:06.9318241Z + local total_time_elapsed
+2026-05-01T00:05:06.9318759Z ++ date -d@0 -u +%H:%M:%S
+2026-05-01T00:05:06.9319331Z + total_time_elapsed=00:00:00
+2026-05-01T00:05:06.9319891Z + benchmarks[$title]=00:00:00
+2026-05-01T00:05:06.9320362Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9320822Z ++ date +%s
+2026-05-01T00:05:06.9321421Z + section_start_stopwatch=1777593762
+2026-05-01T00:05:06.9321972Z + [[ linuxVhdMode == \l\i\n\u\x\V\h\d\M\o\d\e ]]
+2026-05-01T00:05:06.9322441Z + [[ false == \t\r\u\e ]]
+2026-05-01T00:05:06.9322890Z + [[ linuxVhdMode == \l\i\n\u\x\V\h\d\M\o\d\e ]]
+2026-05-01T00:05:06.9323377Z + [[ -n aksvhdtestbuildrg ]]
+2026-05-01T00:05:06.9323894Z + [[ false == \f\a\l\s\e ]]
+2026-05-01T00:05:06.9324473Z + echo 'Looking for managed images in aksvhdtestbuildrg created over 168 hours ago...'
+2026-05-01T00:05:06.9325329Z Looking for managed images in aksvhdtestbuildrg created over 168 hours ago...
+2026-05-01T00:05:06.9325924Z + managed_image_ids=
+2026-05-01T00:05:06.9326467Z + sig_version_ids=
+2026-05-01T00:05:06.9326993Z ++ az image list -g aksvhdtestbuildrg
+2026-05-01T00:05:06.9327671Z ++ jq --arg dl 1776988958 '.[] | select(.name | test("Ubuntu*|CBLMariner*|V1*|V2*|2004*|2204*")) | select(.tags.now < $dl).name'
+2026-05-01T00:05:06.9328312Z ++ head -n 25
+2026-05-01T00:05:06.9328766Z ++ tr -d '\"'
+2026-05-01T00:05:06.9329226Z + '[' -n '' ']'
+2026-05-01T00:05:06.9329745Z + echo 'Did not find any managed images eligible for deletion'
+2026-05-01T00:05:06.9330315Z Did not find any managed images eligible for deletion
+2026-05-01T00:05:06.9330838Z + '[' -n '' ']'
+2026-05-01T00:05:06.9331540Z + echo 'Did not find any SIG versions associated with old managed images eligible for deletion'
+2026-05-01T00:05:06.9332203Z Did not find any SIG versions associated with old managed images eligible for deletion
+2026-05-01T00:05:06.9332783Z + old_sig_version_ids=
+2026-05-01T00:05:06.9333264Z + set +x
+2026-05-01T00:05:06.9334023Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.315
+2026-05-01T00:05:06.9335261Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.317
+2026-05-01T00:05:06.9336403Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.318
+2026-05-01T00:05:06.9337583Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.319
+2026-05-01T00:05:06.9338757Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.322
+2026-05-01T00:05:06.9339927Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.323
+2026-05-01T00:05:06.9341093Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.324
+2026-05-01T00:05:06.9342334Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.326
+2026-05-01T00:05:06.9343389Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.328
+2026-05-01T00:05:06.9344428Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.329
+2026-05-01T00:05:06.9345564Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.330
+2026-05-01T00:05:06.9346857Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.331
+2026-05-01T00:05:06.9347870Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.332
+2026-05-01T00:05:06.9348786Z Will not consider garbage collection of image: /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Compute/galleries/PackerSigGalleryEastUS/images/2404gen2arm64gb200containerd/versions/1.1.333
+2026-05-01T00:05:06.9349444Z Did not find any old SIG versions eligible for deletion
+2026-05-01T00:05:06.9350012Z + capture_benchmark cleanup_delete_old_sig_versions
+2026-05-01T00:05:06.9350588Z + local title=cleanup_delete_old_sig_versions
+2026-05-01T00:05:06.9351035Z + title=cleanup_delete_old_sig_versions
+2026-05-01T00:05:06.9351613Z + title=cleanup_delete_old_sig_versions
+2026-05-01T00:05:06.9352290Z + local is_final_section=false
+2026-05-01T00:05:06.9352670Z + local current_time
+2026-05-01T00:05:06.9353094Z ++ date +%s
+2026-05-01T00:05:06.9353529Z + current_time=1777593904
+2026-05-01T00:05:06.9353957Z + '[' false = true ']'
+2026-05-01T00:05:06.9354491Z + local start_time=1777593762
+2026-05-01T00:05:06.9354929Z + local total_time_elapsed
+2026-05-01T00:05:06.9355241Z ++ date -d@142 -u +%H:%M:%S
+2026-05-01T00:05:06.9355562Z + total_time_elapsed=00:02:22
+2026-05-01T00:05:06.9355884Z + benchmarks[$title]=00:02:22
+2026-05-01T00:05:06.9356176Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9356546Z ++ date +%s
+2026-05-01T00:05:06.9357003Z + section_start_stopwatch=1777593904
+2026-05-01T00:05:06.9357560Z + '[' -z aksvhdtestbuildrg ']'
+2026-05-01T00:05:06.9357921Z + '[' linuxVhdMode '!=' linuxVhdMode ']'
+2026-05-01T00:05:06.9358283Z + STORAGE_ACCOUNT_EXPIRATION_IN_HOURS=4
+2026-05-01T00:05:06.9358621Z + ((  storageAccountExpirationSecs = 4 * 60 * 60  ))
+2026-05-01T00:05:06.9358936Z ++ date +%s
+2026-05-01T00:05:06.9359229Z + ((  storageAccountDeadline=1777593904-14400  ))
+2026-05-01T00:05:06.9359550Z + old_storage_accounts=
+2026-05-01T00:05:06.9359898Z + echo 'Looking for storage accounts in aksvhdtestbuildrg created over 4 hours ago...'
+2026-05-01T00:05:06.9360264Z Looking for storage accounts in aksvhdtestbuildrg created over 4 hours ago...
+2026-05-01T00:05:06.9360600Z ++ date -d@1777579504
+2026-05-01T00:05:06.9360955Z + echo 'That is, those created before Thu Apr 30 20:05:04 UTC 2026 As shown below'
+2026-05-01T00:05:06.9361502Z That is, those created before Thu Apr 30 20:05:04 UTC 2026 As shown below
+2026-05-01T00:05:06.9361980Z + az storage account list -g aksvhdtestbuildrg
+2026-05-01T00:05:06.9362572Z + jq --arg dl 1777579504 '.[] | select(.tags.now < $dl).name'
+2026-05-01T00:05:06.9363052Z + tr -d '\"'
+2026-05-01T00:05:06.9363421Z vhdbuildereastustest
+2026-05-01T00:05:06.9363868Z testaccountvhdsigning
+2026-05-01T00:05:06.9364324Z ++ az storage account list -g aksvhdtestbuildrg
+2026-05-01T00:05:06.9364806Z ++ jq --arg dl 1777579504 '.[] | select(.tags.now < $dl).id'
+2026-05-01T00:05:06.9365276Z ++ tr -d '\"'
+2026-05-01T00:05:06.9365908Z + for storage_account_id in $(az storage account list -g ${AZURE_RESOURCE_GROUP_NAME} | jq --arg dl $storageAccountDeadline '.[] | select(.tags.now < $dl).id' | tr -d '\"' || "")
+2026-05-01T00:05:06.9366708Z + [[ /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Storage/storageAccounts/vhdbuildereastustest = *aksimages* ]]
+2026-05-01T00:05:06.9367574Z + for storage_account_id in $(az storage account list -g ${AZURE_RESOURCE_GROUP_NAME} | jq --arg dl $storageAccountDeadline '.[] | select(.tags.now < $dl).id' | tr -d '\"' || "")
+2026-05-01T00:05:06.9368550Z + [[ /subscriptions/c4c3550e-a965-4993-a50c-628fd38cd3e1/resourceGroups/aksvhdtestbuildrg/providers/Microsoft.Storage/storageAccounts/testaccountvhdsigning = *aksimages* ]]
+2026-05-01T00:05:06.9369013Z + '[' -n '' ']'
+2026-05-01T00:05:06.9369347Z + echo 'did not find any old storage accounts eligible for deletion'
+2026-05-01T00:05:06.9369686Z did not find any old storage accounts eligible for deletion
+2026-05-01T00:05:06.9370167Z + capture_benchmark cleanup_cleanup_storage_accounts
+2026-05-01T00:05:06.9370781Z + local title=cleanup_cleanup_storage_accounts
+2026-05-01T00:05:06.9371396Z + title=cleanup_cleanup_storage_accounts
+2026-05-01T00:05:06.9371899Z + title=cleanup_cleanup_storage_accounts
+2026-05-01T00:05:06.9372444Z + local is_final_section=false
+2026-05-01T00:05:06.9372945Z + local current_time
+2026-05-01T00:05:06.9373457Z ++ date +%s
+2026-05-01T00:05:06.9373987Z + current_time=1777593906
+2026-05-01T00:05:06.9374524Z + '[' false = true ']'
+2026-05-01T00:05:06.9375085Z + local start_time=1777593904
+2026-05-01T00:05:06.9375684Z + local total_time_elapsed
+2026-05-01T00:05:06.9376251Z ++ date -d@2 -u +%H:%M:%S
+2026-05-01T00:05:06.9376854Z + total_time_elapsed=00:00:02
+2026-05-01T00:05:06.9377504Z + benchmarks[$title]=00:00:02
+2026-05-01T00:05:06.9378235Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9378770Z ++ date +%s
+2026-05-01T00:05:06.9379333Z + section_start_stopwatch=1777593906
+2026-05-01T00:05:06.9379939Z + echo -e 'Packer cleanup successfully completed\n\n\n'
+2026-05-01T00:05:06.9380554Z Packer cleanup successfully completed
+2026-05-01T00:05:06.9380875Z
+2026-05-01T00:05:06.9381105Z
+2026-05-01T00:05:06.9381500Z
+2026-05-01T00:05:06.9382034Z + capture_benchmark cleanup_overall true
+2026-05-01T00:05:06.9382626Z + local title=cleanup_overall
+2026-05-01T00:05:06.9383193Z + title=cleanup_overall
+2026-05-01T00:05:06.9383734Z + title=cleanup_overall
+2026-05-01T00:05:06.9384309Z + local is_final_section=true
+2026-05-01T00:05:06.9384880Z + local current_time
+2026-05-01T00:05:06.9385384Z ++ date +%s
+2026-05-01T00:05:06.9385933Z + current_time=1777593906
+2026-05-01T00:05:06.9386483Z + '[' true = true ']'
+2026-05-01T00:05:06.9387012Z + local start_time=1777593758
+2026-05-01T00:05:06.9387596Z + local total_time_elapsed
+2026-05-01T00:05:06.9388192Z ++ date -d@148 -u +%H:%M:%S
+2026-05-01T00:05:06.9388752Z + total_time_elapsed=00:02:28
+2026-05-01T00:05:06.9389299Z + benchmarks[$title]=00:02:28
+2026-05-01T00:05:06.9389892Z + benchmarks_order+=($title)
+2026-05-01T00:05:06.9390408Z ++ date +%s
+2026-05-01T00:05:06.9390958Z + section_start_stopwatch=1777593906
+2026-05-01T00:05:06.9391649Z + process_benchmarks
+2026-05-01T00:05:06.9392143Z + '[' -z vhd-build-performance-data.json ']'
+2026-05-01T00:05:06.9392762Z + '[' '!' -f vhd-build-performance-data.json ']'
+2026-05-01T00:05:06.9393346Z + check_array_size benchmarks
+2026-05-01T00:05:06.9393900Z + declare -n array_name=benchmarks
+2026-05-01T00:05:06.9394428Z + local array_size=8
+2026-05-01T00:05:06.9394909Z + '[' 8 -gt 0 ']'
+2026-05-01T00:05:06.9395326Z + last_index=7
+2026-05-01T00:05:06.9395819Z + (( i=0 ))
+2026-05-01T00:05:06.9396292Z + (( i<8 ))
+2026-05-01T00:05:06.9396843Z + section_name=cleanup_delete_packer_rg
+2026-05-01T00:05:06.9397485Z ++ jq -n --arg section_name cleanup_delete_packer_rg --arg total_time_elapsed 00:00:01 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9397983Z + section_object='{
+2026-05-01T00:05:06.9398489Z   "cleanup_delete_packer_rg": "00:00:01"
+2026-05-01T00:05:06.9399022Z }'
+2026-05-01T00:05:06.9399464Z + jq '. += {
+2026-05-01T00:05:06.9399971Z   "cleanup_delete_packer_rg": "00:00:01"
+2026-05-01T00:05:06.9400528Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9401124Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9401771Z + (( i+=1 ))
+2026-05-01T00:05:06.9402305Z + (( i<8 ))
+2026-05-01T00:05:06.9402863Z + section_name=cleanup_delete_test_vm_rg
+2026-05-01T00:05:06.9403655Z ++ jq -n --arg section_name cleanup_delete_test_vm_rg --arg total_time_elapsed 00:00:02 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9404647Z + section_object='{
+2026-05-01T00:05:06.9405162Z   "cleanup_delete_test_vm_rg": "00:00:02"
+2026-05-01T00:05:06.9405666Z }'
+2026-05-01T00:05:06.9406127Z + jq '. += {
+2026-05-01T00:05:06.9406603Z   "cleanup_delete_test_vm_rg": "00:00:02"
+2026-05-01T00:05:06.9407204Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9407846Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9408366Z + (( i+=1 ))
+2026-05-01T00:05:06.9408769Z + (( i<8 ))
+2026-05-01T00:05:06.9409164Z + section_name=cleanup_delete_managed_image
+2026-05-01T00:05:06.9409644Z ++ jq -n --arg section_name cleanup_delete_managed_image --arg total_time_elapsed 00:00:01 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9410133Z + section_object='{
+2026-05-01T00:05:06.9410534Z   "cleanup_delete_managed_image": "00:00:01"
+2026-05-01T00:05:06.9410878Z }'
+2026-05-01T00:05:06.9411231Z + jq '. += {
+2026-05-01T00:05:06.9411809Z   "cleanup_delete_managed_image": "00:00:01"
+2026-05-01T00:05:06.9412288Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9412856Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9413244Z + (( i+=1 ))
+2026-05-01T00:05:06.9413603Z + (( i<8 ))
+2026-05-01T00:05:06.9414192Z + section_name=cleanup_cleanup_imported_image
+2026-05-01T00:05:06.9414650Z ++ jq -n --arg section_name cleanup_cleanup_imported_image --arg total_time_elapsed 00:00:00 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9415158Z + section_object='{
+2026-05-01T00:05:06.9415640Z   "cleanup_cleanup_imported_image": "00:00:00"
+2026-05-01T00:05:06.9416080Z }'
+2026-05-01T00:05:06.9416498Z + jq '. += {
+2026-05-01T00:05:06.9416915Z   "cleanup_cleanup_imported_image": "00:00:00"
+2026-05-01T00:05:06.9417408Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9417964Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9418455Z + (( i+=1 ))
+2026-05-01T00:05:06.9418880Z + (( i<8 ))
+2026-05-01T00:05:06.9419387Z + section_name=cleanup_cleanup_temp_storage
+2026-05-01T00:05:06.9420054Z ++ jq -n --arg section_name cleanup_cleanup_temp_storage --arg total_time_elapsed 00:00:00 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9420629Z + section_object='{
+2026-05-01T00:05:06.9421039Z   "cleanup_cleanup_temp_storage": "00:00:00"
+2026-05-01T00:05:06.9421511Z }'
+2026-05-01T00:05:06.9421886Z + jq '. += {
+2026-05-01T00:05:06.9422278Z   "cleanup_cleanup_temp_storage": "00:00:00"
+2026-05-01T00:05:06.9422651Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9423067Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9423463Z + (( i+=1 ))
+2026-05-01T00:05:06.9423784Z + (( i<8 ))
+2026-05-01T00:05:06.9424204Z + section_name=cleanup_delete_old_sig_versions
+2026-05-01T00:05:06.9424915Z ++ jq -n --arg section_name cleanup_delete_old_sig_versions --arg total_time_elapsed 00:02:22 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9425440Z + section_object='{
+2026-05-01T00:05:06.9425847Z   "cleanup_delete_old_sig_versions": "00:02:22"
+2026-05-01T00:05:06.9426230Z }'
+2026-05-01T00:05:06.9426553Z + jq '. += {
+2026-05-01T00:05:06.9427020Z   "cleanup_delete_old_sig_versions": "00:02:22"
+2026-05-01T00:05:06.9427592Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9427998Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9428398Z + (( i+=1 ))
+2026-05-01T00:05:06.9428743Z + (( i<8 ))
+2026-05-01T00:05:06.9429096Z + section_name=cleanup_cleanup_storage_accounts
+2026-05-01T00:05:06.9429602Z ++ jq -n --arg section_name cleanup_cleanup_storage_accounts --arg total_time_elapsed 00:00:02 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9430082Z + section_object='{
+2026-05-01T00:05:06.9430448Z   "cleanup_cleanup_storage_accounts": "00:00:02"
+2026-05-01T00:05:06.9430829Z }'
+2026-05-01T00:05:06.9431184Z + jq '. += {
+2026-05-01T00:05:06.9431714Z   "cleanup_cleanup_storage_accounts": "00:00:02"
+2026-05-01T00:05:06.9432183Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9432793Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9433315Z + (( i+=1 ))
+2026-05-01T00:05:06.9433815Z + (( i<8 ))
+2026-05-01T00:05:06.9434238Z + section_name=cleanup_overall
+2026-05-01T00:05:06.9434720Z ++ jq -n --arg section_name cleanup_overall --arg total_time_elapsed 00:02:28 '{($section_name): $total_time_elapsed}'
+2026-05-01T00:05:06.9435187Z + section_object='{
+2026-05-01T00:05:06.9435562Z   "cleanup_overall": "00:02:28"
+2026-05-01T00:05:06.9435975Z }'
+2026-05-01T00:05:06.9436445Z + jq '. += {
+2026-05-01T00:05:06.9436893Z   "cleanup_overall": "00:02:28"
+2026-05-01T00:05:06.9437343Z }' vhd-build-performance-data.json
+2026-05-01T00:05:06.9437834Z + mv temp-perf-file.json vhd-build-performance-data.json
+2026-05-01T00:05:06.9438316Z + (( i+=1 ))
+2026-05-01T00:05:06.9438729Z + (( i<8 ))
+2026-05-01T00:05:06.9439232Z + chmod 755 vhd-build-performance-data.json
+2026-05-01T00:05:06.9439737Z ##[endgroup]cleanup
+2026-05-01T00:05:06.9440227Z ./vhdbuilder/packer/cleanup.sh exited with code 0
+2026-05-01T00:05:06.9440772Z ./vhdbuilder/packer/vhd-scanning.sh exited with code 1
+2026-05-01T00:05:06.9441462Z ./vhdbuilder/packer/test/run-test.sh exited with code 1
+2026-05-01T00:05:06.9441657Z
+2026-05-01T00:05:06.9442123Z One or more scripts failed. Exiting with exit code 1.
+2026-05-01T00:05:06.9442753Z
+2026-05-01T00:05:06.9443186Z make: *** [packer.mk:114: test-scan-and-cleanup] Error 1
+2026-05-01T00:05:06.9443381Z
+2026-05-01T00:05:06.9468804Z ##[error]Script failed with exit code: 2
+2026-05-01T00:05:06.9477130Z [command]/usr/bin/az account clear
+2026-05-01T00:05:07.4906549Z ##[section]Finishing: Test, Scan, and Cleanup
