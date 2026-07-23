@@ -21,15 +21,28 @@ ACL-specific bootstrap payload.
 
 ## Current state
 
+Status checked against public sources on July 22, 2026.
+
 | Component | State |
 | --- | --- |
-| AgentBaker | Detects `OSSKU=AzureContainerLinux`, selects ACL images, and generates Butane-based Ignition. |
-| AKS documentation | Documents `spec.imageFamily: AzureContainerLinux` for managed NAP. |
-| Public Azure Karpenter provider | At commit [`6581367`](https://github.com/Azure/karpenter-provider-azure/tree/6581367bf9988484da003d0e3dfcb67032ac7f53), contains no `AzureContainerLinux` API or image-family mapping. |
-| Machine API SDK | Defines `OSSKUAzureContainerLinux`; the service-side image and security behavior must still be confirmed. |
+| AgentBaker | Recognizes `OSSKU=AzureContainerLinux` or an ACL image distro and generates ACL-compatible Ignition on both the standard and scriptless paths. |
+| AKS documentation | Is inconsistent. The [ACL overview](https://learn.microsoft.com/azure/aks/azure-container-linux-overview) says ACL supports NAP, while the [AKSNodeClass supported-family list](https://learn.microsoft.com/azure/aks/node-auto-provisioning-aksnodeclass#supported-image-families) only documents Ubuntu and Azure Linux. |
+| Public Azure Karpenter provider | Release [`v1.14.0`](https://github.com/Azure/karpenter-provider-azure/releases/tag/v1.14.0) and [main at `01522c8`](https://github.com/Azure/karpenter-provider-azure/tree/01522c8b6c724ec89d31b50aabeaca448ef4c44f) contain no `AzureContainerLinux` API value, image family, OSSKU mapping, or ACL GPU entry. |
+| Machine API SDK | Added the `OSSKUAzureContainerLinux` enum in [`armcontainerservice` 9.2.0](https://github.com/Azure/azure-sdk-for-go/blob/870565769baf65b57bd8ac200cfe36d93dc06678/sdk/resourcemanager/containerservice/armcontainerservice/CHANGELOG.md#920-2026-05-09), but an SDK enum does not establish service-side support. |
 
-The managed NAP deployment might therefore be ahead of, or patched beyond,
-the public provider repository.
+The AKSNodeClass documentation briefly added `AzureContainerLinux` on
+[July 15, 2026](https://github.com/MicrosoftDocs/azure-aks-docs/commit/0eb120b6a65ca7469fbc607506674e070b9b7b74)
+and deliberately removed the supported-family entry and standalone example on
+[July 17, 2026](https://github.com/MicrosoftDocs/azure-aks-docs/commit/a088fa1dc0a73a514c9fb613882df83dc34a85f7).
+The same live page still has a
+[stale comprehensive YAML example](https://learn.microsoft.com/azure/aks/node-auto-provisioning-aksnodeclass#comprehensive-aksnodeclass-configuration-example)
+that lists `AzureContainerLinux` as valid.
+
+The public evidence therefore proves AgentBaker bootstrap readiness and SDK
+vocabulary, but not that customers can select ACL through managed NAP. Managed
+NAP can deploy a controller build that differs from the public provider
+release, so the NAP owners must confirm the deployed CRD, provider version,
+image rollout, and supported regions before ACL is treated as available.
 
 ## Required provider and Machine API support
 
@@ -48,10 +61,10 @@ Pod Sandboxing is not currently exposed by `AKSNodeClass`.
 
 Relevant provider code:
 
-- [`AKSNodeClass` API](https://github.com/Azure/karpenter-provider-azure/blob/6581367bf9988484da003d0e3dfcb67032ac7f53/pkg/apis/v1beta1/aksnodeclass.go)
-- [image-family resolver](https://github.com/Azure/karpenter-provider-azure/blob/6581367bf9988484da003d0e3dfcb67032ac7f53/pkg/providers/imagefamily/resolver.go)
-- [AKS Machine request construction](https://github.com/Azure/karpenter-provider-azure/blob/6581367bf9988484da003d0e3dfcb67032ac7f53/pkg/providers/instance/aksmachineinstancehelpers.go)
-- [instance-type filtering](https://github.com/Azure/karpenter-provider-azure/blob/6581367bf9988484da003d0e3dfcb67032ac7f53/pkg/providers/instancetype/instancetypes.go)
+- [`AKSNodeClass` API](https://github.com/Azure/karpenter-provider-azure/blob/38aebe17358bd306c88aef2a319c91948dc554cf/pkg/apis/v1beta1/aksnodeclass.go)
+- [image-family resolver](https://github.com/Azure/karpenter-provider-azure/blob/38aebe17358bd306c88aef2a319c91948dc554cf/pkg/providers/imagefamily/resolver.go)
+- [AKS Machine request construction](https://github.com/Azure/karpenter-provider-azure/blob/38aebe17358bd306c88aef2a319c91948dc554cf/pkg/providers/instance/aksmachineinstancehelpers.go)
+- [instance-type filtering](https://github.com/Azure/karpenter-provider-azure/blob/38aebe17358bd306c88aef2a319c91948dc554cf/pkg/providers/instancetype/instancetypes.go)
 
 ## Contracts to confirm
 
@@ -71,7 +84,7 @@ Before considering ACL supported, the NAP and Machine API owners must confirm:
 ## GPU support
 
 Updating
-[`supported-gpus.yaml`](https://github.com/Azure/karpenter-provider-azure/blob/6581367bf9988484da003d0e3dfcb67032ac7f53/pkg/utils/supported-gpus.yaml)
+[`supported-gpus.yaml`](https://github.com/Azure/karpenter-provider-azure/blob/38aebe17358bd306c88aef2a319c91948dc554cf/pkg/utils/supported-gpus.yaml)
 is necessary but insufficient. The provider must also add ACL handling to
 `isInstanceTypeSupportedByImageFamily`; otherwise every ACL GPU SKU is
 filtered out.
@@ -107,12 +120,18 @@ Then validate GPU:
 
 Managed NAP support does not automatically provide self-hosted support.
 The provider's self-hosted
-[`AKSScriptless` mode](https://github.com/Azure/karpenter-provider-azure/blob/6581367bf9988484da003d0e3dfcb67032ac7f53/pkg/providers/launchtemplate/launchtemplate.go#L214-L238)
+[`AKSScriptless` mode](https://github.com/Azure/karpenter-provider-azure/blob/38aebe17358bd306c88aef2a319c91948dc554cf/pkg/providers/launchtemplate/launchtemplate.go#L214-L238)
 generates cloud-init/CSE custom data and contains no Ignition support. This is
 different from AgentBaker's scriptless NBC path, which already emits ACL
 Ignition. Self-hosted support requires an AgentBaker bootstrapping-client ACL
 contract or another ACL Ignition implementation, plus direct-VM Trusted
 Launch, Secure Boot, vTPM, and SKU filtering.
+
+The provider's
+[support guidance](https://github.com/Azure/karpenter-provider-azure#node-auto-provisioning-nap-vs-self-hosted-karpenter)
+recommends managed NAP for most users. Microsoft support channels cover
+managed NAP, while self-hosted Karpenter is supported through GitHub issues on
+a best-effort basis.
 
 Until those pieces exist, `imageFamily: AzureContainerLinux` should be
 rejected outside managed Machine API modes.
@@ -134,7 +153,35 @@ rejected outside managed Machine API modes.
 - [ACL installation logic](../parts/linux/cloud-init/artifacts/acl/cse_install_acl.sh)
 - [ACL GPU scenarios](../e2e/scenario_test.go#L284-L355)
 
-## Product references
+## AKS NAP documentation
 
-- [Configure AKSNodeClass resources](https://learn.microsoft.com/azure/aks/node-auto-provisioning-aksnodeclass)
+The AKS documentation table of contents has the following NAP-specific pages:
+
+- [NAP overview](https://learn.microsoft.com/azure/aks/node-auto-provisioning):
+  architecture, prerequisites, limitations, and upgrade behavior.
+- [Enable or disable NAP](https://learn.microsoft.com/azure/aks/use-node-auto-provisioning):
+  cluster configuration, monitoring, and migration from self-hosted
+  Karpenter.
+- [Migrate from Cluster Autoscaler to NAP](https://learn.microsoft.com/azure/aks/migrate-from-autoscaler-to-node-auto-provisioning):
+  direct and side-by-side migration paths.
+- [Use NAP in a custom virtual network](https://learn.microsoft.com/azure/aks/node-auto-provisioning-custom-vnet):
+  subnet delegation, managed identity, and load-balancer requirements.
+- [Update NAP node images](https://learn.microsoft.com/azure/aks/node-auto-provisioning-upgrade-image):
+  image drift and maintenance windows.
+- [Configure NAP networking](https://learn.microsoft.com/azure/aks/node-auto-provisioning-networking):
+  supported CNI modes, subnet RBAC, and CIDR planning.
+- [Configure disruption policies](https://learn.microsoft.com/azure/aks/node-auto-provisioning-disruption):
+  expiration, consolidation, drift, and disruption budgets.
+- [Configure NodePool resources](https://learn.microsoft.com/azure/aks/node-auto-provisioning-node-pools):
+  VM constraints, Spot capacity, limits, and weights.
+- [Configure AKSNodeClass resources](https://learn.microsoft.com/azure/aks/node-auto-provisioning-aksnodeclass):
+  image families, disks, kubelet settings, GPU mode, and LocalDNS.
+
+Related product guidance:
+
 - [Azure Container Linux for AKS overview](https://learn.microsoft.com/azure/aks/azure-container-linux-overview)
+- [AKS-managed GPU nodes](https://learn.microsoft.com/azure/aks/aks-managed-gpu-nodes)
+- [NVIDIA GPU Operator on AKS](https://learn.microsoft.com/azure/aks/nvidia-gpu-operator)
+- [AKS control-plane metrics](https://learn.microsoft.com/azure/aks/control-plane-metrics-monitor)
+- [LocalDNS on AKS](https://learn.microsoft.com/azure/aks/localdns-custom)
+- [Azure Karpenter provider README](https://github.com/Azure/karpenter-provider-azure)
