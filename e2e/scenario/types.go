@@ -257,6 +257,11 @@ func (s *Scenario) PrepareVMSSModel(ctx context.Context, vmss *armcompute.Virtua
 	}
 
 	s.updateTags(ctx, vmss)
+	if aclIPEValidationRequested(s) {
+		if err := validateACLIPEVMSSNoProfileTag(vmss.Tags); err != nil {
+			return fmt.Errorf("ACL IPE scenario VMSS creation model: %w", err)
+		}
+	}
 	return nil
 }
 

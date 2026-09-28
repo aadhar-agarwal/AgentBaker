@@ -73,6 +73,7 @@ var _ = Register(&Scenario{
 			return errors.Join(
 				ValidateFileHasContent(ctx, s, "/etc/os-release", "ID=azurelinux"),
 				ValidateFileHasContent(ctx, s, "/etc/os-release", "VARIANT_ID=azurecontainerlinux"),
+				ValidateACLIPE(ctx, s),
 			)
 		},
 	},

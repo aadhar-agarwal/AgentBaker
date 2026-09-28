@@ -216,7 +216,7 @@ func ConfigureAndCreateVMSS(ctx context.Context, s *Scenario) (*ScenarioVM, erro
 		return errors.Join(logErr, deleteVMSS(ctx, s))
 	})
 
-	if skipErr := skipIfSKUNotAvailableErr(err); skipErr != nil {
+	if skipErr := skipIfSKUNotAvailableErr(err); skipErr != nil && !aclIPEValidationRequested(s) {
 		return vm, skipErr
 	}
 

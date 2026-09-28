@@ -16,6 +16,42 @@ From a high-level, for each scenario,
 3. Liveness and health checks and then run to make sure the new VM's kubelet is posting NodeReady, and that workload
    pods can successfully be scheduled and run on the new node.
 
+### Opt-in ACL IPE first-boot checks
+
+For two separate signed-image runs, set `ACL_IPE_EXPECTED_MODE=off` for the
+default-off image and `ACL_IPE_EXPECTED_MODE=audit` for the separately signed
+audit-default image (`PR head + 05a5719`).
+Select the existing `ACL` scenario (AMD64 TL); other scenarios are unchanged.
+With the variable set, this scenario fails on an invalid mode or missing VHD
+even when missing-VHD skips are enabled. **Neither** run sets an IPE profile
+tag: the creation model, created VMSS/instance tags, and live IMDS must lack
+`acl-node-security-profile` before audit validation. The off image must load
+the policy inactive; the separately published audit-default image must
+activate it without a tag.
+Both checks require the exact PR52 policy and rules loaded in securityfs
+(active with `enforce=0` for audit), matching IMDS VM/VMSS identity, an empty
+successful initrd profile cache, the first-boot UKI addon marker and policy
+hash on the kernel command line, a current-boot loader journal reporting the
+expected mode and loaded policy, and kubelet/containerd health.
+Missing evidence fails; the journal verifies the initrd credential hash,
+not a post-boot read of its transient initrd path. The empty cache records
+the profile **value**, not historical tag absence by itself; the creation
+model, VMSS/instance response, live IMDS, and current-boot journal provide
+the additional evidence. If provisioning rebooted the node and the first-boot
+marker is absent, the first-boot measurement fails. In audit
+mode it follows the [PR52 permissive probe](https://github.com/microsoft/azure-container-linux/blob/e7aff50e946d9693545ed91c7170a3951a998a55/acl/tests/ipe/run-ipe-permissive-test.sh):
+copy `/usr/bin/true` into an isolated `/var/tmp` directory, execute it, and
+require a matching current-boot IPE EXECUTE audit record (native journald
+`_TRANSPORT=audit`, `_AUDIT_TYPE=1420`, or kernel-log fallback) for the
+`DEFAULT op=EXECUTE action=DENY` rule. Confirm
+`ACL_IPE_FirstBoot_<mode>` passes in **both** runs and `ACL_IPE_AuditDeny`
+passes in the audit run; E2E alone does not prove the ACL scenario executed.
+
+This does not test the off-to-audit transition: AgentBaker has no established
+IPE tag-update contract for an existing VMSS instance or proof that an updated
+VMSS tag is observed by its IMDS before a reboot. Do not mutate a shared AKS
+pool to work around this; the reboot helper alone is insufficient.
+
 ## Writing and extending scenarios
 
 Extend an existing scenario's `Validator` when its node has the required settings.

@@ -402,19 +402,26 @@ func annotateVMSSCreateError(s *Scenario, err error) error {
 
 func maybeSkipScenario(ctx context.Context, name string, s *Scenario) error {
 	s.Tags = s.EffectiveTags()
+	if _, err := aclIPEExpectedMode(s); err != nil {
+		return err
+	}
 
 	_, err := CachedPrepareVHD(ctx, GetVHDRequest{
 		Image:    *s.VHD,
 		Location: s.Location,
 	})
 	if err != nil {
-		if config.Config.IgnoreScenariosWithMissingVHD && errors.Is(err, config.ErrNotFound) {
+		if shouldSkipMissingVHD(s, err) {
 			return &skipError{message: fmt.Sprintf("scenario %q image for VHD %s was not found: %s", name, s.VHD.Distro, err)}
 		}
 		return fmt.Errorf("failing scenario %q: could not find image for VHD %s: %w", name, s.VHD.Distro, err)
 	}
 	logging.Logf(ctx, "TAGS %+v", s.Tags)
 	return nil
+}
+
+func shouldSkipMissingVHD(s *Scenario, err error) bool {
+	return config.Config.IgnoreScenariosWithMissingVHD && errors.Is(err, config.ErrNotFound) && !aclIPEValidationRequested(s)
 }
 
 func ValidateNodeCanRunAPod(ctx context.Context, s *Scenario) error {
