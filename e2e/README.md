@@ -16,7 +16,7 @@ From a high-level, for each scenario,
 3. Liveness and health checks and then run to make sure the new VM's kubelet is posting NodeReady, and that workload
    pods can successfully be scheduled and run on the new node.
 
-### Opt-in ACL IPE first-boot checks
+### Opt-in ACL IPE first-boot checks on an AKS-registered VMSS node
 
 For two separate signed-image runs, set `ACL_IPE_EXPECTED_MODE=off` for the
 default-off image and `ACL_IPE_EXPECTED_MODE=audit` for the separately signed
@@ -47,10 +47,13 @@ require a matching current-boot IPE EXECUTE audit record (native journald
 `ACL_IPE_FirstBoot_<mode>` passes in **both** runs and `ACL_IPE_AuditDeny`
 passes in the audit run; E2E alone does not prove the ACL scenario executed.
 
-This does not test the off-to-audit transition: AgentBaker has no established
-IPE tag-update contract for an existing VMSS instance or proof that an updated
-VMSS tag is observed by its IMDS before a reboot. Do not mutate a shared AKS
-pool to work around this; the reboot helper alone is insufficient.
+The `ACL` scenario uses a standalone, scenario-owned Compute VMSS, not an
+AKS-managed agent pool. Its VM joins the existing cluster as a Kubernetes
+Ready node and runs a targeted workload. These checks do not validate
+AKS-managed pool image selection or off-to-audit tag propagation. The
+cluster's `nodepool1` is shared and must not be changed; a transition on the
+isolated VMSS is not implemented pending verification of Compute model-tag,
+instance-update, and IMDS behavior.
 
 ## Writing and extending scenarios
 

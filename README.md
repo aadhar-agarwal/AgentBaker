@@ -45,19 +45,23 @@ Packer resolves `/SharedGalleries/<uniqueName>/images/<definition>/versions/<ver
 the signed source must be directly shared with the builder identity and
 available in Packer's region. RBAC read access alone is insufficient.
 
-To compare default-off-to-audit and audit-default images, queue one run per
-mode with that mode's exact signed source version(s). Select the intended TL
+To compare default-off and audit-default images, queue one run per mode with
+that mode's exact signed source version(s). Select the intended TL
 build jobs and disable unrelated build jobs (including the separate FIPS TL
 jobs). The builder still publishes the normal `aclgen2TL` / `aclgen2arm64TL`
 outputs. Same-run E2E uses `useVhdMetadataArtifacts: true` and
 `IgnoreScenariosWithMissingVhd: true`, so a missing ACL image or region may
-skip the intended scenario. Require evidence from each run: build logs identify
-the exact source; its E2E metadata maps `aclgen2TL` (and `aclgen2arm64TL` if
-selected) to the output SIG resource ID/version; replication to the test
-region completed; and E2E results show the intended ACL scenario ran without
-being skipped. The metadata identifies the output, not the source: correlate
-it with the source logs by build ID. Source selection does not enable IPE
-on-node validation or change destination gallery settings.
+skip the intended scenario. When it runs, `ACL` boots the output in a
+scenario-owned, single-VM Compute VMSS that joins an existing AKS cluster as a
+Kubernetes Ready node and hosts a targeted test pod. It does not create an
+AKS-managed node pool or test an off-to-audit tag transition. Require evidence
+from each run: build logs identify the exact source; its E2E metadata maps
+`aclgen2TL` (and `aclgen2arm64TL` if selected) to the output SIG resource
+ID/version; replication to the test region completed; and E2E results show the
+intended ACL scenario ran without being skipped. The metadata identifies the
+output, not the source: correlate it with the source logs by build ID. Source
+selection does not enable IPE on-node validation or change destination gallery
+settings.
 
 ## Contributor License Agreement (CLA)
 
