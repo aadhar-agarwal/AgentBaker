@@ -105,11 +105,14 @@ type ScenarioRuntime struct {
 }
 
 type ScenarioVM struct {
-	KubeName  string
-	VMSS      *armcompute.VirtualMachineScaleSet
-	VM        *armcompute.VirtualMachineScaleSetVM
-	PrivateIP string
-	SSHClient *SSHClient
+	KubeName             string
+	VMSS                 *armcompute.VirtualMachineScaleSet
+	VM                   *armcompute.VirtualMachineScaleSetVM
+	PrivateIP            string
+	SSHClient            *SSHClient
+	ipeCreationAttempted bool
+	ipeCreationReceipt   *aclIPECreationReceipt
+	ipeTransitionCleanup func(context.Context) error
 }
 
 // CustomDataWriteFile defines an e2e-only cloud-init write_files entry.

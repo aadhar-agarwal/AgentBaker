@@ -50,10 +50,54 @@ passes in the audit run; E2E alone does not prove the ACL scenario executed.
 The `ACL` scenario uses a standalone, scenario-owned Compute VMSS, not an
 AKS-managed agent pool. Its VM joins the existing cluster as a Kubernetes
 Ready node and runs a targeted workload. These checks do not validate
-AKS-managed pool image selection or off-to-audit tag propagation. The
-cluster's `nodepool1` is shared and must not be changed; a transition on the
-isolated VMSS is not implemented pending verification of Compute model-tag,
-instance-update, and IMDS behavior.
+AKS-managed pool image selection. The cluster's `nodepool1` is shared and
+must not be changed.
+
+For a separate **empirical** off-to-audit check on the default-off signed
+image, set `ACL_IPE_EXPECTED_MODE=off`, `ACL_IPE_TRANSITION=off-to-audit`, and
+`ACL_IPE_TRANSITION_APPROVED_CLUSTER_ID` to the exact resource ID of the
+reused AKS cluster, **only with its owner's approval**. Keep `KEEP_VMSS=false`.
+The approved cluster must already be Succeeded with the expected E2E kubenet
+identity; the opt-in reads it before image/resource preparation and never
+uses the generic cluster create/reconcile path. VHD caching/pre-provisioning
+is not supported in this opt-in.
+If that node is expected to run system DaemonSets, explicitly list their
+exact `kube-system` names in `ACL_IPE_TRANSITION_ALLOWED_SYSTEM_DAEMONSETS`
+(comma-separated); an empty list permits none. This opt-in creates a
+one-instance scenario VMSS with Manual upgrade policy and a pre-registration
+NoSchedule isolation taint. Only the scenario's targeted probe is given the
+new toleration; broadly tolerated workloads can still land there, so the
+all-namespace guard rejects unexpected workloads before and after restart.
+The Azure CLI caller must match the VMSS owner tag and have effective
+`Microsoft.Compute/virtualMachineScaleSets/{read,write,delete}` and
+`Microsoft.Compute/virtualMachineScaleSets/virtualMachines/{read,restart/action}`
+on that VMSS. Kubernetes access must include nodes `get/list`, node Leases
+`get` in `kube-node-lease`, cluster-wide pods `list`, and default-namespace
+pods `create/get/delete`. No grants or shared pool changes are made.
+
+The opt-in uses a create-only ARM precondition and confirms a unique creation
+tag in an ARM read before VM discovery or SSH; it does not retry an ambiguous
+create. Bounded owned-VMSS teardown is armed from that receipt even when
+provisioning or SSH fails. If ownership cannot be read and verified, cleanup
+refuses name-only diagnostics/deletion and reports the uncertainty rather than
+touching an unknown VMSS. After verifying untagged first boot
+and a fresh targeted Pod, the check
+records VM/image/ephemeral OS-disk configuration, a disk-backed guest nonce,
+Node identity and a fresh Lease. It PATCHes only VMSS model tags with an
+ETag, preserving all original keys and setting
+`acl-node-security-profile=ipe=audit`; then it restarts only that instance.
+The post-restart check requires the same VM/image/disk configuration and
+nonce, new boot ID, unchanged Node UID/providerID, a Ready node and Lease
+renewed after the observed new boot, exact IMDS
+profile, current-boot initrd cache/credential/loader evidence, active
+permissive PR52 policy and audit denial, recovered services, and a newly
+executed targeted Pod (matching the Create-response UID). The existing VMSS
+cleanup callback collects logs,
+conditionally restores original model tags, then deletes **only** the
+verified owned VMSS and waits for deletion; any failure is reported.
+If `/var/lib` cannot be proved disk-backed or model tags do not reach the
+existing instance on restart, the test fails explicitly. No manual upgrade,
+reimage, deallocate, AKS AgentPool update, or claim of live AKS success.
 
 ## Writing and extending scenarios
 

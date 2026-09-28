@@ -54,7 +54,8 @@ outputs. Same-run E2E uses `useVhdMetadataArtifacts: true` and
 skip the intended scenario. When it runs, `ACL` boots the output in a
 scenario-owned, single-VM Compute VMSS that joins an existing AKS cluster as a
 Kubernetes Ready node and hosts a targeted test pod. It does not create an
-AKS-managed node pool or test an off-to-audit tag transition. Require evidence
+AKS-managed node pool; its optional [isolated-VMSS off-to-audit transition](e2e/README.md#opt-in-acl-ipe-first-boot-checks-on-an-aks-registered-vmss-node)
+does not test an AKS-managed pool. Require evidence
 from each run: build logs identify the exact source; its E2E metadata maps
 `aclgen2TL` (and `aclgen2arm64TL` if selected) to the output SIG resource
 ID/version; replication to the test region completed; and E2E results show the

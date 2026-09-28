@@ -120,7 +120,10 @@ func ValidateACLIPE(ctx context.Context, s *Scenario) error {
 	if err := ValidateACLIPEFirstBoot(ctx, s); err != nil {
 		return err
 	}
-	return ValidateACLIPEAuditDeny(ctx, s)
+	if err := ValidateACLIPEAuditDeny(ctx, s); err != nil {
+		return err
+	}
+	return ValidateACLIPETransition(ctx, s)
 }
 
 func validateACLIPEAuditRecord(output string) (string, error) {
@@ -181,7 +184,10 @@ func ValidateACLIPEAuditDeny(ctx context.Context, s *Scenario) (err error) {
 	defer func() {
 		s.recordADOTestCase("ACL_IPE_AuditDeny", "e2e.acl.ipe", time.Since(start), err)
 	}()
+	return validateACLIPEAuditDeny(ctx, s)
+}
 
+func validateACLIPEAuditDeny(ctx context.Context, s *Scenario) error {
 	policyPath := "/sys/kernel/security/ipe/policies/" + aclIPEAuditPolicyName
 	active, err := getFileContent(ctx, s, policyPath+"/active")
 	if err != nil {

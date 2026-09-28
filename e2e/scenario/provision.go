@@ -166,7 +166,11 @@ func freshScenario(s *Scenario) *Scenario {
 }
 
 func runScenarioCleanup(ctx context.Context, cleanup *scenarioCleanup) error {
-	cleanupCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), CleanupTimeout)
+	timeout := CleanupTimeout
+	if cleanup.timeout > timeout {
+		timeout = cleanup.timeout
+	}
+	cleanupCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), timeout)
 	defer cancel()
 	if err := cleanup.runCleanups(cleanupCtx); err != nil {
 		return fmt.Errorf("scenario cleanup failed: %w", err)
@@ -200,6 +204,17 @@ func runScenario(ctx context.Context, scenarioName string, s *Scenario) (runErr 
 	defer func() {
 		markScenarioOutcome(s, runErr, recover())
 	}()
+	var approvedCluster *Cluster
+	if s.Name == "ACL" && os.Getenv(aclIPETransitionEnv) != "" {
+		if err := aclIPETransitionGate(s); err != nil {
+			return err
+		}
+		var err error
+		approvedCluster, err = aclIPEPrepareApprovedCluster(ctx, s)
+		if err != nil {
+			return err
+		}
+	}
 	if err := maybeSkipScenario(ctx, scenarioName, s); err != nil {
 		return err
 	}
@@ -212,7 +227,7 @@ func runScenario(ctx context.Context, scenarioName string, s *Scenario) (runErr 
 	}
 	defer logging.LogStep(ctx, "running scenario")()
 
-	cluster, err := s.Config.Cluster(ctx, ClusterRequest{
+	cluster, err := aclIPESelectCluster(ctx, s, approvedCluster, ClusterRequest{
 		Location:         s.Location,
 		K8sSystemPoolSKU: s.K8sSystemPoolSKU,
 	})
@@ -403,6 +418,9 @@ func annotateVMSSCreateError(s *Scenario, err error) error {
 func maybeSkipScenario(ctx context.Context, name string, s *Scenario) error {
 	s.Tags = s.EffectiveTags()
 	if _, err := aclIPEExpectedMode(s); err != nil {
+		return err
+	}
+	if err := aclIPETransitionGate(s); err != nil {
 		return err
 	}
 
