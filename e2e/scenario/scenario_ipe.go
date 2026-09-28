@@ -83,15 +83,22 @@ func aclIPEValidationRequested(s *Scenario) bool {
 	return s != nil && s.Name == "ACL" && os.Getenv(aclIPEModeEnv) != ""
 }
 
-func aclIPEExpectedMode(s *Scenario) (string, error) {
-	if !aclIPEValidationRequested(s) {
+func ACLIPEExpectedMode() (string, error) {
+	mode := os.Getenv(aclIPEModeEnv)
+	if mode == "" {
 		return "", nil
 	}
-	mode := os.Getenv(aclIPEModeEnv)
 	if mode != "off" && mode != "audit" {
 		return "", fmt.Errorf("%s must be off or audit for the ACL scenario, got %q", aclIPEModeEnv, mode)
 	}
 	return mode, nil
+}
+
+func aclIPEExpectedMode(s *Scenario) (string, error) {
+	if !aclIPEValidationRequested(s) {
+		return "", nil
+	}
+	return ACLIPEExpectedMode()
 }
 
 func parseACLIPEPolicyState(output string) (aclIPEPolicyState, error) {

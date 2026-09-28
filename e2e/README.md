@@ -18,12 +18,18 @@ From a high-level, for each scenario,
 
 ### Opt-in ACL IPE first-boot checks on an AKS-registered VMSS node
 
-For two separate signed-image runs, set `ACL_IPE_EXPECTED_MODE=off` for the
-default-off image and `ACL_IPE_EXPECTED_MODE=audit` for the separately signed
-audit-default image (`PR head + 05a5719`).
-Select the existing `ACL` scenario (AMD64 TL); other scenarios are unchanged.
-With the variable set, this scenario fails on an invalid mode or missing VHD
-even when missing-VHD skips are enabled. **Neither** run sets an IPE profile
+For two separate signed-image runs in the VHD release pipeline, queue
+`aclIpeExpectedMode=off` for the default-off image and
+`aclIpeExpectedMode=audit` for the separately signed audit-default image
+(`PR head + 05a5719`). The parameter defaults to `none`; the release E2E task
+passes the selected mode as `ACL_IPE_EXPECTED_MODE`. For standalone E2E runs,
+set that environment variable explicitly. Select the existing `ACL` scenario
+(AMD64 TL); the release opt-in passes `ACL` as the sole scenario selector, so
+other Linux and ACL scenarios do not run even if E2E would otherwise be skipped.
+With mode `none`, the release keeps its ordinary E2E selection.
+With the variable set, an invalid mode, absent/filtered/skipped ACL, missing
+VHD, or missing mode-specific validation evidence fails the run even when
+missing-VHD skips are enabled. **Neither** run sets an IPE profile
 tag: the creation model, created VMSS/instance tags, and live IMDS must lack
 `acl-node-security-profile` before audit validation. The off image must load
 the policy inactive; the separately published audit-default image must

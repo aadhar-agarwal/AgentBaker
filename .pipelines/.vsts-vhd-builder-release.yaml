@@ -25,6 +25,14 @@ parameters:
     displayName: ACL AMD64 TL source image version
     type: string
     default: '20260909.1200337.0'
+  - name: aclIpeExpectedMode
+    displayName: ACL IPE first-boot validation (none, off, or audit)
+    type: string
+    default: none
+    values:
+      - none
+      - off
+      - audit
   - name: aclArm64TlSourceGallery
     displayName: ACL ARM64 TL source gallery unique name
     type: string
@@ -1068,7 +1076,7 @@ stages:
               overrideBranch: ${{ parameters.overrideBranch }}
               artifactName: 2404-arm64-gb-gen2-containerd
   - stage: e2e
-    condition: and(succeeded(), ne(variables.SKIP_E2E_TESTS, 'true'))
+    condition: and(succeeded(), or(ne('${{ parameters.aclIpeExpectedMode }}', 'none'), ne(variables.SKIP_E2E_TESTS, 'true')))
     variables:
       VHD_BUILD_ID: $(Build.BuildId)
       TAGS_TO_SKIP: "os=windows"
@@ -1080,3 +1088,4 @@ stages:
           name: All Linux
           IgnoreScenariosWithMissingVhd: true
           useVhdMetadataArtifacts: true
+          aclIpeExpectedMode: ${{ parameters.aclIpeExpectedMode }}

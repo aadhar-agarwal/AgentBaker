@@ -390,8 +390,16 @@ func TestACLIPEOptInDoesNotSkipMissingVHD(t *testing.T) {
 
 	missing := errors.Join(config.ErrNotFound, errors.New("not replicated to test region"))
 	require.True(t, shouldSkipMissingVHD(&Scenario{Name: "ACL"}, missing))
-	t.Setenv(aclIPEModeEnv, "off")
-	require.False(t, shouldSkipMissingVHD(&Scenario{Name: "ACL"}, missing))
-	require.True(t, shouldSkipMissingVHD(&Scenario{Name: "ACL_CustomCA"}, missing))
+	for _, mode := range []string{"off", "audit"} {
+		t.Setenv(aclIPEModeEnv, mode)
+		actual, err := ACLIPEExpectedMode()
+		require.NoError(t, err)
+		require.Equal(t, mode, actual)
+		require.False(t, shouldSkipMissingVHD(&Scenario{Name: "ACL"}, missing))
+		require.True(t, shouldSkipMissingVHD(&Scenario{Name: "ACL_CustomCA"}, missing))
+	}
+	t.Setenv(aclIPEModeEnv, "enforce")
+	_, err := ACLIPEExpectedMode()
+	require.ErrorContains(t, err, "must be off or audit")
 	require.False(t, shouldSkipMissingVHD(&Scenario{Name: "ACL"}, errors.New("other error")))
 }
